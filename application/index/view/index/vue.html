@@ -1,0 +1,20 @@
+{extend name='common@general/base'/}
+{block name="css"}
+
+{/block}
+{block name="body"}
+<h1>欢迎您访问{$title}</h1>
+<div id="root"></div>
+{/block}
+{block name="js"}
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+	new Vue({
+		el: "#root",
+		template : '<h1>hello {{msg}}</h1>',
+		data: {
+			msg : " world"
+		}
+	});
+</script>
+{/block}

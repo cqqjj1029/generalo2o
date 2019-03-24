@@ -9,7 +9,7 @@ class Index extends Base
         return $this->view->fetch();
     }
 
-    public function login()
+    public function vue()
     {
     	return $this->view->fetch();
     }
