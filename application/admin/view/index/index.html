@@ -1,7 +1,7 @@
 ﻿{extend name='common@general/base'/}
 {block name="css"}
+	{include file='general/css' /}
 	{css href="__ROOT__/static/h-ui.admin/css/H-ui.login.css"/}
-	{css href="__ROOT__/static/this/css/common.admin.css"/}
 {/block}
 {block name="body"}
 	<div class="header">
@@ -43,10 +43,10 @@
 	<div class="footer">Copyright ChenQiang by ThinkPHP v5.0 & H-ui.admin v3.1</div>
 {/block}
 {block name="js"}
+	{include file='general/js' /}
 	{js href="__ROOT__/lib/jquery.validation/1.14.0/jquery.validate.js"/}
 	{js href="__ROOT__/lib/jquery.validation/1.14.0/validate-methods.js"/}
 	{js href="__ROOT__/lib/jquery.validation/1.14.0/messages_zh.js"/}
-	{js href="__ROOT__/static/this/js/common.admin.js" /}
 	<!-- 自定义脚本部分 -->
 	<script type="text/javascript">
 	// 刷新验证码

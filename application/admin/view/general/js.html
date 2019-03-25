@@ -1,13 +1,3 @@
-{js href="__ROOT__/static/this/js/common.admin.js" /}
-{/* BEGIN 默认展开当前菜单 */}
-<script type="text/javascript">
-	$(function() {
-		// 上当前页的菜单处于展开状态
-		$(".Hui-aside .menu_dropdown dd li a").each(function(i) {
-			if($(this).attr("href").toLowerCase().indexOf("{$Request.path}".toLowerCase())>=0) {
-				$(this).parents("dd").show();
-			}
-		});
-	});
-</script>
-{/* END 默认展开当前菜单 */}
+{js href="__ROOT__/lib/layer/2.4/layer.js" /}
+{js href="__ROOT__/static/h-ui/js/H-ui.js" /}
+{js href="__ROOT__/static/h-ui.admin/js/H-ui.admin.page.js" /}

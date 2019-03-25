@@ -1,19 +1,62 @@
-{extend name='common@general/base'/}
+{extend name='general/base'/}
 {block name="css"}
 
 {/block}
 {block name="body"}
 <h1>欢迎您访问{$title}</h1>
-<div id="root"></div>
+<div id="root">
+	<div>
+		<input v-model.trim="inputValue"/>
+		<button @click="handleSubmit">提交</button>
+	</div>
+	<ul>
+		<todo-item
+			v-for="(item,index) of list"
+			:key="index"
+			:content="item"
+			:index="index"
+			@delete="handleDelete"
+		></todo-item>
+	</ul>
+</div>
 {/block}
 {block name="js"}
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script type="text/javascript">
+	Vue.component('todo-item', {
+		props:['content','index'],
+		template: '<li @click="handleClick">{{content}}</li>',
+		methods: {
+			handleClick:function() {
+				var self = this;
+				layer.open({
+					content:"确认要删除"+self.content+"吗？"
+					,btn: ['确定', '不要']
+    				,yes: function(i) {
+						self.$emit('delete', self.index);
+						layer.close(i);
+					}
+				});
+			}
+		}
+	});
+	
+
 	new Vue({
 		el: "#root",
-		template : '<h1>hello {{msg}}</h1>',
-		data: {
-			msg : " world"
+		data:{
+			inputValue: '',
+			list:[],
+		},
+		methods: {
+			handleSubmit: function() {
+				if(this.inputValue) {
+					this.list.push(this.inputValue);
+				}
+				this.inputValue = '';
+			},
+			handleDelete: function(index) {
+				this.list.splice(index,1);
+			}
 		}
 	});
 </script>

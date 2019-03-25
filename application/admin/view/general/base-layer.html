@@ -2,10 +2,13 @@
 <html>
 <head>
 {include file='common@general/meta' /}
-{include file='common@general/css'/}
-
 {block name='seo'}
 	{include file='common@general/seo' /}
+{/block}
+{include file='common@general/css' /}
+{include file='general/css'/}
+{block name='css'}
+	{// 页面自定义样式}
 {/block}
 </head>
 <body>
@@ -16,13 +19,8 @@
 	</article>
 {include file='common@general/js'/}
 {include file='general/js'/}
-
 {block name='js'}
 	{// 页面自定义脚本}
-{/block}
-
-{block name='css'}
-	{// 页面自定义样式}
 {/block}
 </body>
 </html>

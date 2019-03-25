@@ -17,6 +17,7 @@ class Index extends General
     {
     	$this->view->assign('title', $this->get_config('admin_title'));
     	$this->view->assign('pagetitle', '登录');
+
         return $this->view->fetch();
     }
 

@@ -13,4 +13,10 @@ class Index extends Base
     {
     	return $this->view->fetch();
     }
+
+    function bootstrap()
+    {
+    	$this->view->assign('pagetitle','bootstrap测试');
+    	return $this->view->fetch();
+    }
 }

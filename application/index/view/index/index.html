@@ -1,12 +1,25 @@
-{extend name='common@general/base'/}
+{extend name='general/base'/}
 {block name="css"}
-
+<style type="text/css" media="screen">
+	
+</style>
 {/block}
 {block name="body"}
 <h1>欢迎您访问{$title}</h1>
-<ul>
-	<li><a href="{:url('index/index/vue')}">vue测试</a></li>
-</ul>
+
+<div class="container px-lg-5">
+	<div class="row mx-lg-n5 align-items-center justify-content-center">
+		<div class="col py-3 px-lg-5 border bg-light">
+			<a href="{:url('index/index/vue')}">vue测试</a>
+		</div>
+		<div class="col py-3 px-lg-5 border bg-light">
+			<a href="{:url('index/index/bootstrap')}">Bootstrap</a>
+		</div>
+		<div class="col">
+			item3
+		</div>
+	</div>
+</div>
 {/block}
 {block name="js"}
 
