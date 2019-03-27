@@ -2,7 +2,7 @@
 namespace app\admin\controller;
 
 use app\admin\controller\Base;
-use app\admin\model\Config as ConfigModel;
+use app\common\model\Config as ConfigModel;
 use think\Loader;
 
 class Config extends Base

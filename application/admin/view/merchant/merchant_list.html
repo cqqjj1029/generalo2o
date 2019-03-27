@@ -11,15 +11,15 @@
 </p>
 		<div class="cl pd-5 bg-1 bk-gray mt-20">
 			<span class="l"> 
-				<a href="javascript:;" onclick="item_multidelete('{:url("admin/admin/do_admin_multidelete")}')" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> 
-				<a href="javascript:;" onclick="layer_show('新增管理员','{:url("admin/admin/admin_add")}','800','500');" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 新增数据</a> 
+				<a href="javascript:;" onclick="item_multidelete('{:url("admin/merchant/do_merchant_multidelete")}')" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> 
+				<a href="javascript:;" onclick="layer_show('新增商户','{:url("admin/merchant/merchant_add")}','800','500');" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 新增数据</a> 
 			</span>
 			<span class="r">共有数据：<strong>{$count}</strong> 条</span>
 		</div>
 		<table class="table table-border table-bordered table-bg table-hover" style="white-space:nowrap">
 			<thead>
 				<tr>
-					<th scope="col" colspan="14">管理员清单</th>
+					<th scope="col" colspan="14">商户列表</th>
 				</tr>
 				<tr class="text-c">
 					<!-- h-ui.js中实现全选功能的脚本 
@@ -31,11 +31,11 @@
 					<th><input type="checkbox" name="" value=""></th>
 					<th>操作</th>
 					<th>ID</th>
-					<th>用户名</th>
-					<th>邮箱</th>
-					<th>电话</th>
-					<th>描述</th>
-					<th>角色</th>
+					<th>名称</th>
+					<th>账号</th>
+					<th>地区</th>
+					<th>创建者</th>
+					<th>管理员</th>
 					<th>状态</th>
 					<th>登录IP</th>
 					<th>登录时间</th>
@@ -46,39 +46,39 @@
 			</thead>
 			<tbody>
 			{volist name='list' id='vo'}
-				<tr class="text-c {if condition='$vo.admin_super neq 0 OR $vo.admin_name eq "admin"'}' warning {/if}" title="{$vo.admin_description}">
-					<td><input type="checkbox" value="{$vo.admin_id}" name="to_multidelete[]"></td>
+				<tr class="text-c" title="{$vo.merchant_description}">
+					<td><input type="checkbox" value="{$vo.merchant_id}" name="to_multidelete[]"></td>
 					<td class="td-manage">
-					{if condition="$vo.admin_status eq '正常'"}
-						<a style="text-decoration:none" onClick="item_status(this,'{:url("admin/admin/do_admin_status",["id"=>$vo.admin_id])}')" href="javascript:;" title="禁用"><i class="Hui-iconfont">&#xe631;</i></a> 
+					{if condition="$vo.merchant_status eq '正常'"}
+						<a style="text-decoration:none" onClick="item_status(this,'{:url("admin/admin/do_admin_status",["id"=>$vo.merchant_id])}')" href="javascript:;" title="禁用"><i class="Hui-iconfont">&#xe631;</i></a> 
 					{else /}
-						<a style="text-decoration:none" onClick="item_status(this,'{:url("admin/admin/do_admin_status",["id"=>$vo.admin_id])}')" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe725;</i></a> 
+						<a style="text-decoration:none" onClick="item_status(this,'{:url("admin/admin/do_admin_status",["id"=>$vo.merchant_id])}')" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe725;</i></a> 
 					{/if}
-						<a title="编辑" href="javascript:;" onclick="layer_show('编辑管理员','{:url("admin/admin/admin_edit",["id"=>$vo.admin_id])}','800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe647;</i></a> 
-						<a title="改密码" href="javascript:;" onclick="layer_show('修改密码','{:url("admin/admin/admin_password",["id"=>$vo.admin_id])}','800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe63f;</i></a>
-						<a title="删除" href="javascript:;" onclick="item_delete(this,'{:url("admin/admin/do_admin_delete",["id"=>$vo.admin_id])}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
-					</td><td>{$vo.admin_id}</td>
+						<a title="编辑" href="javascript:;" onclick="layer_show('编辑商户','{:url("admin/admin/admin_edit",["id"=>$vo.merchant_id])}','800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe647;</i></a> 
+						<a title="改密码" href="javascript:;" onclick="layer_show('修改密码','{:url("admin/admin/admin_password",["id"=>$vo.merchant_id])}','800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe63f;</i></a>
+						<a title="删除" href="javascript:;" onclick="item_delete(this,'{:url("admin/admin/do_admin_delete",["id"=>$vo.merchant_id])}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+					</td><td>{$vo.merchant_id}</td>
 					<td>
-						<span class="name">{$vo.admin_name}</span>
+						<span class="name">{$vo.merchant_name}</span>
 					</td>
-					<td>{$vo.admin_email}</td>
-					<td>{$vo.admin_telephone}</td>
-					<td>{$vo.admin_description}</td>
-					<td>{$vo.role.role_name}</td>
+					<td>{$vo.merchant_account}</td>
+					<td>{$vo.merchant_district_id}</td>
+					<td>{$vo.merchant_creator_admin_id}</td>
+					<td></td>
 					<td>
-						{if condition="$vo.admin_status eq '正常'"}
+						{if condition="$vo.merchant_status eq '正常'"}
 							<span class="label radius label-success">
-								{$vo.admin_status}
+								{$vo.merchant_status}
 							</span>
 						{else /}
 							<span class="label radius">
-								{$vo.admin_status}
+								{$vo.merchant_status}
 							</span>
 						{/if}
 					</td>
-					<td>{$vo.admin_login_ip}</td>
-					<td>{$vo.admin_login_time}</td>
-					<td>{$vo.admin_login_count}</td>
+					<td>{$vo.merchant_login_ip}</td>
+					<td>{$vo.merchant_login_time}</td>
+					<td>{$vo.merchant_login_count}</td>
 					<td>{$vo.create_time}</td>
 					<td>{$vo.update_time}</td>
 				</tr>

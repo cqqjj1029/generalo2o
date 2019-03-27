@@ -2,7 +2,7 @@
 namespace app\common\controller;
 
 use think\Controller;
-use app\admin\model\Config as ConfigModel;
+use app\common\model\Config as ConfigModel;
 
 class General extends Controller
 {
@@ -35,5 +35,80 @@ class General extends Controller
             $value = $e->getMessage();
         }
         return $value;
+    }
+
+    /**
+     * 设置一个系统配置项
+     * @param [type]  $key        键名
+     * @param [type]  $value      值
+     * @param boolean $new_if_non 如果不存在则新增，默认为false
+     */
+    protected function set_config($key, $value, $new_if_non=false, $name='', $deletable=-1)
+    {
+    	$result = ['status'=>false,'message'=>'操作失败','data','rows'=>0];
+    	// 根据config_key查询数据，如果没查到，则定义新实例
+		$config = ConfigModel::get(['config_key'=>$key]) ? ConfigModel::get(['config_key'=>$key]) : new ConfigModel;
+		$config->config_key = $key;
+		$config->config_value = $value;
+		// 如果调用函数时定义了config_name则同时更新数据库中的name
+		$config->config_name = !empty($name) ? $name : $config->config_name;
+		$config->config_deletable = $deletable>=0 ? $deletable : $config->config_deletable;
+		$result['data'] = $config;
+    	try {
+    		if($new_if_non) {
+	    		$result['rows'] = $config->save();
+	    	} else {
+	    		$result['rows'] = $config->isUpdate(true)->save();
+	    	}
+    		if($result['rows']) {
+    			$result['status'] = true;
+    			$result['message'] = '操作成功';
+    		}
+    	} catch(\Exception $e) {
+    		$result['message'] = $e->getMessage();
+    	}
+    	return $result;
+    }
+
+    /**
+     * 申请一个global_id并将现有global_id值增加step
+     * @param  integer $section 中间需要加的区代码
+     * @param  integer $step    序号需要增长的步长
+     * @return [type]           [description]
+     */
+    protected function apply_full_global_id_str($section=0, $step=1)
+    {
+    	$section_str = $section==0 ? '' : str_pad($section,6,'0',STR_PAD_LEFT);	//section长6个数字
+    	$id_str = str_pad($this->apply_global_id($step),6,'0',STR_PAD_LEFT);	//序号长6个数字
+    	$full = time().$section_str.$id_str;
+    	return $full;
+    }
+
+    /**
+     * 取得当前系统全局ID的数值
+     * @param  integer $step 增长步长
+     * @return [type]        返回ID数值
+     */
+    protected function apply_global_id($step=1)
+    {
+    	$config = ConfigModel::get(['config_key'=>'max_global_id']);
+    	if(!$config) {
+    		// 没取到，调用set_config创建配置项
+    		$this->set_config('max_global_id', 0, true, '当前ID序号', 0);
+    		$config = ConfigModel::get(['config_key'=>'max_global_id']);
+    	}
+    	// 根据update_time和当前时间戳的比较判断ID是否需要改变
+    	if($config->getData()['update_time']==time()) {
+    		// update_time和当前时间戳在同一秒，需要改变ID
+	    	$config->config_value+=$step;
+	    } else {
+	    	// update_time和当前时间戳不在同一秒，将序号复位到1
+	    	$config->config_value = 1;
+	    }
+	    // 强行更新update_time
+	    $config->update_time = time();
+	    $config->save();
+	    // 返回ID数值
+    	return $config->config_value;
     }
 }

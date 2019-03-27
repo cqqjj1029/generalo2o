@@ -12,6 +12,19 @@
 // 应用公共文件
 
 /**
+ * 获取毫秒时间戳
+ * @return [type] 返回13位字符串
+ */
+function time_ms()  
+{  
+        $time = explode (" ", microtime () );   
+        $time = $time [1] . ($time [0] * 1000);   
+        $time2 = explode ( ".", $time );   
+        $time = $time2 [0];  
+        return str_pad($time,13,"0",STR_PAD_RIGHT);
+}
+
+/**
  * 获取客户端IP地址
  * @param integer $type 返回类型 0 返回IP地址 1 返回IPV4地址数字
  * @param boolean $adv 是否进行高级模式获取（有可能被伪装）

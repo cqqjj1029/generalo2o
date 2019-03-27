@@ -10,12 +10,19 @@ class Admin extends BaseCUD
 		'admin_role_id',
 	];
 
-	// 通过role_menu表关联role
+	/**
+	 * 关联admin_role_id对应的role
+	 * @return [type] [description]
+	 */
 	public function role()
 	{
 		return $this->hasOne('Role','role_id','admin_role_id');
 	}
 
+	/**
+	 * 关联admin_log
+	 * @return [type] [description]
+	 */
 	public function logs()
 	{
 		return $this->hasMany('AdminLog','admin_name');

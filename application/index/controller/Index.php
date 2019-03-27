@@ -19,4 +19,9 @@ class Index extends Base
     	$this->view->assign('pagetitle','bootstrap测试');
     	return $this->view->fetch();
     }
+
+    public function test()
+    {
+        dump($this->apply_full_global_id_str());
+    }
 }
