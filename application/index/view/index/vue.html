@@ -19,9 +19,87 @@
 		></todo-item>
 	</ul>
 </div>
+<div id="test">
+	<select v-model="province" v-on:change="getlist2(this.province)">
+		<option v-for="item in list1" :key="item.district_id" :value="item.district_id">{{item.district_name}}</option>
+	</select>
+	<select v-model="city" v-on:change="getlist3">
+		<option v-for="item in list2" :key="item.district_id" :value="item.district_id">{{item.district_name}}</option>
+	</select>
+	<select v-model="county">
+		<option v-for="item in list3" :key="item.district_id" :value="item.district_id">{{item.district_name}}</option>
+	</select>
+</div>
 {/block}
 {block name="js"}
+{js href="__ROOT__/lib/vue-resource/vue-resource.js"/}
 <script type="text/javascript">
+	var test = new Vue({
+		el: "#test",
+		data: {
+			list1:[],
+			list2:[],
+			list3:[],
+			province:'',
+			city: '',
+			county: '',
+		},
+		created: function() {
+			this.getlist1();
+		},
+		methods: {
+			getlist1: function() {
+				this.$http.get('{:url("index/service/district")}?father_id='+86)
+					.then(function(res) {
+						var _self = this;
+						_self.list1=res.data;
+						_self.province = res.data[0].district_id;
+						var reg = new RegExp('辽宁');
+						res.data.forEach(function(v) {
+							if(reg.test(v.district_name)) {
+								_self.province = v.district_id;
+							}
+						});
+						_self.getlist2();
+					})
+					.catch(function(res) {
+						console.log(res);
+					});
+			},
+			getlist2: function() {
+				id = this.province||'-1';
+				this.$http.get('{:url("index/service/district")}?father_id='+id)
+					.then(function(res) {
+						var _self = this;
+						_self.list2=res.data;
+						_self.city = res.data[0].district_id;
+						var reg = new RegExp('沈阳');
+						res.data.forEach(function(v) {
+							if(reg.test(v.district_name)) {
+								_self.city = v.district_id;
+							}
+						});
+						_self.getlist3();
+					})
+					.catch(function(res) {
+						console.log(res);
+					});
+			},
+			getlist3: function() {
+				id = this.city||'-1';
+				this.$http.get('{:url("index/service/district")}?father_id='+id)
+					.then(function(res) {
+						var _self = this;
+						_self.list3=res.data;
+						_self.county = res.data[0].district_id;
+					})
+					.catch(function(res) {
+						console.log(res);
+					});
+			},
+		}
+	});
+
 	Vue.component('todo-item', {
 		props:['content','index'],
 		template: '<li @click="handleClick">{{content}}</li>',
@@ -41,7 +119,7 @@
 	});
 	
 
-	new Vue({
+	var root = new Vue({
 		el: "#root",
 		data:{
 			inputValue: '',

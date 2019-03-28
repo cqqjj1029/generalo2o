@@ -6,7 +6,7 @@
 namespace app\common\model;
 use think\Model;
 
-class BaseC extends Model
+class Base extends Model
 {
 	// 关闭自动写入时间戳
 	protected $autoWriteTimestamp = false;

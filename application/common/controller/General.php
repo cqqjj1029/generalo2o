@@ -3,6 +3,7 @@ namespace app\common\controller;
 
 use think\Controller;
 use app\common\model\Config as ConfigModel;
+use app\common\model\District as DistrictModel;
 
 class General extends Controller
 {
@@ -110,5 +111,12 @@ class General extends Controller
 	    $config->save();
 	    // 返回ID数值
     	return $config->config_value;
+    }
+
+    protected function get_district($father_id=86)
+    {
+        $district = new DistrictModel;
+        $list = $district->where(['district_father_id'=>$father_id])->order(['district_id'=>'asc'])->select();
+        return $list;
     }
 }
