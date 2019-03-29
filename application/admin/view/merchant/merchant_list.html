@@ -11,7 +11,6 @@
 </p>
 		<div class="cl pd-5 bg-1 bk-gray mt-20">
 			<span class="l"> 
-				<a href="javascript:;" onclick="item_multidelete('{:url("admin/merchant/do_merchant_multidelete")}')" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> 
 				<a href="javascript:;" onclick="layer_show('新增商户','{:url("admin/merchant/merchant_add")}','800','500');" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 新增数据</a> 
 			</span>
 			<span class="r">共有数据：<strong>{$count}</strong> 条</span>
@@ -28,7 +27,6 @@
 							$(this).closest("table").find("tr > td:first-child input:checkbox").prop("checked", $("table thead th input:checkbox").prop("checked"));
 						});
 					 -->
-					<th><input type="checkbox" name="" value=""></th>
 					<th>操作</th>
 					<th>ID</th>
 					<th>名称</th>
@@ -47,7 +45,6 @@
 			<tbody>
 			{volist name='list' id='vo'}
 				<tr class="text-c" title="{$vo.merchant_description}">
-					<td><input type="checkbox" value="{$vo.merchant_id}" name="to_multidelete[]"></td>
 					<td class="td-manage">
 					{if condition="$vo.merchant_status eq '正常'"}
 						<a style="text-decoration:none" onClick="item_status(this,'{:url("admin/admin/do_admin_status",["id"=>$vo.merchant_id])}')" href="javascript:;" title="禁用"><i class="Hui-iconfont">&#xe631;</i></a> 

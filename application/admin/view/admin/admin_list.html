@@ -46,7 +46,7 @@
 			</thead>
 			<tbody>
 			{volist name='list' id='vo'}
-				<tr class="text-c {if condition='$vo.admin_super neq 0 OR $vo.admin_name eq "admin"'}' warning {/if}" title="{$vo.admin_description}">
+				<tr class="text-c {if condition='$vo.admin_super neq 0 OR $vo.admin_name eq "admin"'} warning {/if}" title="{$vo.admin_description}">
 					<td><input type="checkbox" value="{$vo.admin_id}" name="to_multidelete[]"></td>
 					<td class="td-manage">
 					{if condition="$vo.admin_status eq '正常'"}

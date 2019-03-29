@@ -2,21 +2,23 @@
 <html lang="en">
 <head>
 	{include file='common@general/meta' /}
-	{include file='common@general/css' /}
+	{include file='common@general/seo' /}
+	{include file='common@general/css-hui-iconfont' /}
+	{include file='common@general/css-common' /}
 	{block name="css"}
 
-	{/block}
-	{block name="seo"}
-		{include file='common@general/seo' /}
 	{/block}
 </head>
 <body>
 	{block name="body"}
 
 	{/block}
-	{include file='common@general/js' /}
+	{include file='common@general/js-common' /}
 	{block name="js"}
 
 	{/block}
+	{/* BEGIN 统计脚本 */}
+	{$tongji|default=""}
+	{/* END 统计脚本 */}
 </body>
 </html>

@@ -95,10 +95,7 @@
 {/block}
 
 {block name='js'}
-{js href="__ROOT__/lib/jquery.validation/1.14.0/jquery.validate.js"/}
-{js href="__ROOT__/lib/jquery.validation/1.14.0/validate-methods.js"/}
-{js href="__ROOT__/lib/jquery.validation/1.14.0/messages_zh.js"/}
-
+{include file='common@general/js-jquery-validation' /}
 <script type="text/javascript">
 	$(function() {
 		// 只有当表单中有数据变化时，提交按钮才可用

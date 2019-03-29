@@ -2,11 +2,10 @@
 <html>
 <head>
 {include file='common@general/meta' /}
-{block name='seo'}
-	{include file='common@general/seo' /}
-{/block}
-{include file='common@general/css' /}
-{include file='general/css' /}
+{include file='common@general/seo' /}
+{include file='common@general/css-hui-iconfont' /}
+{include file='common@general/css-common-admin' /}
+{include file='common@general/css-hui-admin' /}
 {block name='css'}
 	{// 页面自定义样式}
 {/block}
@@ -31,8 +30,12 @@
 {include file='general/footer' /}
 </div>
 </section>
-{include file='common@general/js' /}
-{include file='general/js' /}
+{include file='common@general/js-jquery' /}
+{include file='common@general/js-vue' /}
+{include file='common@general/js-layer' /}
+{include file='common@general/js-hui' /}
+{include file='common@general/js-hui-admin-page' /}
+{include file='common@general/js-common-admin' /}
 {/* BEGIN 默认展开当前菜单 */}
 <script type="text/javascript">
 	$(function() {
@@ -48,5 +51,8 @@
 {block name='js'}
 	{// 页面自定义脚本}
 {/block}
+{/* BEGIN 统计脚本 */}
+{$tongji|default=""}
+{/* END 统计脚本 */}
 </body>
 </html>
