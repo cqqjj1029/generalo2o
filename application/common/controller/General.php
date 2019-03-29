@@ -113,6 +113,11 @@ class General extends Controller
     	return $config->config_value;
     }
 
+    /**
+     * 根据father_id查询对应的地区数据
+     * @param  integer $father_id 上一级地区ID，默认86为查询省级
+     * @return [type]             返回数据集
+     */
     protected function get_district($father_id=86)
     {
         $district = new DistrictModel;

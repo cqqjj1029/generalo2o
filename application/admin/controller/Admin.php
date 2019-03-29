@@ -15,27 +15,7 @@ class Admin extends Base
 	public function admin_list()
 	{
 		$this->view->assign('pagetitle','管理员管理');
-		// 读取admin数据
-		$adminlist = AdminModel::all();
-		foreach($adminlist as $n=>$admin_val) {
-			if(Session::get('admin_infor')->admin_super) {
-				$adminlist[$n]['role'] = $admin_val->role;
-			} else {
-				// 不是超级管理员
-				// 要过滤掉超级管理员和高权限管理员
-				if($admin_val->admin_name=='admin'||$admin_val->admin_super) {
-					// 超级管理员，过滤
-					unset($adminlist[$n]);
-				} else {
-					if($admin_val->role) {
-						if(!empty(array_diff(array_column($admin_val->role->menus, 'menu_id'), array_column(Session::get('admin_menus'), 'menu_id')))) {
-							// 高权限，删
-							unset($adminlist[$n]);
-						}
-					}
-				}
-			}
-		}
+		$adminlist = $this->getMyAdminList();
 		$this->view->assign('list',$adminlist);
 		$this->view->assign('count',count($adminlist));
 		// 渲染页面

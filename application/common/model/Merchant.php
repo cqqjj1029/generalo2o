@@ -6,13 +6,17 @@ use app\admin\model\Admin;
 
 class Merchant extends BaseCUD
 {
+	/**
+	 * 关联merchant_district_id对应的地区，一对一
+	 * @return [type] [description]
+	 */
 	public function district()
 	{
 		return $this->hasOne('District','district_id','merchant_district_id');
 	}
 
 	/**
-	 * 关联merchant_creator_admin_id对应的创建者
+	 * 关联merchant_creator_admin_id对应的创建者，一对一
 	 * @return [type] [description]
 	 */
 	public function creator()
@@ -20,10 +24,13 @@ class Merchant extends BaseCUD
 		return $this->hasOne('Admin', 'admin_id', 'merchant_creator_admin_id');
 	}
 
-	// 通过role_menu表关联menu
+	/**
+	 * 通过merchant_admin表关联对应的管理员，一对多
+	 * @return [type] [description]
+	 */
 	public function admins()
 	{
-		return $this->belongsToMany('Admin','\app\admin\model\RoleMenu');
+		return $this->belongsToMany('Admin','\app\admin\model\MerchantAdmin');
 	}
 
 	/**

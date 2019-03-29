@@ -6,8 +6,8 @@ use think\Controller;
 use think\Session;
 use think\Request;
 use app\admin\model\Menu as MenuModel;
+use app\admin\model\Admin as AdminModel;
 use app\admin\model\AdminLog as AdminLogModel;
-
 
 class Base extends General
 {
@@ -188,5 +188,34 @@ class Base extends General
     	// 对unset后的数组要重建索引（不做也可以）
     	$list = array_values($list);
         return $list;
+    }
+
+    /**
+     * 获取管理员列表
+     * @param  boolean $super 是否包含超级管理员，false时即使是超级管理员查询也不包含超级管理员
+     * @return [type]         返回结果集
+     */
+    protected function getMyAdminList($super=true)
+    {
+        // 读取admin数据
+        $adminlist = AdminModel::all();
+        foreach($adminlist as $n=>$admin_val) {
+            $adminlist[$n]['role'] = $admin_val->role;
+            if(!$super || !Session::get('admin_infor')->admin_super) {
+                // 删除超级管理
+                if($admin_val->admin_name=='admin'||$admin_val->admin_super) {
+                    // 超级管理员，过滤
+                    unset($adminlist[$n]);
+                } else {
+                    if(!Session::get('admin_infor')->admin_super) {
+                        if(!empty(array_diff(array_column($admin_val->role->menus, 'menu_id'), array_column(Session::get('admin_menus'), 'menu_id')))) {
+                            // 高权限，删
+                            unset($adminlist[$n]);
+                        }
+                    }
+                }
+            }
+        }
+        return $adminlist;
     }
 }

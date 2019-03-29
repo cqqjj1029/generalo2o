@@ -5,10 +5,14 @@ use app\common\model\District as DistrictModel;
 
 class Service extends Base
 {
-    public function district($father_id=1)
+    /**
+     * 根据father_id查询对应的地区数据
+     * @param  integer $father_id 上一级地区ID，默认86为查询省级
+     * @return [type]             返回数据集
+     */
+    public function district($father_id=86)
     {
         $data = $this->get_district($father_id);
-        // $data = json_encode($data);
         return $data;
     }
 

@@ -28,6 +28,15 @@ class Admin extends BaseCUD
 		return $this->hasMany('AdminLog','admin_name');
 	}
 
+	/**
+	 * 通过merchant_admin表关联对应的商户，一对多
+	 * @return [type] [description]
+	 */
+	public function merchants()
+	{
+		return $this->belongsToMany('Merchant','\app\admin\model\MerchantAdmin');
+	}
+
 	// admin_status获取器
 	public function getAdminStatusAttr($value) {
 		$s = '';
