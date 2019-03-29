@@ -69,7 +69,7 @@
 			    	{volist name='admin_list' id='vo_a'}
 				    	<div class="col-xs-12 col-sm-4">
 				    		<label title="{$vo_a.admin_description}" {if condition='$vo_a.admin_super neq 0 OR $vo_a.admin_name eq "admin"'} class="c-warning" {/if}>
-				    			<input type="checkbox" name="admin_id[]" value="{$vo_a.admin_id}" />
+				    			<input type="checkbox" name="admin_id[]" value="{$vo_a.admin_id}" {if condition='$vo_a.admin_id eq $Think.session.admin_infor.admin_id'} checked="true" {/if} />
 				    			{$vo_a.admin_name}
 				    			{if condition='$vo_a.role.role_name'}
 				    			({$vo_a.role.role_name})
@@ -90,7 +90,6 @@
 {/block}
 
 {block name='js'}
-{include file='common@general/js-jquery-validation' /}
 <script type="text/javascript">
 	var district = new Vue({
 		el: "#vm-district",
