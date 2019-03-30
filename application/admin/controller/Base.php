@@ -99,7 +99,7 @@ class Base extends General
          */
         $adminlog = new AdminLogModel;
         $adminlog->data([
-            'admin_name'        =>  Session::has('admin_infor')?Session::get('admin_infor')->admin_name:'',
+            'admin_account'        =>  Session::has('admin_infor')?Session::get('admin_infor')->admin_account:'',
             'log_path'          =>  Request::instance()->path(),
             'log_ip'            =>  get_client_ip(),
             'log_input'         =>  stripos(serialize(input()),'password')?'{hided}':serialize(input()),    // 如果数据项中有密码，则不对数据进行记录
@@ -203,7 +203,7 @@ class Base extends General
             $adminlist[$n]['role'] = $admin_val->role;
             if(!$super || !Session::get('admin_infor')->admin_super) {
                 // 删除超级管理
-                if($admin_val->admin_name=='admin'||$admin_val->admin_super) {
+                if($admin_val->admin_account=='admin'||$admin_val->admin_super) {
                     // 超级管理员，过滤
                     unset($adminlist[$n]);
                 } else {

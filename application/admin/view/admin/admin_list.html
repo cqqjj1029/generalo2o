@@ -19,7 +19,7 @@
 		<table class="table table-border table-bordered table-bg table-hover" style="white-space:nowrap">
 			<thead>
 				<tr>
-					<th scope="col" colspan="14">管理员清单</th>
+					<th scope="col" colspan="15">管理员清单</th>
 				</tr>
 				<tr class="text-c">
 					<!-- h-ui.js中实现全选功能的脚本 
@@ -31,7 +31,8 @@
 					<th><input type="checkbox" name="" value=""></th>
 					<th>操作</th>
 					<th>ID</th>
-					<th>用户名</th>
+					<th>姓名</th>
+					<th>账号</th>
 					<th>邮箱</th>
 					<th>电话</th>
 					<th>描述</th>
@@ -46,7 +47,7 @@
 			</thead>
 			<tbody>
 			{volist name='list' id='vo'}
-				<tr class="text-c {if condition='$vo.admin_super neq 0 OR $vo.admin_name eq "admin"'} warning {/if}" title="{$vo.admin_description}">
+				<tr class="text-c {if condition='$vo.admin_super neq 0 OR $vo.admin_account eq "admin"'} warning {/if}" title="{$vo.admin_description}">
 					<td><input type="checkbox" value="{$vo.admin_id}" name="to_multidelete[]"></td>
 					<td class="td-manage">
 					{if condition="$vo.admin_status eq '正常'"}
@@ -58,8 +59,9 @@
 						<a title="改密码" href="javascript:;" onclick="layer_show('修改密码','{:url("admin/admin/admin_password",["id"=>$vo.admin_id])}','800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe63f;</i></a>
 						<a title="删除" href="javascript:;" onclick="item_delete(this,'{:url("admin/admin/do_admin_delete",["id"=>$vo.admin_id])}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
 					</td><td>{$vo.admin_id}</td>
+					<td>{$vo.admin_name}</td>
 					<td>
-						<span class="name">{$vo.admin_name}</span>
+						<span class="name">{$vo.admin_account}</span>
 					</td>
 					<td>{$vo.admin_email}</td>
 					<td>{$vo.admin_telephone}</td>
@@ -77,10 +79,10 @@
 						{/if}
 					</td>
 					<td>{$vo.admin_login_ip}</td>
-					<td>{$vo.admin_login_time}</td>
+					<td style="white-space:normal">{$vo.admin_login_time}</td>
 					<td>{$vo.admin_login_count}</td>
-					<td>{$vo.create_time}</td>
-					<td>{$vo.update_time}</td>
+					<td style="white-space:normal">{$vo.create_time}</td>
+					<td style="white-space:normal">{$vo.update_time}</td>
 				</tr>
 			{/volist}
 			</tbody>

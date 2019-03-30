@@ -63,7 +63,7 @@ class Index extends General
 		}
 		// 表单验证通过，可以对用户名密码进行验证了
 		try {
-			$admin = AdminModel::get(['admin_name'=>$data['admin_name']]);
+			$admin = AdminModel::get(['admin_account'=>$data['admin_account']]);
 		} catch(\Exception $e) {
 			$result['message'] .= $e->getMessage();
 			return $result;
@@ -73,7 +73,7 @@ class Index extends General
 			$result['message'] .= '用户名错误';
 			return $result;
 		}
-		if(!to_encrypt_compare($data['admin_password'], $data['admin_name'], $admin->admin_password)) {
+		if(!to_encrypt_compare($data['admin_password'], $data['admin_account'], $admin->admin_password)) {
 			// 密码错误
 			$result['message'] .= '密码错误';
 			return $result;
@@ -86,7 +86,7 @@ class Index extends General
 		// 一切判断全部通过，开始准备账号角色权限信息，用异常处理的方式
 		try {
 			// admin用户天生就是超级管理员
-			$admin->admin_super = $admin->admin_name=='admin' ? 1 : $admin->admin_super;
+			$admin->admin_super = $admin->admin_account=='admin' ? 1 : $admin->admin_super;
 			// 对超级管理员手动配置角色，对非超级管理员通过数据表关联角色
 			$role = $admin->admin_super ? new RoleModel(['role_name'=>'超级管理员']) : $admin->role;
 			// 根据角色关联菜单，超级管理手动设置菜单权限为null
@@ -96,12 +96,12 @@ class Index extends General
 			Session::set('admin_role', $role);	// 角色信息
 			Session::set('admin_menus', $menus);	// 菜单权限
 			// 把当前IP、时间、登录次数、新的密码更新到数据库中
-			$admin->where(['admin_name'=>$admin['admin_name']])
+			$admin->where(['admin_account'=>$admin['admin_account']])
 				->setInc('admin_login_count');
 			// 执行Db类的update不会触发修改器，所以要将密码做加密处理后再update
-			$admin->where(['admin_name'=>$admin['admin_name']])
+			$admin->where(['admin_account'=>$admin['admin_account']])
 				->update([
-					'admin_password'	=>	to_encrypt($data['admin_password'],$data['admin_name']),
+					'admin_password'	=>	to_encrypt($data['admin_password'],$data['admin_account']),
 					'admin_login_ip'	=>	get_client_ip(),
 					'admin_login_time'	=>	time()
 				]);

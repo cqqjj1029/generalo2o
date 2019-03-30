@@ -9,21 +9,27 @@
 			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>登录账号：</label>
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>邮箱：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" placeholder="字母、数字、下划线、减号，4到25位之间" name="merchant_account" rangelength="[4,25]" required>
+				<input type="text" class="input-text" name="merchant_email" placeholder="邮箱格式xxx@xxx.xxx" required>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" name="merchant_mobile" placeholder="填写正确的手机号" required>
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>密码：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="password" class="input-text" placeholder="字母、数字、下划线、减号，4到25位之间" name="merchant_password" rangelength="[4,25]" required>
+				<input type="password" class="input-text" placeholder="字母、数字、下划线、减号，4到25位之间" name="merchant_password" id="merchant_password" rangelength="[4,25]" required>
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>密码再输入一次：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="password" class="input-text" placeholder="字母、数字、下划线、减号，4到25位之间" name="merchant_password_confirm" equalTo:merchant_password rangelength="[4,25]" required>
+				<input type="password" class="input-text" placeholder="字母、数字、下划线、减号，4到25位之间" name="merchant_password_confirm" rangelength="[4,25]" required>
 			</div>
 		</div>
 		<div class="row cl">
@@ -36,7 +42,7 @@
 						</select>
 					</span>
 					<span class="select-box inline size-M">
-						<select class="select" v-model="city">
+						<select class="select" v-model="city" name="merchant_district_id">
 							<option v-for="item in list2" :key="item.district_id" :value="item.district_id">{{item.district_name}}</option>
 						</select>
 					</span>
@@ -68,9 +74,9 @@
 					<div class="row cl panel-body">
 			    	{volist name='admin_list' id='vo_a'}
 				    	<div class="col-xs-12 col-sm-4">
-				    		<label title="{$vo_a.admin_description}" {if condition='$vo_a.admin_super neq 0 OR $vo_a.admin_name eq "admin"'} class="c-warning" {/if}>
+				    		<label title="{$vo_a.admin_description}" {if condition='$vo_a.admin_super neq 0 OR $vo_a.admin_account eq "admin"'} class="c-warning" {/if}>
 				    			<input type="checkbox" name="admin_id[]" value="{$vo_a.admin_id}" {if condition='$vo_a.admin_id eq $Think.session.admin_infor.admin_id'} checked="true" {/if} />
-				    			{$vo_a.admin_name}
+				    			{$vo_a.admin_account}
 				    			{if condition='$vo_a.role.role_name'}
 				    			({$vo_a.role.role_name})
 				    			{/if}
@@ -155,32 +161,20 @@
 
 		$("form").validate({
 			rules : {
+				merchant_email: {
+					email: true,
+				},
+				merchant_mobile: {
+					isMobile: true,
+				},
 				merchant_password_confirm: {
       				equalTo : "#merchant_password"
     			},
 			},
 			submitHandler: function(form) {
 				// 当验证通过时执行ajax提交
-				$.ajax({
-	                type: "POST",	// POST方法提交
-	                url: "{:url('admin/merchant/do_merchant_add')}",	// 执行的方法
-	                data: $("form").serialize(),	// 将表单控件的name属性序列化后提交
-	                dataType: "json",	// 数据类型为json
-	                success: function(data) {
-	                	// 当ajax请求执行成功时执行
-	                    if (data.status == true) {
-	                    	// 返回data对象中的status元素值为1表示数据插入成功
-	                        layer.msg(data.message, {icon: 6, time: 2000});	// 使用H-ui的浮动提示框，2秒后自动消失
-							setTimeout(function() {
-								parent.location.reload();
-							}, 2000);	//2秒后对父页面执行刷新（相当于关闭了弹层同时更新了数据）
-	                    } else {
-	                    	// 返回data对象的status值不为1，表示数据插入失败
-	                    	layer.msg(data.message, {icon: 5, time: 2000});	// 使用H-ui的浮动提示框，2秒后自动消失
-	                    	// 页面停留在这里，不再执行任何动作
-	                    }
-	                }
-            	});
+				// 自定义函数ajax_post(url,data);
+				ajax_post("{:url('admin/merchant/do_merchant_add')}",$("form").serialize());
 			}
 		});
 	});

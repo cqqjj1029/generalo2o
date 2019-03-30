@@ -73,15 +73,19 @@ class General extends Controller
 
     /**
      * 申请一个global_id并将现有global_id值增加step
-     * @param  integer $section 中间需要加的区代码
-     * @param  integer $step    序号需要增长的步长
-     * @return [type]           [description]
+     * @param  integer $section     中间需要加的区代码
+     * @param  integer $sn_length   序号字符串长度，左补0，默认为2
+     * @param  integer $step        序号需要增长的步长
+     * @return string               字符串格式为：[时间戳].[section].[sn]
      */
-    protected function apply_full_global_id_str($section=0, $step=1)
+    protected function apply_full_global_id_str($section=0, $sn_length=2, $step=1)
     {
+        /*
+        字符串格式为：[时间戳].[section].[sn]
+         */
     	$section_str = $section==0 ? '' : str_pad($section,6,'0',STR_PAD_LEFT);	//section长6个数字
-    	$id_str = str_pad($this->apply_global_id($step),6,'0',STR_PAD_LEFT);	//序号长6个数字
-    	$full = time().$section_str.$id_str;
+    	$sn_str = str_pad($this->apply_global_sn($step),$sn_length,'0',STR_PAD_LEFT);	//序号长6个数字
+    	$full = time().$section_str.$sn_str;
     	return $full;
     }
 
@@ -90,7 +94,7 @@ class General extends Controller
      * @param  integer $step 增长步长
      * @return [type]        返回ID数值
      */
-    protected function apply_global_id($step=1)
+    protected function apply_global_sn($step=1)
     {
     	$config = ConfigModel::get(['config_key'=>'max_global_id']);
     	if(!$config) {

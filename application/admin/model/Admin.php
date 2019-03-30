@@ -25,7 +25,7 @@ class Admin extends BaseCUD
 	 */
 	public function logs()
 	{
-		return $this->hasMany('AdminLog','admin_name');
+		return $this->hasMany('AdminLog','admin_account');
 	}
 
 	/**
@@ -84,7 +84,7 @@ class Admin extends BaseCUD
 	 * @param [type] $data  [description]
 	 */
 	public function setAdminPasswordAttr($value, $data) {
-		return to_encrypt($value, $data['admin_name']);
+		return to_encrypt($value, $data['admin_account']);
 	}
 
 	public function setAdminRoleIdAttr($value) {

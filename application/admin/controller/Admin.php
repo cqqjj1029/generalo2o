@@ -98,10 +98,10 @@ class Admin extends Base
 		$result = ['status'=>false,'message'=>'操作失败','data','rows'=>0];
     	$data = input();
     	$data['admin_status'] = input('?admin_status') ? 1 : 0;
-    	$result['data'] = $data;
     	// 用验证器对数据进行校验
     	$validate = Loader::validate('Admin');
     	$v = $validate->scene('init')->check($data);
+    	$result['data'] = $data;
 		if($v) {
 			$admin = new AdminModel;
 			if(input('?admin_super') && $data['admin_super']) {
@@ -138,6 +138,7 @@ class Admin extends Base
     	// 用验证器对数据进行校验
     	$validate = Loader::validate('Admin');
     	$admin = AdminModel::get(['admin_id'=>$data['admin_id']]);
+		$admin->admin_name = $data['admin_name'];
 		$admin->admin_email = $data['admin_email'];
     	$admin->admin_telephone = $data['admin_telephone'];
     	$admin->admin_role_id = $data['admin_role_id'];
@@ -173,11 +174,11 @@ class Admin extends Base
     	// 用验证器对数据进行校验
     	$validate = Loader::validate('Admin');
     	$admin = AdminModel::get(['admin_id'=>$data['admin_id']]);
-    	if($admin->admin_name=='admin' || $data['admin_name']=='admin') {
+    	if($admin->admin_account=='admin' || $data['admin_account']=='admin') {
     		$result['message'] = '不允许操作admin用户';
     		$result['status'] = false;
     	} else {
-    		$admin->admin_name = $data['admin_name'];
+    		$admin->admin_account = $data['admin_account'];
     		$admin->admin_password = $data['admin_password'];
 	    	$v = $validate->scene('password')->check($data);
 	    	$result['data'] = $admin;
@@ -212,13 +213,13 @@ class Admin extends Base
 		try {
 			$admin = AdminModel::get($id);	// 查询id对应的记录
 			$admin['admin_status'] = $admin->getData('admin_status')==1 ? 0 : 1;
-			if( ($admin->admin_super==1||$admin->admin_name=='admin') && Session::get('admin_infor')['admin_name']!='admin') {
+			if( ($admin->admin_super==1||$admin->admin_account=='admin') && Session::get('admin_infor')['admin_account']!='admin') {
 				$result['message'] .= ' 不允许对超级管理进行操作';
 				$result['status'] = false;
 			} else {
 				$result['rows'] = $admin->isUpdate(true)->allowField(true)->save(['admin_status' => $admin->getData('admin_status')],['admin_id'=>$id]);
 				if($result['rows']) {
-					$result['message'] = $admin['admin_name'].'管理员已切换为“'.$admin['admin_status'].'”状态';	// 生成友好的提示信息
+					$result['message'] = $admin['admin_account'].'管理员已切换为“'.$admin['admin_status'].'”状态';	// 生成友好的提示信息
 					$result['status'] = true;
 				}
 			}
@@ -240,7 +241,7 @@ class Admin extends Base
     	try {
     		$result['data'] = AdminModel::get($id);
     		if($result['data']) {
-    			if($result['data']['admin_super']||$result['data']['admin_name']=='admin') {
+    			if($result['data']['admin_super']||$result['data']['admin_account']=='admin') {
     				$result['status'] = false;
     				$result['message'] .= '不允许删除超级管理员';
     			} else {

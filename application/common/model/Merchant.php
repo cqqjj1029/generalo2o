@@ -21,16 +21,21 @@ class Merchant extends BaseCUD
 	 */
 	public function creator()
 	{
-		return $this->hasOne('Admin', 'admin_id', 'merchant_creator_admin_id');
+		return $this->hasOne('app\admin\model\Admin', 'admin_id', 'merchant_creator_admin_id');
 	}
 
 	/**
-	 * 通过merchant_admin表关联对应的管理员，一对多
+	 * 通过merchant_admin表关联对应的管理员，多对多
 	 * @return [type] [description]
 	 */
 	public function admins()
 	{
-		return $this->belongsToMany('Admin','\app\admin\model\MerchantAdmin');
+		return $this->belongsToMany('app\admin\model\Admin','\app\admin\model\MerchantAdmin');
+	}
+
+	public function admin_ids()
+	{
+		return $this->hasMany('app\admin\model\MerchantAdmin','merchant_id');
 	}
 
 	/**
@@ -60,12 +65,12 @@ class Merchant extends BaseCUD
 	}
 
 	/**
-	 * merchant_password字段修改器,返回md5(sha1(p).sha1(n))
+	 * merchant_password字段修改器，密码依赖手机号,返回md5(sha1(p).sha1(n))
 	 * @param [type] $value [description]
 	 * @param [type] $data  [description]
 	 */
 	public function setMerchantPasswordAttr($value, $data) {
-		return to_encrypt($value, $data['admin_name']);
+		return to_encrypt($value, $data['merchant_mobile']);
 	}
 
 	/**

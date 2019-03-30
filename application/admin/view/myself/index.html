@@ -13,7 +13,7 @@
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3">账号：</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<strong>{$Think.session.admin_infor.admin_name}</strong>
+			<strong>{$Think.session.admin_infor.admin_account}</strong>
 		</div>
 	</div>
 	<div class="row cl">
@@ -53,21 +53,27 @@
 		</div>
 	</div>
 	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">姓名：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type="text" class="input-text" placeholder="管理员姓名" value="{$admin.admin_name}" id="admin_name" name="admin_name" required />
+		</div>
+	</div>
+	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3">邮箱：</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<input type="text" class="input-text" placeholder="管理员使用的邮箱" value="{$Think.session.admin_infor.admin_email}" id="admin_email" name="admin_email" email />
+			<input type="text" class="input-text" placeholder="管理员使用的邮箱" value="{$admin.admin_email}" id="admin_email" name="admin_email" />
 		</div>
 	</div>
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3">电话：</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<input type="text" class="input-text" placeholder="管理员使用的联系电话" value="{$Think.session.admin_infor.admin_telephone}" id="admin_telephone" name="admin_telephone" isTel />
+			<input type="text" class="input-text" placeholder="管理员使用的联系电话" value="{$admin.admin_telephone}" id="admin_telephone" name="admin_telephone" />
 		</div>
 	</div>
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3">说明：</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<input type="text" class="input-text" placeholder="简单描述管理员" value="{$Think.session.admin_infor.admin_description}" id="admin_description" name="admin_description" />
+			<input type="text" class="input-text" placeholder="简单描述管理员" value="{$admin.admin_description}" id="admin_description" name="admin_description" />
 		</div>
 	</div>		
 	<div class="row cl">
@@ -79,6 +85,7 @@
 {/block}
 
 {block name='js'}
+{include file='common@general/js-jquery-validation' /}
 <script type="text/javascript">
 	$(function() {
 		// 只有当表单中有数据变化时，提交按钮才可用

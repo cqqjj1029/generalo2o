@@ -18,7 +18,7 @@
 		<table class="table table-border table-bordered table-bg table-hover" style="white-space:nowrap">
 			<thead>
 				<tr>
-					<th scope="col" colspan="14">商户列表</th>
+					<th scope="col" colspan="15">商户列表</th>
 				</tr>
 				<tr class="text-c">
 					<!-- h-ui.js中实现全选功能的脚本 
@@ -30,7 +30,8 @@
 					<th>操作</th>
 					<th>ID</th>
 					<th>名称</th>
-					<th>账号</th>
+					<th>邮箱</th>
+					<th>手机</th>
 					<th>地区</th>
 					<th>创建者</th>
 					<th>管理员</th>
@@ -47,21 +48,26 @@
 				<tr class="text-c" title="{$vo.merchant_description}">
 					<td class="td-manage">
 					{if condition="$vo.merchant_status eq '正常'"}
-						<a style="text-decoration:none" onClick="item_status(this,'{:url("admin/admin/do_admin_status",["id"=>$vo.merchant_id])}')" href="javascript:;" title="禁用"><i class="Hui-iconfont">&#xe631;</i></a> 
+						<a style="text-decoration:none" onClick="ajax_post_confirm('{:url("admin/merchant/do_merchant_status")}',{id:'{$vo.merchant_id}'},'{$vo.merchant_name}','禁用')" href="javascript:;" title="禁用"><i class="Hui-iconfont">&#xe631;</i></a> 
 					{else /}
-						<a style="text-decoration:none" onClick="item_status(this,'{:url("admin/admin/do_admin_status",["id"=>$vo.merchant_id])}')" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe725;</i></a> 
+						<a style="text-decoration:none" onClick="ajax_post_confirm('{:url("admin/merchant/do_merchant_status")}',{id:'{$vo.merchant_id}'},'{$vo.merchant_name}','启用')" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe725;</i></a> 
 					{/if}
 						<a title="编辑" href="javascript:;" onclick="layer_show('编辑商户','{:url("admin/admin/admin_edit",["id"=>$vo.merchant_id])}','800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe647;</i></a> 
 						<a title="改密码" href="javascript:;" onclick="layer_show('修改密码','{:url("admin/admin/admin_password",["id"=>$vo.merchant_id])}','800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe63f;</i></a>
-						<a title="删除" href="javascript:;" onclick="item_delete(this,'{:url("admin/admin/do_admin_delete",["id"=>$vo.merchant_id])}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+						<a title="删除" href="javascript:;" onclick="ajax_post_confirm('{:url("admin/merchant/do_merchant_delete")}',{id:'{$vo.merchant_id}'},'{$vo.merchant_name}','删除')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
 					</td><td>{$vo.merchant_id}</td>
 					<td>
 						<span class="name">{$vo.merchant_name}</span>
 					</td>
-					<td>{$vo.merchant_account}</td>
-					<td>{$vo.merchant_district_id}</td>
-					<td>{$vo.merchant_creator_admin_id}</td>
-					<td></td>
+					<td>{$vo.merchant_email}</td>
+					<td>{$vo.merchant_mobile}</td>
+					<td>{$vo.district.district_name}</td>
+					<td>{$vo.creator.admin_name}</td>
+					<td style="white-space:normal" class="text-l">
+						{volist name='vo.child' id='vo_c'}
+							<span title="{$vo_c.admin_account}">{$vo_c.admin_name}</span> /
+						{/volist}
+					</td>
 					<td>
 						{if condition="$vo.merchant_status eq '正常'"}
 							<span class="label radius label-success">
@@ -74,10 +80,10 @@
 						{/if}
 					</td>
 					<td>{$vo.merchant_login_ip}</td>
-					<td>{$vo.merchant_login_time}</td>
+					<td style="white-space:normal">{$vo.merchant_login_time}</td>
 					<td>{$vo.merchant_login_count}</td>
-					<td>{$vo.create_time}</td>
-					<td>{$vo.update_time}</td>
+					<td style="white-space:normal">{$vo.create_time}</td>
+					<td style="white-space:normal">{$vo.update_time}</td>
 				</tr>
 			{/volist}
 			</tbody>
@@ -90,88 +96,6 @@
 {js href="__ROOT__/lib/datatables/1.10.0/jquery.dataTables.min.js"/}
 {js href="__ROOT__/lib/laypage/1.2/laypage.js"/}
 <script type="text/javascript">
-function item_status(obj,url) {
-	// 为了友好，取到要操作模块的“菜单名称”字段，要在提示语中使用
-	var name = $(obj).parents("tr").find(".name").html();
-	// 用layer.confirm插件进行操作确认
-	layer.confirm("确认要切换“"+name+"”的状态吗？", function() {
-		// 当layer.confirm被确认后开始提交操作
-		// $.get(url, data, success)
-		$.get(url, function(data) {
-			// 请求控制器方法，传递module_id参数，执行回调函数，用data接收返回值
-			if(data.status==1) {
-				// 返回状态码是1，提示操作成功，并刷新页面
-				layer.msg(data.message, {icon:6, time:1500});
-				setTimeout(function() {
-					window.location.reload();
-				}, 2000);
-			} else {
-				// 返回状态码不是1，提示失败信息，不再刷新页面
-				layer.msg(data.message, {icon:5, time:3000});
-			}
-		});
-	})
-}
-
-// 删除管理员
-function item_delete(obj, url) {
-	// 为了友好，取到要操作模块的“菜单名称”字段，要在提示语中使用
-	var name = $(obj).parents("tr").find(".name").html();
-	// 用layer.confirm插件进行操作确认
-	layer.confirm("确认要删除“"+name+"”吗？", function() {
-		// 当layer.confirm被确认后开始提交操作
-		// $.get(url, data, success)
-		$.get(url, function(data) {
-			if(data.status==1) {
-				// 返回状态码是1，提示操作成功，并刷新页面
-				layer.msg(data.message, {icon:6, time:1500});
-				setTimeout(function() {
-					window.location.reload();
-				}, 2000);
-			} else {
-				// 返回状态码不是1，提示失败信息，不再刷新页面
-				layer.msg(data.message, {icon:5, time:3000});
-			}
-		});	
-	});
-}
-
-// 批量删除
-function item_multidelete(url) {
-	// 定义一个数组用于保存已被选中的checkbox
-	var ids = new Array();
-	// 遍历名为to_multidelete[]的checkbox
-	$("input[name='to_multidelete[]").each(function() {
-		if($(this).is(":checked")) {
-			// 把被选中的checkbox的value值保存到module_ids中
-			ids.push($(this).val());
-		}
-	});
-	// 判断一下数组的长度，如果是0，则不用麻烦服务器了
-	if(ids.length == 0) {
-		layer.msg("没有选中任何数据", {icon:5, time:2000});
-	} else {
-		// 确实有被选中的记录，页面进行一次确认
-		layer.confirm("确定要删除这些数据吗？", function() {
-			// 用$.post()方法去调用控制器中的方法
-			// $.post(url,data,success)
-			$.post(
-				url
-				, {ids: ids}
-				, function(data) {
-					if(data.status==0) {
-						layer.msg(data.message, {icon:5, time:3000});
-					} else {
-						layer.msg(data.message, {icon:6, time:2000});
-						
-					}
-					setTimeout(function() {
-							window.location.reload();
-						}, 3000);
-			});
-		});
-	}
-}
 
 </script>
 {/block}

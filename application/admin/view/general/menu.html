@@ -27,6 +27,8 @@
 				<ul>
 					<li><a href="{:url('admin/myself/index')}" title="个人信息">个人信息</a></li>
 					<li><a href="{:url('admin/myself/password')}" title="修改密码">修改密码</a></li>
+					<li><a href="javascript:;" onclick="ajax_post('{:url("admin/myself/do_sync_session")}','')">同步数据</a></li>
+					<li><a href="javascript:;" onclick="ajax_post('{:url("admin/myself/do_clear_cache")}','')">清除缓存</a></li>
 					<li><a href="{:url('admin/myself/do_logout')}" title="安全退出">安全退出</a></li>
 				</ul>
 			</dd>
