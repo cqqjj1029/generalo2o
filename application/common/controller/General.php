@@ -4,6 +4,7 @@ namespace app\common\controller;
 use think\Controller;
 use app\common\model\Config as ConfigModel;
 use app\common\model\District as DistrictModel;
+use app\common\model\Trade as TradeModel;
 
 class General extends Controller
 {
@@ -139,5 +140,16 @@ class General extends Controller
         $district = DistrictModel::get($id);
         $father = DistrictModel::get($district->district_father_id);
         return $father;
+    }
+
+    protected function get_trade($father_id=0)
+    {
+        $trade = new TradeModel;
+        if($father_id) {
+            $list = $trade->where('trade_father_id', 'eq', $father_id)->order(['trade_id'=>'asc'])->select();
+        } else {
+            $list = $trade->where('trade_father_id','null')->order(['trade_id'=>'asc'])->select();
+        }
+        return $list;
     }
 }

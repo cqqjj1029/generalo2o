@@ -16,6 +16,12 @@ class Service extends Base
         return $data;
     }
 
+    public function trade($father_id=0)
+    {
+        $data = $this->get_trade($father_id);
+        return $data;
+    }
+
     /*
     格式化全国省市区数据并保存到数据库中
     public function decode()

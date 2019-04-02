@@ -30,10 +30,104 @@
 		<option v-for="item in list3" :key="item.district_id" :value="item.district_id">{{item.district_name}}</option>
 	</select>
 </div>
+<div id="trade">
+	<select v-model="trade1" v-on:change="get_trade2(this.trade1)">
+		<option v-for="item in tradelist1" :key="item.trade_id" :value="item.trade_id">{{item.trade_id}}-{{item.trade_name}}</option>
+	</select>
+	<select v-model="trade2" v-on:change="get_trade3(this.trade2)">
+		<option v-for="item in tradelist2" :key="item.trade_id" :value="item.trade_id">{{item.trade_id}}-{{item.trade_name}}</option>
+	</select>
+	<select v-model="trade3" v-on:change="get_trade4(this.trade3)">
+		<option v-for="item in tradelist3" :key="item.trade_id" :value="item.trade_id">{{item.trade_id}}-{{item.trade_name}}</option>
+	</select>
+	<select v-model="trade4" v-on:change="get_trade(this.trade4)">
+		<option v-for="item in tradelist4" :key="item.trade_id" :value="item.trade_id">{{item.trade_id}}-{{item.trade_name}}</option>
+	</select>
+</div>
 {/block}
 {block name="js"}
 {js href="__ROOT__/lib/vue-resource/vue-resource.js"/}
 <script type="text/javascript">
+	var trade = new Vue({
+		el: "#trade",
+		data: {
+			tradelist1:[],
+			tradelist2:[],
+			tradelist3:[],
+			tradelist4:[],
+			trade1: '',
+			trade2: '',
+			trade3: '',
+			trade4: '',
+		},
+		created: function() {
+			this.get_trade1();
+		},
+		methods: {
+			get_trade1: function() {
+				this.$http.get('{:url("index/service/trade")}?father_id='+0)
+					.then(function(res) {
+						var _self = this;
+						_self.tradelist1=res.data;
+						_self.trade1 = res.data[0].trade_id;
+						// var reg = new RegExp('辽宁');
+						// res.data.forEach(function(v) {
+						// 	if(reg.test(v.district_name)) {
+						// 		_self.province = v.district_id;
+						// 	}
+						// });
+						_self.get_trade2();
+					})
+					.catch(function(res) {
+						console.log(res);
+					});
+			},
+			get_trade2: function() {
+				id = this.trade1||'-1';
+				this.$http.get('{:url("index/service/trade")}?father_id='+id)
+					.then(function(res) {
+						var _self = this;
+						_self.tradelist2=res.data;
+						_self.trade2 = res.data[0].trade_id;
+						// var reg = new RegExp('沈阳');
+						// res.data.forEach(function(v) {
+						// 	if(reg.test(v.district_name)) {
+						// 		_self.city = v.district_id;
+						// 	}
+						// });
+						_self.get_trade3();
+					})
+					.catch(function(res) {
+						console.log(res);
+					});
+			},
+			get_trade3: function() {
+				id = this.trade2||'-1';
+				this.$http.get('{:url("index/service/trade")}?father_id='+id)
+					.then(function(res) {
+						var _self = this;
+						_self.tradelist3=res.data;
+						_self.trade3 = res.data[0].trade_id;
+						_self.get_trade4();
+					})
+					.catch(function(res) {
+						console.log(res);
+					});
+			},
+			get_trade4: function() {
+				id = this.trade3||'-1';
+				this.$http.get('{:url("index/service/trade")}?father_id='+id)
+					.then(function(res) {
+						var _self = this;
+						_self.tradelist4=res.data;
+						_self.trade4 = res.data[0].trade_id;
+					})
+					.catch(function(res) {
+						console.log(res);
+					});
+			},
+		}
+	});
 	var test = new Vue({
 		el: "#test",
 		data: {
