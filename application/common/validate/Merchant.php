@@ -30,7 +30,7 @@ class Merchant extends Validate
     
     protected $scene = [
         'init'          =>  [],
-        'password'      =>  ['merchant_mobile','merchant_password'],
+        'password'      =>  ['merchant_password'],
         'nopassword'    =>  ['merchant_name','merchant_email','merchant_mobile'],
         'login'         =>  ['merchant_email'=>'require|email','merchant_password'=>'require|length:4,25|alphaDash'],
     ];

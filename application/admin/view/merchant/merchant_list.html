@@ -52,8 +52,8 @@
 					{else /}
 						<a style="text-decoration:none" onClick="ajax_post_confirm('{:url("admin/merchant/do_merchant_status")}',{id:'{$vo.merchant_id}'},'{$vo.merchant_name}','启用')" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe725;</i></a> 
 					{/if}
-						<a title="编辑" href="javascript:;" onclick="layer_show('编辑商户','{:url("admin/admin/admin_edit",["id"=>$vo.merchant_id])}','800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe647;</i></a> 
-						<a title="改密码" href="javascript:;" onclick="layer_show('修改密码','{:url("admin/admin/admin_password",["id"=>$vo.merchant_id])}','800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe63f;</i></a>
+						<a title="编辑" href="javascript:;" onclick="layer_show('编辑商户','{:url("admin/merchant/merchant_edit",["id"=>$vo.merchant_id])}','800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe647;</i></a> 
+						<a title="改密码" href="javascript:;" onclick="layer_show('修改密码','{:url("admin/merchant/merchant_password",["id"=>$vo.merchant_id])}','800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe63f;</i></a>
 						<a title="删除" href="javascript:;" onclick="ajax_post_confirm('{:url("admin/merchant/do_merchant_delete")}',{id:'{$vo.merchant_id}'},'{$vo.merchant_name}','删除')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
 					</td><td>{$vo.merchant_id}</td>
 					<td>

@@ -169,7 +169,7 @@ class Admin extends Base
 	 */
 	public function do_admin_password()
 	{
-    	$result = ['status'=>false,'message'=>'操作失败','data','rows'=>0];
+    	$result = ['status'=>false,'message'=>'操作失败：','data','rows'=>0];
     	$data = input();
     	// 用验证器对数据进行校验
     	$validate = Loader::validate('Admin');

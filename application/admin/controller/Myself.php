@@ -90,7 +90,7 @@ class Myself extends Base
         $admin_origin = AdminModel::get(['admin_account'=>$admin->admin_account]);
         if($admin_origin) {
             // 能根据用户名查到记录，说明用户名正确
-            if(to_encrypt_compare($data['admin_password_old'], $admin_origin->admin_account, $admin_origin->admin_password)) {
+            if(to_encrypt_compare($admin_origin->admin_password, $data['admin_password_old'], $admin_origin->admin_account)) {
                 // 用户名密码正确
                 // 判断停用状态
                 if($admin_origin->admin_status == '正常') {

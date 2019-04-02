@@ -73,7 +73,7 @@ class Index extends General
 			$result['message'] .= '用户名错误';
 			return $result;
 		}
-		if(!to_encrypt_compare($data['admin_password'], $data['admin_account'], $admin->admin_password)) {
+		if(!to_encrypt_compare($admin->admin_password, $data['admin_password'], $data['admin_account'])) {
 			// 密码错误
 			$result['message'] .= '密码错误';
 			return $result;

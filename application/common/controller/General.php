@@ -128,4 +128,16 @@ class General extends Controller
         $list = $district->where(['district_father_id'=>$father_id])->order(['district_id'=>'asc'])->select();
         return $list;
     }
+
+    /**
+     * 根据district_id查询对应的父级地区数据
+     * @param  integer $id 要查询的district_id
+     * @return [type]      返回数据集
+     */
+    protected function get_district_father($id=110000)
+    {
+        $district = DistrictModel::get($id);
+        $father = DistrictModel::get($district->district_father_id);
+        return $father;
+    }
 }

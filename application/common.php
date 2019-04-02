@@ -60,7 +60,7 @@ function get_client_ip($type = 1,$adv=false) {
  * @param  [string] $name     [用户名明文]
  * @return [string]           [加密后的密文]
  */
-function to_encrypt($password, $name) {
+function to_encrypt($password, $name='') {
     // 对密码和用户名两个字符串进行简单处理
     // 用PHP自带password_hash()方法对新字符串进行加密处理
     // 结果返回60位字符串（每次运行返回的结果都会不同）
@@ -77,7 +77,7 @@ function to_encrypt($password, $name) {
  * @param  [type] $hash     [需要被验证的密文]
  * @return [type]           [验证结果布尔值]
  */
-function to_encrypt_compare($password, $name, $hash) {
+function to_encrypt_compare($hash, $password, $name='') {
     // 对密码和用户名两个字符串进行重新排列组合生成新的字符串
     // 用PHP自带password_verify()方法对新字符串进行加密处理
     // 结果返回布尔值

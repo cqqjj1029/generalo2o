@@ -79,7 +79,7 @@ class Admin extends BaseCUD
 	}
 
 	/**
-	 * admin_password字段修改器,返回md5(sha1(p).sha1(n))
+	 * admin_password字段修改器,密文依赖password和account
 	 * @param [type] $value [description]
 	 * @param [type] $data  [description]
 	 */

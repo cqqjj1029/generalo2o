@@ -65,12 +65,11 @@ class Merchant extends BaseCUD
 	}
 
 	/**
-	 * merchant_password字段修改器，密码依赖手机号,返回md5(sha1(p).sha1(n))
-	 * @param [type] $value [description]
-	 * @param [type] $data  [description]
+	 * merchant_password字段修改器，只对密码字段加密
+	 * @param [type] $value 返回加密后字符串
 	 */
-	public function setMerchantPasswordAttr($value, $data) {
-		return to_encrypt($value, $data['merchant_mobile']);
+	public function setMerchantPasswordAttr($value) {
+		return to_encrypt($value);
 	}
 
 	/**
