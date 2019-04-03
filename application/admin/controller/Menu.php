@@ -244,6 +244,7 @@ class Menu extends Base
     				$result['message'] = '有子菜单存在，不允许删除';
     			} else {
 					$result['rows'] = MenuModel::destroy(['menu_id'=>$id]);	// 执行软删除
+                    // 软删除时不删除对应的关联记录
 					$result['status'] = true;
 					$result['message'] = '操作成功';
 				}

@@ -24,4 +24,9 @@ class Index extends Base
     {
         dump($this->apply_full_global_id_str());
     }
+
+    public function gaode()
+    {
+        return $this->view->fetch();
+    }
 }

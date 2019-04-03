@@ -125,19 +125,22 @@ class Merchant extends Base
 			// 执行模型新增操作并返回行数
 			$result['rows'] = $merchant->isUpdate(false)->allowField(true)->save($data);
 			if($result['rows']==1) {
-				// merchant添加成功，接下来插入merchant_admin
+				// merchant添加成功
 				$result['message'] = '<li>商户添加成功</li>';
-				$list = [];
-				foreach($data['admin_id'] as $admin_id) {
-					array_push($list, [
-						'merchant_id'=>$merchant->merchant_id,
-						'admin_id'=>$admin_id
-					]);
+				// 插入merchant_admin
+				if($data['admin_id']) {
+					$list = [];
+					foreach($data['admin_id'] as $admin_id) {
+						array_push($list, [
+							'merchant_id'=>$merchant->merchant_id,
+							'admin_id'=>$admin_id
+						]);
+					}
+					// 实例化角色菜单模型
+					$merchant_admin = new MerchantAdminModel;
+					// 批量写入数据
+					$data['menu_id'] = $merchant_admin->saveAll($list);
 				}
-				// 实例化角色菜单模型
-				$merchant_admin = new MerchantAdminModel;
-				// 批量写入数据
-				$data['menu_id'] = $merchant_admin->saveAll($list);
 				// 设置反馈信息
 				$result['message'] .= '<li>商户管理员设置成功</li>';
 				$result['status'] = true;
@@ -247,6 +250,8 @@ class Merchant extends Base
 				$result['message'].='<li>参数错误2</li>';
 				return $result;
 			}
+			// 软删除商户主表数据
+			// 软删除时不删除对应的关联记录
 			$result['rows'] = MerchantModel::destroy(['merchant_id'=>$id]);
 			if(!$result['rows']) {
 				$result['message'].='<li>参数错误3</li>'.input('?id');

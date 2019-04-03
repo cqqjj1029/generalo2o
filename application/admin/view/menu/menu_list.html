@@ -29,6 +29,7 @@
 						});
 					 -->
 					<th><input type="checkbox" name="" value=""></th>
+					<th>操作</th>
 					<th>ID</th>
 					<th>菜单名</th>
 					<th>路由</th>
@@ -38,13 +39,22 @@
 					<th>角色</th>
 					<th>创建时间</th>
 					<th>修改时间</th>
-					<th>操作</th>
 				</tr>
 			</thead>
 			<tbody>
 			{volist name='list' id='vo'}
 				<tr class="text-c warning" title="{$vo.menu_description}">
 					<td><input type="checkbox" value="{$vo.menu_id}" name="to_multidelete[]"></td>
+					<td class="td-manage">
+					{if condition="$vo.menu_visible eq '显示'"}
+						<a style="text-decoration:none" onClick="item_status(this,'{:url("admin/menu/do_menu_visible",["id"=>$vo.menu_id])}')" href="javascript:;" title="不显示"><i class="Hui-iconfont">&#xe631;</i></a> 
+					{else /}
+						<a style="text-decoration:none" onClick="item_status(this,'{:url("admin/menu/do_menu_visible",["id"=>$vo.menu_id])}')" href="javascript:;" title="显示"><i class="Hui-iconfont">&#xe725;</i></a> 
+					{/if}
+						<a title="编辑" href="javascript:;" onclick="layer_show('编辑菜单','{:url("admin/menu/menu_edit",["id"=>$vo.menu_id])}','800','500');" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe647;</i></a> 
+						<a title="删除" href="javascript:;" onclick="item_delete(this,'{:url("admin/menu/do_menu_delete",["id"=>$vo.menu_id])}');" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+						<a title="添加子菜单" href="javascript:;" onclick="layer_show('添加菜单','{:url("admin/menu/menu_add",["fid"=>$vo.menu_id])}','800','500');" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe61f;</i></a>
+					</td>
 					<td>{$vo.menu_id}</td>
 					<td class="text-l"><span class="name">{$vo.menu_name}</span></td>
 					<td class="text-l">{$vo.menu_route}</td>
@@ -68,21 +78,20 @@
 					</td>
 					<td style="white-space:normal">{$vo.create_time}</td>
 					<td style="white-space:normal">{$vo.update_time}</td>
-					<td class="td-manage">
-					{if condition="$vo.menu_visible eq '显示'"}
-						<a style="text-decoration:none" onClick="item_status(this,'{:url("admin/menu/do_menu_visible",["id"=>$vo.menu_id])}')" href="javascript:;" title="不显示"><i class="Hui-iconfont">&#xe631;</i></a> 
-					{else /}
-						<a style="text-decoration:none" onClick="item_status(this,'{:url("admin/menu/do_menu_visible",["id"=>$vo.menu_id])}')" href="javascript:;" title="显示"><i class="Hui-iconfont">&#xe725;</i></a> 
-					{/if}
-						<a title="编辑" href="javascript:;" onclick="layer_show('编辑菜单','{:url("admin/menu/menu_edit",["id"=>$vo.menu_id])}','800','500');" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe647;</i></a> 
-						<a title="删除" href="javascript:;" onclick="item_delete(this,'{:url("admin/menu/do_menu_delete",["id"=>$vo.menu_id])}');" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
-						<a title="添加子菜单" href="javascript:;" onclick="layer_show('添加菜单','{:url("admin/menu/menu_add",["fid"=>$vo.menu_id])}','800','500');" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe61f;</i></a>
-					</td>
 				</tr>
 				{/* 子菜单的名称一定要用menu_child才能分配到数据 */}
 				{volist name='vo.menu_child' id='vo_c'}
 					<tr class="text-c" title="{$vo_c.menu_description}">
 						<td><input type="checkbox" value="{$vo_c.menu_id}" name="to_multidelete[]"></td>
+						<td class="td-manage">
+						{if condition="$vo_c.menu_visible eq '显示'"}
+							<a style="text-decoration:none" onClick="item_status(this,'{:url("admin/menu/do_menu_visible",["id"=>$vo_c.menu_id])}')" href="javascript:;" title="不显示"><i class="Hui-iconfont">&#xe631;</i></a> 
+						{else /}
+							<a style="text-decoration:none" onClick="item_status(this,'{:url("admin/menu/do_menu_visible",["id"=>$vo_c.menu_id])}')" href="javascript:;" title="显示"><i class="Hui-iconfont">&#xe725;</i></a> 
+						{/if}
+							<a title="编辑" href="javascript:;" onclick="layer_show('编辑菜单','{:url("admin/menu/menu_edit",["id"=>$vo_c.menu_id])}','800','500');" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe647;</i></a> 
+							<a title="删除" href="javascript:;" onclick="item_delete(this,'{:url("admin/menu/do_menu_delete",["id"=>$vo_c.menu_id])}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+						</td>
 						<td>{$vo_c.menu_id}</td>
 						<td class="text-l">└ <span class="name">{$vo_c.menu_name}</span></td>
 						<td class="text-l">{$vo_c.menu_route}</td>
@@ -106,15 +115,6 @@
 						</td>
 						<td style="white-space:normal">{$vo_c.create_time}</td>
 						<td style="white-space:normal">{$vo_c.update_time}</td>
-						<td class="td-manage">
-						{if condition="$vo_c.menu_visible eq '显示'"}
-							<a style="text-decoration:none" onClick="item_status(this,'{:url("admin/menu/do_menu_visible",["id"=>$vo_c.menu_id])}')" href="javascript:;" title="不显示"><i class="Hui-iconfont">&#xe631;</i></a> 
-						{else /}
-							<a style="text-decoration:none" onClick="item_status(this,'{:url("admin/menu/do_menu_visible",["id"=>$vo_c.menu_id])}')" href="javascript:;" title="显示"><i class="Hui-iconfont">&#xe725;</i></a> 
-						{/if}
-							<a title="编辑" href="javascript:;" onclick="layer_show('编辑菜单','{:url("admin/menu/menu_edit",["id"=>$vo_c.menu_id])}','800','500');" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe647;</i></a> 
-							<a title="删除" href="javascript:;" onclick="item_delete(this,'{:url("admin/menu/do_menu_delete",["id"=>$vo_c.menu_id])}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
-						</td>
 					</tr>
 				{/volist}
 			{/volist}

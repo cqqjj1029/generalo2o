@@ -1,0 +1,32 @@
+{/*前台主体页面模板，使用bootstrap框架*/}
+{/*引入jquery、vue、bootstrap、layer_mobile框架脚本*/}
+{/*用于前台主体页面*/}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{include file='common@general/meta' /}
+	{include file='common@general/seo' /}
+	{include file='common@general/css-bootstrap' /}
+	{include file='common@general/css-hui-iconfont' /}
+	{include file='common@general/css-common' /}
+	{block name="css"}
+
+	{/block}
+
+</head>
+<body>
+	{block name="body"}
+
+	{/block}
+	{include file='common@general/js-jquery' /}
+	{include file='common@general/js-layer-mobile' /}
+	{include file='common@general/js-bootstrap' /}
+	{include file='common@general/js-vue' /}
+	{block name="js"}
+
+	{/block}
+	{/* BEGIN 统计脚本 */}
+	{$tongji|default=""}
+	{/* END 统计脚本 */}
+</body>
+</html>

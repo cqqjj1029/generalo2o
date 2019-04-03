@@ -29,19 +29,23 @@
 						});
 					 -->
 					<th><input type="checkbox" name="" value=""></th>
+					<th>操作</th>
 					<th>ID</th>
 					<th>角色名</th>
 					<th>角色描述</th>
 					<th>操作权限</th>
 					<th>创建时间</th>
 					<th>修改时间</th>
-					<th>操作</th>
 				</tr>
 			</thead>
 			<tbody>
 			{volist name='list' id='vo'}
 				<tr class="text-c" title="{$vo.role_description}">
 					<td><input type="checkbox" value="{$vo.role_id}" name="to_multidelete[]"></td>
+					<td class="td-manage">
+						<a title="编辑" href="javascript:;" onclick="layer_show('编辑角色','{:url("admin/role/role_edit",["id"=>$vo.role_id])}','800','500');" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe647;</i></a> 
+						<a title="删除" href="javascript:;" onclick="role_delete(this,'{:url("admin/role/do_role_delete",["id"=>$vo.role_id])}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+					</td>
 					<td>{$vo.role_id}</td>
 					<td><span class="name">{$vo.role_name}</span></td>
 					<td>{$vo.role_description}</td>
@@ -52,10 +56,6 @@
 					</td>
 					<td style="white-space:normal">{$vo.create_time}</td>
 					<td style="white-space:normal">{$vo.update_time}</td>
-					<td class="td-manage">
-						<a title="编辑" href="javascript:;" onclick="layer_show('编辑角色','{:url("admin/role/role_edit",["id"=>$vo.role_id])}','800','500');" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe647;</i></a> 
-						<a title="删除" href="javascript:;" onclick="role_delete(this,'{:url("admin/role/do_role_delete",["id"=>$vo.role_id])}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
-					</td>
 				</tr>
 			{/volist}
 			</tbody>

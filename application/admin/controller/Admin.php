@@ -246,6 +246,7 @@ class Admin extends Base
     				$result['message'] .= '不允许删除超级管理员';
     			} else {
 					$result['rows'] = AdminModel::destroy(['admin_id'=>$id]);	// 执行软删除
+					// 软删除时不删除对应的关联记录
 					$result['status'] = true;
 					$result['message'] = '操作成功';
 				}

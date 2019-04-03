@@ -49,12 +49,17 @@ class General extends Controller
     {
     	$result = ['status'=>false,'message'=>'操作失败','data','rows'=>0];
     	// 根据config_key查询数据，如果没查到，则定义新实例
-		$config = ConfigModel::get(['config_key'=>$key]) ? ConfigModel::get(['config_key'=>$key]) : new ConfigModel;
-		$config->config_key = $key;
-		$config->config_value = $value;
-		// 如果调用函数时定义了config_name则同时更新数据库中的name
-		$config->config_name = !empty($name) ? $name : $config->config_name;
-		$config->config_deletable = $deletable>=0 ? $deletable : $config->config_deletable;
+		$config = ConfigModel::get(['config_key'=>$key]);
+        if(!$config && $new_if_non) {
+            // 不存在，但是设置了不存在则新增
+            $config = new ConfigModel;
+        }
+        $config->config_key = $key;
+        $config->config_value = $value;
+        // 如果调用函数时定义了config_name则同时更新数据库中的name
+        if($name!='') $config->config_name = $name; // name设置了值就赋值，否则不动
+        if($deletable!=-1) $config->config_deletable = $deletable;  // deletable设置了值就赋值，否则不动
+		
 		$result['data'] = $config;
     	try {
     		if($new_if_non) {
