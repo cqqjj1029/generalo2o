@@ -1,0 +1,184 @@
+{extend name='general/base-layer' /}
+
+{block name='main'}
+	<form method="post" class="form form-horizontal">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>商户名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" placeholder="商户中/英文全称，3到100个字" id="merchant_name" name="merchant_name" rangelength="[3,100]" required>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>邮箱：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" name="merchant_email" placeholder="邮箱格式xxx@xxx.xxx" required>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" name="merchant_mobile" placeholder="填写正确的手机号" required>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>密码：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="password" class="input-text" placeholder="字母、数字、下划线、减号，4到25位之间" name="merchant_password" id="merchant_password" rangelength="[4,25]" required>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>密码再输入一次：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="password" class="input-text" placeholder="字母、数字、下划线、减号，4到25位之间" name="merchant_password_confirm" rangelength="[4,25]" required>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">所在地区：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<div id="vm-district">
+					<span class="select-box inline size-M">
+						<select class="select" v-model="province" v-on:change="getCity(this.province)">
+							<option v-for="item in list1" :key="item.district_id" :value="item.district_id">{{item.district_name}}</option>
+						</select>
+					</span>
+					<span class="select-box inline size-M">
+						<select class="select" v-model="city" name="merchant_district_id">
+							<option v-for="item in list2" :key="item.district_id" :value="item.district_id">{{item.district_name}}</option>
+						</select>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">可用状态：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<div class='switch size-S' data-on="success" data-on-label="正常" data-off-label="禁用">
+					<input type='checkbox' name='merchant_status' checked="checked" />
+    			</div>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">描述信息：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea class="textarea" placeholder="对商户的描述信息" name="merchant_description"></textarea>
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+				<button type="submit" class="btn btn-success radius disabled" disabled="disabled">提交数据</button>
+			</div>
+		</div>
+	</form>
+{/block}
+
+{block name='js'}
+<script type="text/javascript">
+	var district = new Vue({
+		el: "#vm-district",
+		data: {
+			list1:[],
+			list2:[],
+			province:'',
+			city: '',
+		},
+		created: function() {
+			// this.getProvince();
+			this.getList(86, "list1", "province");
+		},
+		methods: {
+			getList: function(father_id, list_obj, value_obj) {
+				this.$http.get('{:url("index/service/district")}?father_id='+father_id)
+					.then(function(res) {
+						var _self = this;
+						_self.list1=res.data;
+						_self.province = res.data[0].district_id;
+						var reg = new RegExp('辽宁');
+						res.data.forEach(function(v) {
+							if(reg.test(v.district_name)) {
+								_self.province = v.district_id;
+							}
+						});
+						// _self.getCity();
+					})
+					.catch(function(res) {
+						console.log(res);
+					});
+			},
+			getProvince: function() {
+				this.$http.get('{:url("index/service/district")}?father_id='+86)
+					.then(function(res) {
+						var _self = this;
+						_self.list1=res.data;
+						_self.province = res.data[0].district_id;
+						var reg = new RegExp('辽宁');
+						res.data.forEach(function(v) {
+							if(reg.test(v.district_name)) {
+								_self.province = v.district_id;
+							}
+						});
+						_self.getCity();
+					})
+					.catch(function(res) {
+						console.log(res);
+					});
+			},
+			getCity: function() {
+				id = this.province||'-1';
+				this.$http.get('{:url("index/service/district")}?father_id='+id)
+					.then(function(res) {
+						var _self = this;
+						_self.list2=res.data;
+						_self.city = res.data[0].district_id;
+						var reg = new RegExp('沈阳');
+						res.data.forEach(function(v) {
+							if(reg.test(v.district_name)) {
+								_self.city = v.district_id;
+							}
+						});
+					})
+					.catch(function(res) {
+						console.log(res);
+					});
+			},
+		}
+	});
+</script>
+<script type="text/javascript">
+	$(function() {
+		// 实现菜单全选
+		$("#checkall:checkbox").on("click",function() {
+			$(this).parents(".formControls").find(".panel input:checkbox").prop("checked", $("#checkall:checkbox").prop("checked"));
+		});
+		// 只有当表单中有数据变化时，提交按钮才可用
+		$("form").children().bind('input propertychange', function() {
+			$(":submit").removeClass('disabled').removeAttr("disabled");
+		});
+
+		$("form").validate({
+			rules : {
+				merchant_email: {
+					email: true,
+				},
+				merchant_mobile: {
+					isMobile: true,
+				},
+				merchant_password_confirm: {
+      				equalTo : "#merchant_password"
+    			},
+			},
+			submitHandler: function(form) {
+				// 当验证通过时执行ajax提交
+				// 自定义函数ajax_post(url,data);
+				ajax_post("{:url('admin/merchant/do_merchant_add')}",$("form").serialize());
+			}
+		});
+	});
+</script>
+{/block}
+
+{block name='css'}
+<!-- 编写本页特有的样式 -->
+<style type="text/css" media="screen">
+
+</style>
+{/block}

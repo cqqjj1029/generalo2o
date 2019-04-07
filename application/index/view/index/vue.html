@@ -44,10 +44,60 @@
 		<option v-for="item in tradelist4" :key="item.trade_id" :value="item.trade_id">{{item.trade_id}}-{{item.trade_name}}</option>
 	</select>
 </div>
+<div id="components-demo">
+	<button-counter></button-counter>
+	<button-counter></button-counter>
+	<button-counter></button-counter>
+</div>
+<div id="blog-demo" :style="{ fontSize: postFontSize + 'em' }">
+	<blog-post
+		v-for="post in posts"
+		v-bind:key="post.id"
+		v-bind:post="post"
+		v-on:enlarge-text="onEnlargeText"
+	></blog-post>
+</div>
 {/block}
 {block name="js"}
 {js href="__ROOT__/lib/vue-resource/vue-resource.js"/}
 <script type="text/javascript">
+	Vue.component('blog-post', {
+		props: ['post'],
+		template: '\
+			<div class="blog-post">\
+				<h3>{{ post.title }}</h3>\
+				<button v-on:click="$emit(\'enlarge-text\', 0.2)">放大</button>\
+				<div v-html="post.content"></div>\
+			</div>\
+		'
+	});
+
+	var bd = new Vue({
+		el: "#blog-demo",
+		data: {
+			posts: [
+				{id: 1, title: 'My journey with Vue', content: "hello vue world!" },
+				{id: 2, title: 'Blogging with Vue', content: "Does that work?" },
+			],
+			postFontSize: 1
+		},
+		methods: {
+			onEnlargeText: function(enlargeAmount) {
+				this.postFontSize+=enlargeAmount;
+			}
+		}
+	});
+	Vue.component('button-counter', {
+		data: function() {
+			return {
+				count: 0
+			}
+		},
+		template: '<button v-on:click="count++">被点击了{{ count }}次</button>'
+	});
+
+	var bc = new Vue({el: "#components-demo"});
+
 	var trade = new Vue({
 		el: "#trade",
 		data: {

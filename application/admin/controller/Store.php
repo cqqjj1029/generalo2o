@@ -31,4 +31,9 @@ class Store extends Base
         $this->view->assign('count', count($list));
         return $this->view->fetch();
 	}
+
+    public function store_add()
+    {
+        return $this->view->fetch();
+    }
 }
