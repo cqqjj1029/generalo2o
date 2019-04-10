@@ -11,7 +11,7 @@
  Target Server Version : 50723
  File Encoding         : 65001
 
- Date: 09/04/2019 19:09:48
+ Date: 10/04/2019 18:47:19
 */
 
 SET NAMES utf8mb4;
@@ -191,6 +191,59 @@ INSERT INTO `o2o_config` VALUES ('网站关键词', 'keywords', 'o2o,预约', 0,
 INSERT INTO `o2o_config` VALUES ('当前ID序号', 'max_global_id', '1', 0, 0, 1553674271, 1554262916);
 INSERT INTO `o2o_config` VALUES ('网站标题', 'title', '在线预约系统', 0, 0, 1553665278, 1553665278);
 INSERT INTO `o2o_config` VALUES ('统计代码', 'tongji', '&lt;script&gt; var _hmt = _hmt || []; (function() {   var hm = document.createElement(&quot;script&quot;);   hm.src = &quot;https://hm.baidu.com/hm.js?944d4adcd460e3f09700bc2a4dc7385b&quot;;   var s = document.getElementsByTagName(&quot;script&quot;)[0];    s.parentNode.insertBefore(hm, s); })(); &lt;/script&gt;', 0, 0, 1553665278, 1553665278);
+
+-- ----------------------------
+-- Table structure for o2o_customer
+-- ----------------------------
+DROP TABLE IF EXISTS `o2o_customer`;
+CREATE TABLE `o2o_customer`  (
+  `customer_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户ID',
+  `customer_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户姓名',
+  `customer_mobile` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户手机号',
+  `customer_email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户邮箱',
+  `create_time` int(10) UNSIGNED NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` int(10) UNSIGNED NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`customer_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户账号主表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for o2o_customer_user
+-- ----------------------------
+DROP TABLE IF EXISTS `o2o_customer_user`;
+CREATE TABLE `o2o_customer_user`  (
+  `customer_user_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户使用人ID，唯一ID',
+  `customer_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户ID',
+  `customer_user_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '姓名',
+  `customer_user_telephone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '电话',
+  `customer_user_distinct` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '省市县',
+  `customer_user_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '地址',
+  `customer_user_plate_no` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '车牌号',
+  `customer_user_vechicle_vin` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '车辆识别代码',
+  `customer_user_driving_no` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '驾驶证号',
+  `customer_user_driving_file_no` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '驾驶证档案编号',
+  `customer_user_vechicle_expired` int(10) UNSIGNED NULL DEFAULT NULL COMMENT '行驶证到期时间戳',
+  `customer_user_driving_expired` int(10) UNSIGNED NULL DEFAULT NULL COMMENT '驾驶证到期时间戳',
+  `customer_user_vechicle_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '行驶证照片url',
+  `customer_user_driving_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '驾驶证照片url',
+  `customer_user_id_no` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '身份证号',
+  `create_time` int(10) UNSIGNED NULL DEFAULT NULL,
+  `update_time` int(10) UNSIGNED NULL DEFAULT NULL,
+  PRIMARY KEY (`customer_user_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户使用人表，相当于商城中的收件人' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for o2o_customer_wx
+-- ----------------------------
+DROP TABLE IF EXISTS `o2o_customer_wx`;
+CREATE TABLE `o2o_customer_wx`  (
+  `customer_wx_unionid` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '微信openid',
+  `customer_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户主表id',
+  `customer_wx_headimageurl` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '头像url',
+  `create_time` int(10) UNSIGNED NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` int(10) UNSIGNED NOT NULL COMMENT '修改时间',
+  PRIMARY KEY (`customer_wx_unionid`) USING BTREE,
+  UNIQUE INDEX `customer_id`(`customer_id`) USING BTREE COMMENT '一个微信号只能绑定一个主账号'
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户绑定微信表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for o2o_district
@@ -4504,6 +4557,79 @@ CREATE TABLE `o2o_merchant_admin`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商户merchant和管理员admin的关系表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Table structure for o2o_order
+-- ----------------------------
+DROP TABLE IF EXISTS `o2o_order`;
+CREATE TABLE `o2o_order`  (
+  `order_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '订单ID，唯一ID',
+  `order_generate_time` int(10) UNSIGNED NULL DEFAULT NULL COMMENT '创建时间',
+  `order_pay_time` int(10) UNSIGNED NULL DEFAULT NULL COMMENT '付款时间',
+  `order_pay_expried_time` int(10) UNSIGNED NULL DEFAULT NULL COMMENT '付款过期时间，时间戳',
+  `order_expired_time` int(10) UNSIGNED NULL DEFAULT NULL COMMENT '订单服务过期时间',
+  `order_accomplish_time` int(10) UNSIGNED NULL DEFAULT NULL COMMENT '完成时间',
+  `order_price_total` decimal(10, 2) NULL DEFAULT NULL COMMENT '订单总金额',
+  `order_price_discount` decimal(10, 2) NULL DEFAULT NULL COMMENT '订单优惠金额',
+  `order_price_total_standard` decimal(10, 2) NULL DEFAULT NULL COMMENT '订单参考金额',
+  `order_price_paid` decimal(10, 2) NULL DEFAULT NULL COMMENT '订单实付金额，paid应该等于total-discount',
+  `order_remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '订单备注-用户',
+  `order_ermark_merchant` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '订单备注-商家',
+  `customer_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '下单用户ID',
+  `customer_user_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '订单使用人ID',
+  `customer_user_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '姓名',
+  `customer_user_telephone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '电话',
+  `customer_user_distinct` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '省市县',
+  `customer_user_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '地址',
+  `customer_user_plate_no` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '车牌号',
+  `customer_user_vechicle_vin` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '车辆识别代码',
+  `customer_user_driving_no` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '驾驶证号',
+  `customer_user_driving_file_no` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '驾驶证档案编号',
+  `customer_user_vechicle_expired` int(10) UNSIGNED NULL DEFAULT NULL COMMENT '行驶证到期时间戳',
+  `customer_user_driving_expired` int(10) UNSIGNED NULL DEFAULT NULL COMMENT '驾驶证到期时间戳',
+  `customer_user_id_no` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '身份证号',
+  PRIMARY KEY (`order_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户订单表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for o2o_order_item
+-- ----------------------------
+DROP TABLE IF EXISTS `o2o_order_item`;
+CREATE TABLE `o2o_order_item`  (
+  `order_item_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '订单成员ID，自然ID',
+  `order_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '订单ID',
+  `store_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '店铺ID',
+  `store_service_spec_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '服务规格ID',
+  `order_item_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '订单成员标题',
+  `order_store_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '店铺名称',
+  `order_item_pic_url_300` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '图片300像素URL',
+  `order_item_price` decimal(10, 2) NULL DEFAULT NULL COMMENT '订单成员价格',
+  `order_item_price_discount` decimal(10, 2) NULL DEFAULT NULL COMMENT '订单成员优惠',
+  `order_item_price_standard` decimal(10, 2) NULL DEFAULT NULL COMMENT '订单成员参考价格',
+  `order_item_price_paid` decimal(10, 2) NULL DEFAULT NULL COMMENT '订单成员实付金额，paid应该等于price-discount',
+  `order_item_accomplish_time` int(10) UNSIGNED NULL DEFAULT NULL COMMENT '订单成员完成时间',
+  `order_item_expired_time` int(10) UNSIGNED NULL DEFAULT NULL COMMENT '订单成员过期时间',
+  PRIMARY KEY (`order_item_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单成员表，自然ID' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for o2o_pic
+-- ----------------------------
+DROP TABLE IF EXISTS `o2o_pic`;
+CREATE TABLE `o2o_pic`  (
+  `pic_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '图片ID，唯一ID',
+  `pic_url_original` varchar(512) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '原图URL',
+  `pic_url_900` varchar(512) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '900宽图片URL',
+  `pic_url_600` varchar(512) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '600宽图片URL',
+  `pic_url_300` varchar(512) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '300宽图片URL',
+  `pic_url_150` varchar(512) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '150宽图片URL',
+  `pic_description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图片说明备注',
+  `pic_type` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图片类型，如jpeg',
+  `pic_mime` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图片mime类型，如image/jpeg',
+  `create_time` int(10) UNSIGNED NULL DEFAULT NULL,
+  `update_time` int(10) UNSIGNED NULL DEFAULT NULL,
+  PRIMARY KEY (`pic_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '全站图片表，含150、300、600、900和原图，唯一ID' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Table structure for o2o_role
 -- ----------------------------
 DROP TABLE IF EXISTS `o2o_role`;
@@ -4624,6 +4750,19 @@ CREATE TABLE `o2o_store`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商户下的店铺表，唯一ID' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Table structure for o2o_store_pic
+-- ----------------------------
+DROP TABLE IF EXISTS `o2o_store_pic`;
+CREATE TABLE `o2o_store_pic`  (
+  `store_pic_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '店铺图片自然主键',
+  `store_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '店铺ID',
+  `pic_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '图片ID',
+  `store_pic_position` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '店铺图片位置，默认0为头图',
+  `store_pic_default` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否为首图，0为否，1为是',
+  PRIMARY KEY (`store_pic_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '店铺图片表，自增ID' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Table structure for o2o_store_service
 -- ----------------------------
 DROP TABLE IF EXISTS `o2o_store_service`;
@@ -4635,9 +4774,7 @@ CREATE TABLE `o2o_store_service`  (
   `store_service_subtitle` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '店铺服务副标题',
   `store_service_detail` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '店铺服务详情，text类型，支持html',
   `store_service_rule` varchar(4000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '店铺服务规则，varchar(4000)类型，支持html',
-  `store_service_price` decimal(10, 2) NOT NULL COMMENT '店铺服务实际价格',
-  `store_service_price_standard` decimal(10, 2) NULL DEFAULT NULL COMMENT '店铺服务标准价格（参考价）',
-  `store_service_validity` int(11) NULL DEFAULT 0 COMMENT '订单有效期时间戳长度，0为长期有效',
+  `store_service_validity` int(10) UNSIGNED NULL DEFAULT 2592000 COMMENT '订单有效期时间戳长度，0为长期有效，默认2592000为30天',
   `create_time` int(10) UNSIGNED NULL DEFAULT NULL,
   `update_time` int(10) UNSIGNED NULL DEFAULT NULL,
   `delete_time` int(10) UNSIGNED NULL DEFAULT NULL,
@@ -4645,8 +4782,37 @@ CREATE TABLE `o2o_store_service`  (
   `store_service_view_count` int(10) UNSIGNED NULL DEFAULT NULL COMMENT '访问量，进入详情统计',
   `store_service_seo_keywords` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '关键词，显示在meta中',
   `store_service_seo_description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述，显示在meta中',
+  `store_service_status` tinyint(3) UNSIGNED NULL DEFAULT 0 COMMENT '店铺服务状态，0为禁用，1为正常',
+  `store_service_switch` tinyint(3) UNSIGNED NULL DEFAULT 0 COMMENT '店铺服务上架状态，0为下架，1为上架',
   PRIMARY KEY (`store_service_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '店铺服务表，相当于商城的商品表，唯一ID' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for o2o_store_service_spec
+-- ----------------------------
+DROP TABLE IF EXISTS `o2o_store_service_spec`;
+CREATE TABLE `o2o_store_service_spec`  (
+  `store_service_spec_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '店铺服务规格ID，唯一ID',
+  `store_service_spec_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '店铺服务规格名称',
+  `store_service_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '店铺服务ID，唯一ID',
+  `store_service_spec_price` decimal(10, 2) NULL DEFAULT NULL COMMENT '店铺服务规格价格，实际价格',
+  `store_service_spec_price_standard` decimal(10, 2) NULL DEFAULT NULL COMMENT '店铺服务规格标准价格，参数价格',
+  `store_service_spec_memo` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '店铺服务规格备注',
+  PRIMARY KEY (`store_service_spec_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '店铺服务规格表，唯一ID' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for o2o_store_service_spec_pic
+-- ----------------------------
+DROP TABLE IF EXISTS `o2o_store_service_spec_pic`;
+CREATE TABLE `o2o_store_service_spec_pic`  (
+  `store_service_spec_pic_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '店铺服务规格图片ID，自然主键',
+  `store_service_spec_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '店铺服务规格ID',
+  `pic_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '图片ID',
+  `store_service_spec_pic_default` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否为首图，0为否，1为是',
+  `store_service_spec_pic_position` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '图片位置，默认0为主图',
+  PRIMARY KEY (`store_service_spec_pic_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '店铺商品服务规格的图片表，自增ID' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for o2o_store_wx
