@@ -1,0 +1,218 @@
+{extend name='general/base'/}
+{block name='css'}
+
+{/block}
+{block name='nav'}
+<span class="c-666">{$pagetitle}</span> 
+<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
+{/block}
+
+{block name='main'}
+<p class="f-20">
+	{$pagetitle}
+</p>
+<div class="cl pd-5 bg-1 bk-gray mt-20">
+	<span class="l"> 
+		<a href="javascript:;" onclick="layer_show('新增管理员','{:url("admin/admin/admin_add")}','800','500');" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 新增数据</a> 
+	</span>
+	<span class="r">共有数据：<strong></strong> 条</span>
+</div>
+<table class="table table-border table-bordered table-bg table-hover" style="white-space:nowrap">
+	<thead>
+		<tr>
+			<th scope="col" colspan="5">业务目录</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr class="success">
+			<td class="text-c" width="50" rowspan="2">1级</td>
+			<td width="60" class="text-c td-manage" rowspan="2">
+				<a style="text-decoration:none" href="javascript:;"><i class="Hui-iconfont">&#xe647;</i></a>
+				<a style="text-decoration:none" href="javascript:;" class="ml-5"><i class="Hui-iconfont">&#xe6e2;</i></a>
+				<a style="text-decoration:none" href="javascript:;" class="ml-5"><i class="Hui-iconfont">&#xe61f;</i></a>
+			</td>
+			<td colspan="4">
+				<div>
+					<div class="col-xs-3 col-sm-2 col-md-1">
+						<span class="strong">ID</span>：1
+					</div>
+					<div class="col-xs-4 col-sm-3 col-md-2">
+						<span class="strong">名称</span>：业务0
+					</div>
+				<div>
+			</td>
+		</tr>
+		<tr class="success">
+			<th class="text-r" width="30">关联</th>
+			<td colspan="3">
+				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
+			</td>
+		</tr>
+		<tr class="warning">
+			<td class="text-c" rowspan="2">2级</td>
+			<td width="60" class="text-c td-manage" rowspan="2">
+				<a style="text-decoration:none" href="javascript:;"><i class="Hui-iconfont">&#xe647;</i></a>
+				<a style="text-decoration:none" href="javascript:;" class="ml-5"><i class="Hui-iconfont">&#xe6e2;</i></a>
+				<a style="text-decoration:none" href="javascript:;" class="ml-5"><i class="Hui-iconfont">&#xe61f;</i></a>
+			</td>
+			<td class="text-c" rowspan="2">└</td>
+			<td colspan="3">
+				<div class="col-xs-3 col-sm-2 col-md-1">
+					<span class="strong">ID</span>：2
+				</div>
+				<div class="col-xs-3 col-sm-2 col-md-1">
+					<span class="strong">名称</span>：业务1
+				</div>
+			</td>
+		</tr>
+		<tr class="warning">
+			<th class="text-r" width="30">关联</th>
+			<td colspan="2">
+				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
+			</td>
+		</tr>
+		<tr>
+			<td class="text-c" rowspan="2">3级</td>
+			<td class="text-c td-manage" rowspan="2">
+				<a style="text-decoration:none" href="javascript:;"><i class="Hui-iconfont">&#xe647;</i></a>
+				<a style="text-decoration:none" href="javascript:;" class="ml-5"><i class="Hui-iconfont">&#xe6e2;</i></a>
+			</td>
+			<td rowspan="2"></td>
+			<td class="text-c" width="20" rowspan="2">└</td>
+			<td colspan="2">
+				<div class="col-xs-3 col-sm-2 col-md-1">
+					<span class="strong">ID</span>：2
+				</div>
+				<div class="col-xs-3 col-sm-2 col-md-1">
+					<span class="strong">名称</span>：业务1
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<th class="text-r" width="30">关联</th>
+			<td>
+				<div class="col-xs-5 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-5 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-5 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-5 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-5 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-5 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-5 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-5 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-5 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-5 col-sm-3 col-md-2 col-lg-1">业务0</div>
+				<div class="col-xs-5 col-sm-3 col-md-2 col-lg-1">业务0</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
+{/block}
+{block name='js'}
+{js href="__ROOT__/lib/My97DatePicker/4.8/WdatePicker.js"/}
+{js href="__ROOT__/lib/datatables/1.10.0/jquery.dataTables.min.js"/}
+{js href="__ROOT__/lib/laypage/1.2/laypage.js"/}
+<script type="text/javascript">
+function item_status(obj,url) {
+	// 为了友好，取到要操作模块的“菜单名称”字段，要在提示语中使用
+	var name = $(obj).parents("tr").find(".name").html();
+	// 用layer.confirm插件进行操作确认
+	layer.confirm("确认要切换“"+name+"”的状态吗？", function() {
+		// 当layer.confirm被确认后开始提交操作
+		// $.get(url, data, success)
+		$.get(url, function(data) {
+			// 请求控制器方法，传递module_id参数，执行回调函数，用data接收返回值
+			if(data.status==1) {
+				// 返回状态码是1，提示操作成功，并刷新页面
+				layer.msg(data.message, {icon:6, time:1500});
+				setTimeout(function() {
+					window.location.reload();
+				}, 2000);
+			} else {
+				// 返回状态码不是1，提示失败信息，不再刷新页面
+				layer.msg(data.message, {icon:5, time:3000});
+			}
+		});
+	})
+}
+
+// 删除管理员
+function item_delete(obj, url) {
+	// 为了友好，取到要操作模块的“菜单名称”字段，要在提示语中使用
+	var name = $(obj).parents("tr").find(".name").html();
+	// 用layer.confirm插件进行操作确认
+	layer.confirm("确认要删除“"+name+"”吗？", function() {
+		// 当layer.confirm被确认后开始提交操作
+		// $.get(url, data, success)
+		$.get(url, function(data) {
+			if(data.status==1) {
+				// 返回状态码是1，提示操作成功，并刷新页面
+				layer.msg(data.message, {icon:6, time:1500});
+				setTimeout(function() {
+					window.location.reload();
+				}, 2000);
+			} else {
+				// 返回状态码不是1，提示失败信息，不再刷新页面
+				layer.msg(data.message, {icon:5, time:3000});
+			}
+		});	
+	});
+}
+
+// 批量删除
+function item_multidelete(url) {
+	// 定义一个数组用于保存已被选中的checkbox
+	var ids = new Array();
+	// 遍历名为to_multidelete[]的checkbox
+	$("input[name='to_multidelete[]").each(function() {
+		if($(this).is(":checked")) {
+			// 把被选中的checkbox的value值保存到module_ids中
+			ids.push($(this).val());
+		}
+	});
+	// 判断一下数组的长度，如果是0，则不用麻烦服务器了
+	if(ids.length == 0) {
+		layer.msg("没有选中任何数据", {icon:5, time:2000});
+	} else {
+		// 确实有被选中的记录，页面进行一次确认
+		layer.confirm("确定要删除这些数据吗？", function() {
+			// 用$.post()方法去调用控制器中的方法
+			// $.post(url,data,success)
+			$.post(
+				url
+				, {ids: ids}
+				, function(data) {
+					if(data.status==0) {
+						layer.msg(data.message, {icon:5, time:3000});
+					} else {
+						layer.msg(data.message, {icon:6, time:2000});
+						
+					}
+					setTimeout(function() {
+							window.location.reload();
+						}, 3000);
+			});
+		});
+	}
+}
+</script>
+{/block}
