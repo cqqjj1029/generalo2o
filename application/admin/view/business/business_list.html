@@ -13,9 +13,9 @@
 </p>
 <div class="cl pd-5 bg-1 bk-gray mt-20">
 	<span class="l"> 
-		<a href="javascript:;" onclick="layer_show('新增管理员','{:url("admin/admin/admin_add")}','800','500');" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 新增数据</a> 
+		<a href="javascript:;" onclick="layer_show('新增管理员','{:url("admin/business/business_add")}','800','500');" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 新增数据</a> 
 	</span>
-	<span class="r">共有数据：<strong></strong> 条</span>
+	<span class="r">共有数据：<strong>{$count}</strong> 条</span>
 </div>
 <table class="table table-border table-bordered table-bg table-hover" style="white-space:nowrap">
 	<thead>
@@ -24,9 +24,10 @@
 		</tr>
 	</thead>
 	<tbody>
+		{volist name='list' id='vo'}
 		<tr class="success">
-			<td class="text-c" width="50" rowspan="2">1级</td>
-			<td width="60" class="text-c td-manage" rowspan="2">
+			<td class="text-c" width="30">{$vo.business_level}级</td>
+			<td width="60" class="text-c td-manage">
 				<a style="text-decoration:none" href="javascript:;"><i class="Hui-iconfont">&#xe647;</i></a>
 				<a style="text-decoration:none" href="javascript:;" class="ml-5"><i class="Hui-iconfont">&#xe6e2;</i></a>
 				<a style="text-decoration:none" href="javascript:;" class="ml-5"><i class="Hui-iconfont">&#xe61f;</i></a>
@@ -34,65 +35,41 @@
 			<td colspan="4">
 				<div>
 					<div class="col-xs-3 col-sm-2 col-md-1">
-						<span class="strong">ID</span>：1
+						ID：<span class="strong">{$vo.business_id}</span>
 					</div>
 					<div class="col-xs-4 col-sm-3 col-md-2">
-						<span class="strong">名称</span>：业务0
+						名称：<span class="strong">{$vo.business_name}</span>
+					</div>
+					<div class="col-xs-5 col-sm-4 col-md-3">
+						描述：<span class="strong">{$vo.business_description}</span>
 					</div>
 				<div>
 			</td>
 		</tr>
-		<tr class="success">
-			<th class="text-r" width="30">关联</th>
-			<td colspan="3">
-				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
-				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
-				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
-				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
-				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
-				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
-				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
-				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
-				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
-				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
-				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
-			</td>
-		</tr>
+		{volist name='vo.level2' id='vo2'}
 		<tr class="warning">
-			<td class="text-c" rowspan="2">2级</td>
-			<td width="60" class="text-c td-manage" rowspan="2">
+			<td class="text-c">{$vo2.business_level}级</td>
+			<td width="60" class="text-c td-manage">
 				<a style="text-decoration:none" href="javascript:;"><i class="Hui-iconfont">&#xe647;</i></a>
 				<a style="text-decoration:none" href="javascript:;" class="ml-5"><i class="Hui-iconfont">&#xe6e2;</i></a>
 				<a style="text-decoration:none" href="javascript:;" class="ml-5"><i class="Hui-iconfont">&#xe61f;</i></a>
 			</td>
-			<td class="text-c" rowspan="2">└</td>
+			<td class="text-c">└</td>
 			<td colspan="3">
 				<div class="col-xs-3 col-sm-2 col-md-1">
-					<span class="strong">ID</span>：2
+					ID：<span class="strong">{$vo2.business_id}</span>
 				</div>
 				<div class="col-xs-3 col-sm-2 col-md-1">
-					<span class="strong">名称</span>：业务1
+					名称：<span class="strong">{$vo2.business_name}</span>
+				</div>
+				<div class="col-xs-4 col-sm-3 col-md-2">
+					描述：<span class="strong">{$vo2.business_description}</span>
 				</div>
 			</td>
 		</tr>
-		<tr class="warning">
-			<th class="text-r" width="30">关联</th>
-			<td colspan="2">
-				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
-				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
-				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
-				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
-				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
-				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
-				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
-				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
-				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
-				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
-				<div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">业务0</div>
-			</td>
-		</tr>
+		{volist name='vo2.level3' id='vo3'}
 		<tr>
-			<td class="text-c" rowspan="2">3级</td>
+			<td class="text-c" rowspan="2">{$vo3.business_level}级</td>
 			<td class="text-c td-manage" rowspan="2">
 				<a style="text-decoration:none" href="javascript:;"><i class="Hui-iconfont">&#xe647;</i></a>
 				<a style="text-decoration:none" href="javascript:;" class="ml-5"><i class="Hui-iconfont">&#xe6e2;</i></a>
@@ -101,10 +78,13 @@
 			<td class="text-c" width="20" rowspan="2">└</td>
 			<td colspan="2">
 				<div class="col-xs-3 col-sm-2 col-md-1">
-					<span class="strong">ID</span>：2
+					ID：<span class="strong">{$vo3.business_id}</span>
 				</div>
 				<div class="col-xs-3 col-sm-2 col-md-1">
-					<span class="strong">名称</span>：业务1
+					名称：<span class="strong">{$vo3.business_name}</span>
+				</div>
+				<div class="col-xs-4 col-sm-3 col-md-2">
+					描述：<span class="strong">{$vo3.business_description}</span>
 				</div>
 			</td>
 		</tr>
@@ -124,6 +104,9 @@
 				<div class="col-xs-5 col-sm-3 col-md-2 col-lg-1">业务0</div>
 			</td>
 		</tr>
+		{/volist}{//3级}
+		{/volist}{//2级}
+		{/volist}{//1级}
 	</tbody>
 </table>
 {/block}

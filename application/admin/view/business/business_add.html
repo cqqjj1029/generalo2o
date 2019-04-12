@@ -1,0 +1,247 @@
+{extend name='general/base-layer' /}
+
+{block name='main'}
+	<form method="post" class="form form-horizontal">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>业务名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" placeholder="业务名称" id="business_name" name="business_name" rangelength="[2,20]" required>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>层级：</label>
+			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+				<div class="radio-box">
+					<input type="radio" id="business_level-1" name="business_level" value="1" required>
+					<label for="business_level-1">第1级</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="business_level-2" name="business_level" value="2" required>
+					<label for="business_level-2">第2级</label>
+				</div>
+				<div class="radio-box">
+					<label><input type="radio" id="business_level-3" name="business_level" value="3" required>
+					第3级</label>
+				</div>
+			</div>
+		</div>
+		<div class="row cl hide">
+			<lable class="form-label col-xs-4 col-sm-3">上级业务：</lable>
+			<div class="formControls col-xs-8 col-sm-9">
+				<span class="select-box inline">
+				  <select class="select" size="1" id="business_father_id-p1" name="business_father_id-p1">
+				  </select>
+				</span>
+				<span class="select-box inline">
+				  <select class="select" size="1" id="business_father_id" name="business_father_id">
+				  </select>
+				</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">业务描述：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea type="text" class="textarea radius" placeholder="简单描述业务内容" name="business_description" maxlength="50"></textarea>
+			</div>
+		</div>		
+		<div class="row cl hide">
+			<lable class="form-label col-xs-4 col-sm-3">相关业务：</lable>
+			<div class="formControls col-xs-8 col-sm-9">
+				<div class="c-blue">
+					已关联 <span id="relevance_count" class="c-red strong">0</span> 项（相关业务仅在3级业务与3级业务间生效）
+					<input type="button" id="relevance_reset" class="btn btn-link" value="重置"/>
+				</div>
+				{volist name='list' id='vo'}
+				<div class="skin-minimal panel panel-primary mb-20">
+					<div class="panel-header">
+						<div class="check-box">
+						    <label><input class="check-level-1" type="checkbox" value="{$vo.business_id}">{$vo.business_name}</label>
+						</div>
+					</div>
+					<div class="panel-body">
+						{volist name='vo.level2' id='vo2'}
+						<div class="panel panel-secondary mb-10">
+							<div class="panel-header">
+								<div class="check-box">
+								    <label><input class="check-level-2" type="checkbox" value="{$vo2.business_id}">{$vo2.business_name}</label>
+								</div>
+							</div>
+							<div class="panel-body">
+								{volist name='vo2.level3' id='vo3'}
+								<div class="check-box">
+								    <label><input class="check-level-3" name="business_relevance_id[]" type="checkbox" value="{$vo3.business_id}">{$vo3.business_name}</label>
+								</div>
+								{/volist}
+							</div>
+						</div>
+						{/volist}
+					</div>
+				</div>
+				{/volist}
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+				<button type="submit" class="btn btn-success radius disabled" disabled="true">提交数据</button>
+			</div>
+		</div>
+	</form>
+{/block}
+
+{block name='js'}
+<script type="text/javascript">
+	function init_business_father_id(obj,father_id) {
+		obj.html('');
+		obj.append('<option value="">请选择</option>');
+		$.ajax({
+            type: "POST",	// POST方法提交
+            url: "{:url('index/service/business')}",	// 执行的方法
+            data: {father_id:father_id},	// 
+            dataType: "json",	// 数据类型为json
+            success: function(data) {
+            	// alert(data);
+            	$.each(data, function(index, item){
+					obj.append('<option value="'+item.business_id+'">'+item.business_name+'（第'+item.business_level+'级）</option>');
+				});
+            }
+    	});
+	}
+
+	function init_form() {
+		var checkValue = $('input:radio[name="business_level"]:checked').val();
+		switch(checkValue) {
+			case "3" :  // 3级时
+				// 获取1级数据并写入上上级列表中
+				init_business_father_id($("#business_father_id-p1"),0);
+				// 显示上级列表行
+				$("#business_father_id").parents(".row").show();
+				// 显示上上级列表控件
+				$("#business_father_id-p1").parents(".select-box").show();
+				// 隐藏上级列表控件(等上上级有值时再显示)
+				$("#business_father_id").parents(".select-box").hide();
+				// 清空上级列表
+				$("#business_father_id").html('');
+				// 显示相关业务
+				$("input[name='business_relevance_id[]']").parents(".row").show();
+				break;
+			case "2" :	// 2级时
+				// 获取1级数据并写入business_father_id列表中
+				init_business_father_id($("#business_father_id"),0);
+				// 显示business_father_id列表行
+				$("#business_father_id").parents(".row").show();
+				// 显示上级列表控件
+				$("#business_father_id").parents(".select-box").show();
+				// 隐藏上上级列表控件
+				$("#business_father_id-p1").parents(".select-box").hide();
+				// 隐藏相关业务
+				$("input[name='business_relevance_id[]']").parents(".row").hide();
+				break;
+			case "1" :		// 1级时
+			default :
+				// 不显示上级列表
+				$("#business_father_id").parents(".row").hide();
+				// 上级列表内容清空
+				$("#business_father_id").html('');
+				// 上上级列表内容清容
+				$("#business_father_id-p1").html('');
+				// 不显示相关业务
+				$("input[name='business_relevance_id[]']").parents(".row").hide();
+				break;
+		}
+	}
+
+	$(function() {
+		// 初始化显示
+		init_form();
+		// 实现radio和checkbox的样式
+		$('.skin-minimal input').iCheck({
+			checkboxClass: 'icheckbox-red',
+			radioClass: 'iradio-blue',
+			increaseArea: '20%'
+		});
+		// 层级单选按钮事件
+		$('input:radio[name="business_level"]').on('ifChecked', function(){
+			// 根据列表初始化显示
+			init_form();
+		});
+		// 当business_father_id-p1列表发生变化时触发事件，改变business_father_id列表
+		$("#business_father_id-p1").change(function() {
+			var father_id = $("#business_father_id-p1").val();
+			if(father_id) {
+				init_business_father_id($("#business_father_id"),father_id);
+				$("#business_father_id").parents(".select-box").show();
+			} else {
+				$("#business_father_id").html('');
+				$("#business_father_id").parents(".select-box").hide();
+			}
+		})
+
+		// 实现二级面板checkbox全选
+		$(".check-level-2").on("ifUnchecked ifChecked",function() {
+			var ischecked = $(this).prop("checked");
+			$(this).parents(".panel-secondary").find(".check-level-3").iCheck(ischecked?"check":"uncheck");
+		});
+		// 实现一级面板checkbox全选
+		$(".check-level-1").on("ifUnchecked ifChecked",function() {
+			var ischecked = $(this).prop("checked");
+			$(this).parents(".panel-primary").find(".check-level-2,.check-level-3").iCheck(ischecked?"check":"uncheck");
+		});
+		// 实现对已选相关业务的计数
+		$(".check-level-3").on("ifUnchecked ifChecked",function() {
+			$("#relevance_count").text($(".check-level-3:checked").length);
+		});
+		$("#relevance_reset").click(function() {
+			$(".check-level-1,.check-level-2,.check-level-3").iCheck("uncheck");
+		});
+		// 只有当表单中有数据变化时，提交按钮才可用
+		$("form").children().bind('input propertychange', function() {
+			$(":submit").removeClass('disabled').removeAttr("disabled");
+		});
+		// 对radio和checkbox添加只有当表单中有数据变化时，提交按钮才可用设置
+		$('input:radio,input:checkbox').on('ifChecked', function(){
+			$(":submit").removeClass('disabled').removeAttr("disabled");
+		});
+
+		$("form").validate({
+			// 设置radio错误提示信息的位置为右边
+			errorPlacement: function(error, element) {
+                if (element.is(":radio")){
+                    error.appendTo(element.parent().next().parent().parent());
+                } else {
+                   error.appendTo(element.parent());//默认，这个必须些，不写会影响其他样式问题
+                }
+            },
+			submitHandler: function(form) {
+				// 当验证通过时执行ajax提交
+				$.ajax({
+	                type: "POST",	// POST方法提交
+	                url: "{:url('admin/business/do_business_add')}",	// 执行的方法
+	                data: $("form").serialize(),	// 将表单控件的name属性序列化后提交
+	                dataType: "json",	// 数据类型为json
+	                success: function(data) {
+	                	// 当ajax请求执行成功时执行
+	                    if (data.status == true) {
+	                    	// 返回data对象中的status元素值为1表示数据插入成功
+	                        layer.msg(data.message, {icon: 6, time: 2000});	// 使用H-ui的浮动提示框，2秒后自动消失
+							setTimeout(function() {
+								parent.location.reload();
+							}, 2000);	//2秒后对父页面执行刷新（相当于关闭了弹层同时更新了数据）
+	                    } else {
+	                    	// 返回data对象的status值不为1，表示数据插入失败
+	                    	layer.msg(data.message, {icon: 5, time: 2000});	// 使用H-ui的浮动提示框，2秒后自动消失
+	                    	// 页面停留在这里，不再执行任何动作
+	                    }
+	                }
+            	});
+			}
+		});
+	});
+</script>
+{/block}
+
+{block name='css'}
+<!-- 编写本页特有的样式 -->
+<style type="text/css" media="screen">
+
+</style>
+{/block}

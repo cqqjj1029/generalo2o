@@ -5,6 +5,7 @@ use think\Controller;
 use app\common\model\Config as ConfigModel;
 use app\common\model\District as DistrictModel;
 use app\common\model\Trade as TradeModel;
+use app\common\model\Business as BusinessModel;
 
 class General extends Controller
 {
@@ -147,6 +148,11 @@ class General extends Controller
         return $father;
     }
 
+    /**
+     * 根据father_id获取trade列表
+     * @param  integer $father_id [description]
+     * @return [type]             [description]
+     */
     protected function get_trade($father_id=0)
     {
         $trade = new TradeModel;
@@ -154,6 +160,22 @@ class General extends Controller
             $list = $trade->where('trade_father_id', 'eq', $father_id)->order(['trade_id'=>'asc'])->select();
         } else {
             $list = $trade->where('trade_father_id','null')->order(['trade_id'=>'asc'])->select();
+        }
+        return $list;
+    }
+
+    /**
+     * 根据father_id获取business列表
+     * @param  integer $father_id business_father_id
+     * @return [type]             [description]
+     */
+    protected function get_business($father_id=0)
+    {
+        $business = new BusinessModel;
+        if($father_id) {
+            $list = $business->where('business_father_id', 'eq', $father_id)->order(['business_id'=>'asc'])->select();
+        } else {
+            $list = $business->where('business_father_id','0')->order(['business_id'=>'asc'])->select();
         }
         return $list;
     }

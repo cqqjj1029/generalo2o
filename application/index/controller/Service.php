@@ -16,10 +16,27 @@ class Service extends Base
         return $data;
     }
 
+    /**
+     * 根据father_id查询对应的行业数据
+     * @param  integer $father_id [description]
+     * @return [type]             [description]
+     */
     public function trade($father_id=0)
     {
         $data = $this->get_trade($father_id);
         return $data;
+    }
+
+    /**
+     * 根据father_id查询对应的业务数据
+     * @param  integer $father_id [description]
+     * @return [type]             [description]
+     */
+    public function business($father_id=0)
+    {
+        $data = $this->get_business($father_id);
+        return $data;
+        // dump($data);
     }
 
     /*
