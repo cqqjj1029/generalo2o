@@ -25,9 +25,12 @@ class Business extends Validate
 
     protected function checkFather($value,$rule,$data)
     {
-        // return $data['business_level'];
-        if(!$data['business_father_id']&&in_array($data['business_level'],['2','3'])) {
-            return '层级大于1时必须设置上级业务';
+        if(in_array($data['business_level'],['2','3'])) {
+            if(!array_key_exists('business_father_id', $data) || !$data['business_father_id']) {
+                return '层级大于1时必须设置上级业务';
+            } else {
+                return true;
+            }
         } else {
             return true;
         }

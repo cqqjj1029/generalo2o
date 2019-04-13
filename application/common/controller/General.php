@@ -179,4 +179,81 @@ class General extends Controller
         }
         return $list;
     }
+
+    /**
+     * 根据id查询到业务向上的所有记录
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    protected function get_business_path($id)
+    {
+        // 取得当前层级
+        $level = $this->get_business_level($id);
+        $business_path = BusinessModel::get($id);
+        for($i=1; $i<=$level; $i++) {
+            // 把当前路径暂存到business_father中
+            $business_father = $business_path;
+            // 记当前路径指向当前的上一级
+            $business_path = $this->get_business_father($business_father->business_id);
+            if($business_path) {
+                // 把暂存的路径保存为上一级的child
+                $business_path->child = $business_father;
+            } else {
+                $business_path = $business_father;
+            }
+        }
+        return $business_path;
+    }
+
+    /**
+     * 根据id查询到业务的上一级记录
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    protected function get_business_father($id)
+    {
+        $business = BusinessModel::get($id);
+        $business_father = $business?BusinessModel::get($business->business_father_id):null;
+        return $business_father;
+    }
+
+    /**
+     * 根据id获取business的最顶级记录，用遍历父级的方式去找
+     * @param  [type] $id 要查询的business_id
+     * @return [type]     如果要查询的记录就是顶级，则返回记录本身
+     */
+    protected function get_business_1($id)
+    {
+        $business_1 = BusinessModel::get($id);
+        // 记录当前记录的father_id
+        $father_id = $business_1->business_father_id;
+        // 如果获取到的father_id非0非空，说明当前记录有上一级目录
+        while($father_id) {
+            // 获取当前记录的上一级记录
+            $business_1 = $this->get_business_father($father_id);
+            // 把获取到的father_id记录下来，进入下一次循环
+            $father_id = $business_1->business_father_id;
+        }
+        return $business_1;
+    }
+
+    /**
+     * 用遍历父级的方式确定当前id的所在层级
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    protected function get_business_level($id)
+    {
+        // 默认用business_father来记录从当前记录开始每一层向上遍历到的记录
+        $business_father = BusinessModel::get($id);
+        $father_id = $business_father->business_father_id;
+        $level = $business_father ? 1 : 0;  // 如果根据ID找到不记录，那么level就为0
+        // 当father_id非0非空时，进入循环
+        while($father_id) {
+            $business_father = BusinessModel::get($father_id);
+            $father_id = $business_father->business_father_id;
+            $level++;
+        }
+        return $level;
+    }
 }

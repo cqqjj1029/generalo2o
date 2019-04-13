@@ -39,6 +39,17 @@ class Service extends Base
         // dump($data);
     }
 
+    /**
+     * 取得当前业务向上的所有业务
+     * @param  integer $id [description]
+     * @return [type]      [description]
+     */
+    public function business_path($id=0)
+    {
+        $data = $this->get_business_path($id);
+        return $data;
+    }
+
     /*
     格式化全国省市区数据并保存到数据库中
     public function decode()

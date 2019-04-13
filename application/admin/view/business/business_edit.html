@@ -3,24 +3,30 @@
 {block name='main'}
 	<form method="post" class="form form-horizontal">
 		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>业务ID：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				{$business.business_id}<input type="hidden" id="business_id" name="business_id" value="{$business.business_id}"/>
+			</div>
+		</div>
+		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>业务名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" placeholder="业务名称" id="business_name" name="business_name" rangelength="[2,20]" required>
+				<input value="{$business.business_name}" type="text" class="input-text" placeholder="业务名称" id="business_name" name="business_name" rangelength="[2,20]" required>
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>层级：</label>
 			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
 				<div class="radio-box">
-					<input type="radio" id="business_level-1" name="business_level" value="1" required>
+					<input {if condition="$business.business_level eq 1"} checked="true" {/if} type="radio" id="business_level-1" name="business_level" value="1" required>
 					<label for="business_level-1">第1级</label>
 				</div>
 				<div class="radio-box">
-					<input type="radio" id="business_level-2" name="business_level" value="2" required>
+					<input {if condition="$business.business_level eq 2"} checked="true" {/if} type="radio" id="business_level-2" name="business_level" value="2" required>
 					<label for="business_level-2">第2级</label>
 				</div>
 				<div class="radio-box">
-					<input type="radio" id="business_level-3" name="business_level" value="3" required>
+					<input {if condition="$business.business_level eq 3"} checked="true" {/if} type="radio" id="business_level-3" name="business_level" value="3" required>
 					<label for="business_level-3">第3级</label>
 				</div>
 			</div>
@@ -41,49 +47,15 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3">业务描述：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<textarea type="text" class="textarea radius" placeholder="简单描述业务内容" name="business_description" maxlength="50"></textarea>
+				<textarea type="text" class="textarea radius" placeholder="简单描述业务内容" name="business_description" maxlength="50">{$business.business_description}</textarea>
 			</div>
-		</div>		
-		<div class="row cl hide">
+		</div>
+		<div class="row cl">
 			<lable class="form-label col-xs-4 col-sm-3">相关业务：</lable>
 			<div class="formControls col-xs-8 col-sm-9">
 				<div class="c-blue">
-					已关联 <span id="relevance_count" class="c-red strong">0</span> 项（相关业务仅在3级业务与3级业务间生效）
-					<input type="button" id="relevance_reset" class="btn btn-link" value="重置"/>
+					要设置相关业务请点这里
 				</div>
-				<div class="c-blue">
-					“双向”时当前业务也会成为选中业务的相关业务，反之不会。
-					<div class="switch" data-on-label="双向" data-off-label="单向" data-on="primary" data-off="danger">
-			        	<input type="checkbox" name="relevance_bind" value="1" checked />
-			        </div>
-				</div>
-				{volist name='list' id='vo'}
-				<div class="skin-minimal panel panel-primary mb-20">
-					<div class="panel-header">
-						<div class="check-box">
-						    <label><input class="check-level-1" type="checkbox" value="{$vo.business_id}">{$vo.business_name}</label>
-						</div>
-					</div>
-					<div class="panel-body">
-						{volist name='vo.level2' id='vo2'}
-						<div class="panel panel-secondary mb-10">
-							<div class="panel-header">
-								<div class="check-box">
-								    <label><input class="check-level-2" type="checkbox" value="{$vo2.business_id}">{$vo2.business_name}</label>
-								</div>
-							</div>
-							<div class="panel-body">
-								{volist name='vo2.level3' id='vo3'}
-								<div class="check-box">
-								    <label><input class="check-level-3" name="business_relevance_id[]" type="checkbox" value="{$vo3.business_id}">{$vo3.business_name}</label>
-								</div>
-								{/volist}
-							</div>
-						</div>
-						{/volist}
-					</div>
-				</div>
-				{/volist}
 			</div>
 		</div>
 		<div class="row cl">
@@ -96,7 +68,7 @@
 
 {block name='js'}
 <script type="text/javascript">
-	function init_business_father_id(obj,father_id) {
+	function init_business_father_id(obj,father_id,default_id) {
 		obj.html('');
 		obj.append('<option value="">请选择</option>');
 		$.ajax({
@@ -107,7 +79,13 @@
             success: function(data) {
             	// alert(data);
             	$.each(data, function(index, item){
-					obj.append('<option value="'+item.business_id+'">'+item.business_id+': '+item.business_name+'（第'+item.business_level+'级）</option>');
+            		if(item.business_id!={$business.business_id}) {
+	            		if(item.business_id==default_id) {
+							obj.append('<option value="'+item.business_id+'" selected="true">'+item.business_id+': '+item.business_name+'（第'+item.business_level+'级）</option>');
+	            		} else {
+							obj.append('<option value="'+item.business_id+'">'+item.business_id+': '+item.business_name+'（第'+item.business_level+'级）</option>');
+						}
+					}
 				});
             }
     	});
@@ -118,29 +96,24 @@
 		switch(checkValue) {
 			case "3" :  // 3级时
 				// 获取1级数据并写入上上级列表中
-				init_business_father_id($("#business_father_id-p1"),0);
+				init_business_father_id($("#business_father_id-p1"), 0, {$business_path.business_id});
+				init_business_father_id($("#business_father_id"), {$business_path.business_id}, {$business_path.child.business_id});
 				// 显示上级列表行
 				$("#business_father_id").parents(".row").show();
 				// 显示上上级列表控件
 				$("#business_father_id-p1").parents(".select-box").show();
-				// 隐藏上级列表控件(等上上级有值时再显示)
-				$("#business_father_id").parents(".select-box").hide();
-				// 清空上级列表
-				$("#business_father_id").html('');
-				// 显示相关业务
-				$("input[name='business_relevance_id[]']").parents(".row").show();
+				// 显示上级列表控件
+				$("#business_father_id").parents(".select-box").show();
 				break;
 			case "2" :	// 2级时
 				// 获取1级数据并写入business_father_id列表中
-				init_business_father_id($("#business_father_id"),0);
+				init_business_father_id($("#business_father_id"),0, {$business_path.business_id});
 				// 显示business_father_id列表行
 				$("#business_father_id").parents(".row").show();
 				// 显示上级列表控件
 				$("#business_father_id").parents(".select-box").show();
 				// 隐藏上上级列表控件
 				$("#business_father_id-p1").parents(".select-box").hide();
-				// 隐藏相关业务
-				$("input[name='business_relevance_id[]']").parents(".row").hide();
 				break;
 			case "1" :		// 1级时
 			default :
@@ -150,8 +123,6 @@
 				$("#business_father_id").html('');
 				// 上上级列表内容清容
 				$("#business_father_id-p1").html('');
-				// 不显示相关业务
-				$("input[name='business_relevance_id[]']").parents(".row").hide();
 				break;
 		}
 	}
@@ -181,24 +152,6 @@
 				$("#business_father_id").parents(".select-box").hide();
 			}
 		})
-
-		// 实现二级面板checkbox全选
-		$(".check-level-2").on("ifUnchecked ifChecked",function() {
-			var ischecked = $(this).prop("checked");
-			$(this).parents(".panel-secondary").find(".check-level-3").iCheck(ischecked?"check":"uncheck");
-		});
-		// 实现一级面板checkbox全选
-		$(".check-level-1").on("ifUnchecked ifChecked",function() {
-			var ischecked = $(this).prop("checked");
-			$(this).parents(".panel-primary").find(".check-level-2,.check-level-3").iCheck(ischecked?"check":"uncheck");
-		});
-		// 实现对已选相关业务的计数
-		$(".check-level-3").on("ifUnchecked ifChecked",function() {
-			$("#relevance_count").text($(".check-level-3:checked").length);
-		});
-		$("#relevance_reset").click(function() {
-			$(".check-level-1,.check-level-2,.check-level-3").iCheck("uncheck");
-		});
 		// 只有当表单中有数据变化时，提交按钮才可用
 		$("form").children().bind('input propertychange', function() {
 			$(":submit").removeClass('disabled').removeAttr("disabled");
@@ -221,7 +174,7 @@
 				// 当验证通过时执行ajax提交
 				$.ajax({
 	                type: "POST",	// POST方法提交
-	                url: "{:url('admin/business/do_business_add')}",	// 执行的方法
+	                url: "{:url('admin/business/do_business_edit')}",	// 执行的方法
 	                data: $("form").serialize(),	// 将表单控件的name属性序列化后提交
 	                dataType: "json",	// 数据类型为json
 	                success: function(data) {
