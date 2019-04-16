@@ -54,7 +54,7 @@
 			<lable class="form-label col-xs-4 col-sm-3">相关业务：</lable>
 			<div class="formControls col-xs-8 col-sm-9">
 				<div class="c-blue">
-					要设置相关业务请点这里
+					<a href="{:url('admin/business/business_relevance',['id'=>$business.business_id])}" name='business_relevance_id[]'>要设置相关业务请点这里</a>
 				</div>
 			</div>
 		</div>
@@ -97,13 +97,15 @@
 			case "3" :  // 3级时
 				// 获取1级数据并写入上上级列表中
 				init_business_father_id($("#business_father_id-p1"), 0, {$business_path.business_id});
-				init_business_father_id($("#business_father_id"), {$business_path.business_id}, {$business_path.child.business_id});
+				init_business_father_id($("#business_father_id"), {$business_path.business_id}, {empty name="$business_path.child"} 0 {else} {$business_path.child.business_id} {/empty});
 				// 显示上级列表行
 				$("#business_father_id").parents(".row").show();
 				// 显示上上级列表控件
 				$("#business_father_id-p1").parents(".select-box").show();
 				// 显示上级列表控件
 				$("#business_father_id").parents(".select-box").show();
+				// 显示相关业务
+				$("[name='business_relevance_id[]']").parents(".row").show();
 				break;
 			case "2" :	// 2级时
 				// 获取1级数据并写入business_father_id列表中
@@ -113,7 +115,10 @@
 				// 显示上级列表控件
 				$("#business_father_id").parents(".select-box").show();
 				// 隐藏上上级列表控件
+				$("#business_father_id-p1").html('');
 				$("#business_father_id-p1").parents(".select-box").hide();
+				// 隐藏相关业务
+				$("[name='business_relevance_id[]']").parents(".row").hide();
 				break;
 			case "1" :		// 1级时
 			default :
@@ -123,6 +128,8 @@
 				$("#business_father_id").html('');
 				// 上上级列表内容清容
 				$("#business_father_id-p1").html('');
+				// 隐藏相关业务
+				$("[name='business_relevance_id[]']").parents(".row").hide();
 				break;
 		}
 	}

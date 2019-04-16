@@ -27,13 +27,20 @@
 		{volist name='list' id='vo'}
 		<tr class="success">
 			<td class="text-c" width="30">{$vo.business_level}级</td>
-			<td width="60" class="text-c td-manage">
-				<a style="text-decoration:none" onclick="layer_show('修改业务','{:url("admin/business/business_edit",["id"=>$vo.business_id])}','800','500');" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe647;</i></a>
-				<a style="text-decoration:none" href="javascript:;" class="ml-5" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>
-				<a style="text-decoration:none" href="javascript:;" class="ml-5" title="添加下一级"><i class="Hui-iconfont">&#xe61f;</i></a>
+			<td width="60" class="text-l td-manage">
+				<a style="text-decoration:none" onclick="layer_show('新增子业务','{:url("admin/business/business_add",["fid"=>$vo.business_id])}','800','500');" href="javascript:;" title="添加下一级"><i class="Hui-iconfont">&#xe61f;</i></a>
+				<a style="text-decoration:none" onclick="layer_show('修改业务','{:url("admin/business/business_edit",["id"=>$vo.business_id])}','800','500');" href="javascript:;" title="编辑" class="ml-5"><i class="Hui-iconfont">&#xe647;</i></a>
+				{if condition="$vo.business_status eq '正常'"}
+				<a style="text-decoration:none" title="禁用" onclick="ajax_post_confirm('{:url("admin/business/do_business_status")}',{id:'{$vo.business_id}'},'{$vo.business_name}','禁用')" href="javascript:;" class="ml-5"><i class="Hui-iconfont">&#xe624;</i></a>
+				{else}
+				<a style="text-decoration:none" title="启用" onclick="ajax_post_confirm('{:url("admin/business/do_business_status")}',{id:'{$vo.business_id}'},'{$vo.business_name}','启用')" href="javascript:;" class="ml-5"><i class="Hui-iconfont">&#xe725;</i></a>
+				{/if}
+				{empty name="$vo.level2"}
+				<a title="删除" href="javascript:;" onclick="ajax_post_confirm('{:url("admin/business/do_business_delete")}',{id:'{$vo.business_id}'},'{$vo.business_name}','删除')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+				{/empty}
 			</td>
 			<td colspan="4" class="text-l f-14">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 {if condition="$vo.business_status eq '禁用'"} del {/if}">
 					<span class="strong">{$vo.business_id}</span>：<span class="strong">{$vo.business_name}</span>
 					{if condition="$vo.business_description"}
 						（{$vo.business_description}）
@@ -44,14 +51,21 @@
 		{volist name='vo.level2' id='vo2'}
 		<tr class="warning">
 			<td class="text-c">{$vo2.business_level}级</td>
-			<td width="60" class="text-c td-manage">
-				<a style="text-decoration:none" onclick="layer_show('修改业务','{:url("admin/business/business_edit",["id"=>$vo2.business_id])}','800','500');" title="编辑" href="javascript:;"><i class="Hui-iconfont">&#xe647;</i></a>
-				<a style="text-decoration:none" title="删除" href="javascript:;" class="ml-5"><i class="Hui-iconfont">&#xe6e2;</i></a>
-				<a style="text-decoration:none" title="添加下一级" href="javascript:;" class="ml-5"><i class="Hui-iconfont">&#xe61f;</i></a>
+			<td width="60" class="text-l td-manage">
+				<a style="text-decoration:none" onclick="layer_show('新增子业务','{:url("admin/business/business_add",["fid"=>$vo2.business_id])}','800','500');" title="添加下一级" href="javascript:;"><i class="Hui-iconfont">&#xe61f;</i></a>
+				<a style="text-decoration:none" onclick="layer_show('修改业务','{:url("admin/business/business_edit",["id"=>$vo2.business_id])}','800','500');" title="编辑" href="javascript:;" class="ml-5"><i class="Hui-iconfont">&#xe647;</i></a>
+				{if condition="$vo2.business_status eq '正常'"}
+				<a style="text-decoration:none" title="禁用" onclick="ajax_post_confirm('{:url("admin/business/do_business_status")}',{id:'{$vo2.business_id}'},'{$vo2.business_name}','禁用')" href="javascript:;" class="ml-5"><i class="Hui-iconfont">&#xe624;</i></a>
+				{else}
+				<a style="text-decoration:none" title="启用" onclick="ajax_post_confirm('{:url("admin/business/do_business_status")}',{id:'{$vo2.business_id}'},'{$vo2.business_name}','启用')" href="javascript:;" class="ml-5"><i class="Hui-iconfont">&#xe725;</i></a>
+				{/if}
+				{empty name="$vo2.level3"}
+				<a title="删除" href="javascript:;" onclick="ajax_post_confirm('{:url("admin/business/do_business_delete")}',{id:'{$vo2.business_id}'},'{$vo2.business_name}','删除')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+				{/empty}
 			</td>
 			<td class="text-c" width="20">└</td>
 			<td colspan="3" class="text-l f-14">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 {if condition="$vo2.business_status eq '禁用'"} del {/if}">
 					<span class="strong">{$vo2.business_id}</span>：<span class="strong">{$vo2.business_name}</span>
 					{if condition="$vo2.business_description"}
 						（{$vo2.business_description}）
@@ -62,25 +76,45 @@
 		{volist name='vo2.level3' id='vo3'}
 		<tr>
 			<td class="text-c">{$vo3.business_level}级</td>
-			<td class="text-c td-manage">
+			<td class="text-l td-manage">
 				<a style="text-decoration:none" title="编辑" onclick="layer_show('修改业务','{:url("admin/business/business_edit",["id"=>$vo3.business_id])}','800','500');" href="javascript:;"><i class="Hui-iconfont">&#xe647;</i></a>
-				<a style="text-decoration:none" title="删除" href="javascript:;" class="ml-5"><i class="Hui-iconfont">&#xe6e2;</i></a>
+				<a style="text-decoration:none" title="关联" onclick="layer_show('设置相关业务','{:url("admin/business/business_relevance",["id"=>$vo3.business_id])}','800','500');" href="javascript:;" class="ml-5"><i class="Hui-iconfont">&#xe6f1;</i></a>
+				{if condition="$vo3.business_status eq '正常'"}
+				<a style="text-decoration:none" title="禁用" onclick="ajax_post_confirm('{:url("admin/business/do_business_status")}',{id:'{$vo3.business_id}'},'{$vo3.business_name}','禁用')" href="javascript:;" class="ml-5"><i class="Hui-iconfont">&#xe624;</i></a>
+				{else}
+				<a style="text-decoration:none" title="启用" onclick="ajax_post_confirm('{:url("admin/business/do_business_status")}',{id:'{$vo3.business_id}'},'{$vo3.business_name}','启用')" href="javascript:;" class="ml-5"><i class="Hui-iconfont">&#xe725;</i></a>
+				{/if}
+				<a style="text-decoration:none" title="清除相关" onclick="ajax_post_confirm('{:url("admin/business/do_business_relevance_clear")}',{id:'{$vo3.business_id}'},'{$vo3.business_name}','清除相关')" href="javascript:;" class="ml-5"><i class="Hui-iconfont">&#xe68f;</i></a>
+				<a style="text-decoration:none" title="删除" onclick="ajax_post_confirm('{:url("admin/business/do_business_delete")}',{id:'{$vo3.business_id}'},'{$vo3.business_name}','删除')" href="javascript:;" class="ml-5"><i class="Hui-iconfont">&#xe6e2;</i></a>
 			</td>
 			<td></td>
 			<td class="text-c" width="20">└</td>
 			<td colspan="2" class="text-l f-14">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 {if condition="$vo3.business_status eq '禁用'"} del {/if}">
 					<span class="strong">{$vo3.business_id}</span>：<span class="strong">{$vo3.business_name}</span>
 					{if condition="$vo3.business_description"}
 						（{$vo3.business_description}）
 					{/if}
 				</div>
-				{if condition="$vo3.relevance"}
-				{foreach $vo3.relevance as $vo4}
-				<div class="col-xs-7 col-sm-4 col-md-2 col-lg-2">
-					<span title="{$vo4.business_description}" class="label label-secondary radius">{$vo4.business_id}：{$vo4.business_name}</span>
+				{if condition="$vo3.relevances"}
+				<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 mt-5 mb-5">相关</div>
+				<div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 mt-5 mb-5">
+					{foreach $vo3.relevances as $vo4_1}
+					<div class="col-xs-7 col-sm-5 col-md-4 col-lg-2">
+						<span title="相关：{$vo4_1.business_name} {$vo4_1.business_description}" class="label {if condition="$vo4_1.business_status eq '禁用'"} label-default del {else} label-secondary {/if} radius">{$vo4_1.business_id}：{$vo4_1.business_name}</span>
+					</div>
+					{/foreach}
 				</div>
-				{/foreach}
+				{/if}
+				{if condition="$vo3.businesses"}
+				<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 mt-5 mb-5">被相关</div>
+				<div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 mt-5 mb-5">
+					{foreach $vo3.businesses as $vo4_2}
+					<div class="col-xs-7 col-sm-5 col-md-4 col-lg-2">
+						<span title="被相关：{$vo4_2.business_name} {$vo4_2.business_description}" class="label {if condition="$vo4_2.business_status eq '禁用'"} label-default del {else} label-warning {/if} radius">{$vo4_2.business_id}：{$vo4_2.business_name}</span>
+					</div>
+					{/foreach}
+				</div>
 				{/if}
 			</td>
 		</tr>
@@ -91,91 +125,9 @@
 </table>
 {/block}
 {block name='js'}
-{js href="__ROOT__/lib/My97DatePicker/4.8/WdatePicker.js"/}
 {js href="__ROOT__/lib/datatables/1.10.0/jquery.dataTables.min.js"/}
 {js href="__ROOT__/lib/laypage/1.2/laypage.js"/}
 <script type="text/javascript">
-function item_status(obj,url) {
-	// 为了友好，取到要操作模块的“菜单名称”字段，要在提示语中使用
-	var name = $(obj).parents("tr").find(".name").html();
-	// 用layer.confirm插件进行操作确认
-	layer.confirm("确认要切换“"+name+"”的状态吗？", function() {
-		// 当layer.confirm被确认后开始提交操作
-		// $.get(url, data, success)
-		$.get(url, function(data) {
-			// 请求控制器方法，传递module_id参数，执行回调函数，用data接收返回值
-			if(data.status==1) {
-				// 返回状态码是1，提示操作成功，并刷新页面
-				layer.msg(data.message, {icon:6, time:1500});
-				setTimeout(function() {
-					window.location.reload();
-				}, 2000);
-			} else {
-				// 返回状态码不是1，提示失败信息，不再刷新页面
-				layer.msg(data.message, {icon:5, time:3000});
-			}
-		});
-	})
-}
 
-// 删除管理员
-function item_delete(obj, url) {
-	// 为了友好，取到要操作模块的“菜单名称”字段，要在提示语中使用
-	var name = $(obj).parents("tr").find(".name").html();
-	// 用layer.confirm插件进行操作确认
-	layer.confirm("确认要删除“"+name+"”吗？", function() {
-		// 当layer.confirm被确认后开始提交操作
-		// $.get(url, data, success)
-		$.get(url, function(data) {
-			if(data.status==1) {
-				// 返回状态码是1，提示操作成功，并刷新页面
-				layer.msg(data.message, {icon:6, time:1500});
-				setTimeout(function() {
-					window.location.reload();
-				}, 2000);
-			} else {
-				// 返回状态码不是1，提示失败信息，不再刷新页面
-				layer.msg(data.message, {icon:5, time:3000});
-			}
-		});	
-	});
-}
-
-// 批量删除
-function item_multidelete(url) {
-	// 定义一个数组用于保存已被选中的checkbox
-	var ids = new Array();
-	// 遍历名为to_multidelete[]的checkbox
-	$("input[name='to_multidelete[]").each(function() {
-		if($(this).is(":checked")) {
-			// 把被选中的checkbox的value值保存到module_ids中
-			ids.push($(this).val());
-		}
-	});
-	// 判断一下数组的长度，如果是0，则不用麻烦服务器了
-	if(ids.length == 0) {
-		layer.msg("没有选中任何数据", {icon:5, time:2000});
-	} else {
-		// 确实有被选中的记录，页面进行一次确认
-		layer.confirm("确定要删除这些数据吗？", function() {
-			// 用$.post()方法去调用控制器中的方法
-			// $.post(url,data,success)
-			$.post(
-				url
-				, {ids: ids}
-				, function(data) {
-					if(data.status==0) {
-						layer.msg(data.message, {icon:5, time:3000});
-					} else {
-						layer.msg(data.message, {icon:6, time:2000});
-						
-					}
-					setTimeout(function() {
-							window.location.reload();
-						}, 3000);
-			});
-		});
-	}
-}
 </script>
 {/block}

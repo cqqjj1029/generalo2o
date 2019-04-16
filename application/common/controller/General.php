@@ -189,6 +189,9 @@ class General extends Controller
     {
         // 取得当前层级
         $level = $this->get_business_level($id);
+        if(!$level) {
+            return false;
+        }
         $business_path = BusinessModel::get($id);
         for($i=1; $i<=$level; $i++) {
             // 把当前路径暂存到business_father中
@@ -246,6 +249,9 @@ class General extends Controller
     {
         // 默认用business_father来记录从当前记录开始每一层向上遍历到的记录
         $business_father = BusinessModel::get($id);
+        if(!$business_father) {
+            return 0;
+        }
         $father_id = $business_father->business_father_id;
         $level = $business_father ? 1 : 0;  // 如果根据ID找到不记录，那么level就为0
         // 当father_id非0非空时，进入循环

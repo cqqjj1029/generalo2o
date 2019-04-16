@@ -1,0 +1,148 @@
+{extend name='general/base-layer' /}
+
+{block name='main'}
+	<form method="post" class="form form-horizontal">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>业务ID：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				{$business.business_id}<input type="hidden" id="business_id" name="business_id" value="{$business.business_id}"/>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>业务名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				{$business.business_name}<input type="hidden" id="business_name" name="business_name" value="{$business.business_name}"/>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">业务信息：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<div class="c-blue">
+					<a href="{:url('admin/business/business_edit',['id'=>$business.business_id])}">要设置相关业务请点这里</a>
+				</div>
+			</div>
+		</div>	
+		<div class="row cl">
+			<lable class="form-label col-xs-4 col-sm-3">相关业务：</lable>
+			<div class="formControls col-xs-8 col-sm-9">
+				<div class="c-blue">
+					已关联 <span id="relevance_count" class="c-red strong">0</span> 项（相关业务仅在3级业务与3级业务间生效）
+				</div>
+				<div class="c-blue"><input type="button" id="relevance_reset" class="btn btn-link" value="清除"/></div>
+				{volist name='list' id='vo'}
+				<div class="skin-minimal panel panel-primary mb-20">
+					<div class="panel-header">
+						<div class="check-box">
+						    <label><input class="check-level-1" type="checkbox" value="{$vo.business_id}" {if condition="$vo.business_status eq '禁用'"} disabled="true" {/if}><span class="{if condition="$vo.business_status eq '禁用'"} del {/if}">{$vo.business_name}</span></label>
+						</div>
+					</div>
+					<div class="panel-body">
+						{volist name='vo.level2' id='vo2'}
+						<div class="panel panel-secondary mb-10">
+							<div class="panel-header">
+								<div class="check-box">
+								    <label><input class="check-level-2" type="checkbox" value="{$vo2.business_id}" {if condition="$vo2.business_status eq '禁用'"} disabled="true" {/if}><span class="{if condition="$vo2.business_status eq '禁用'"} del {/if}">{$vo2.business_name}</span></label>
+								</div>
+							</div>
+							<div class="panel-body">
+								{volist name='vo2.level3' id='vo3'}
+								{if condition='$vo3.business_id neq $business.business_id'}
+									<div class="check-box">
+									    <label title="{$vo3.business_description}"><input class="check-level-3" name="business_relevance_id[]" type="checkbox" value="{$vo3.business_id}" {in name='vo3.business_id' value='$relevance_ids'} checked="true" {/in}><span class="{if condition="$vo3.business_status eq '禁用'"} del {/if}">{$vo3.business_name}</span></label>
+									</div>
+								{/if}
+								{/volist}
+							</div>
+						</div>
+						{/volist}
+					</div>
+				</div>
+				{/volist}
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+				<button type="submit" class="btn btn-success radius disabled" disabled="true">提交数据</button>
+			</div>
+		</div>
+	</form>
+{/block}
+
+{block name='js'}
+<script type="text/javascript">
+	function relevance_count() {
+		$("#relevance_count").text($(".check-level-3:checked").length);
+	}
+	$(function() {
+		relevance_count();
+		// 实现radio和checkbox的样式
+		$('.skin-minimal input').iCheck({
+			checkboxClass: 'icheckbox-red',
+			radioClass: 'iradio-blue',
+			increaseArea: '20%'
+		});
+		// 实现二级面板checkbox全选
+		$(".check-level-2").on("ifUnchecked ifChecked",function() {
+			var ischecked = $(this).prop("checked");
+			$(this).parents(".panel-secondary").find(".check-level-3").iCheck(ischecked?"check":"uncheck");
+		});
+		// 实现一级面板checkbox全选
+		$(".check-level-1").on("ifUnchecked ifChecked",function() {
+			var ischecked = $(this).prop("checked");
+			$(this).parents(".panel-primary").find(".check-level-2,.check-level-3").iCheck(ischecked?"check":"uncheck");
+		});
+		// 实现对已选相关业务的计数
+		$(".check-level-3").on("ifUnchecked ifChecked",function() {
+			relevance_count();
+		});
+		$("#relevance_reset").click(function() {
+			$(".check-level-1,.check-level-2,.check-level-3").each(function() {
+				if(!$(this).attr('disabled')) {
+					$(this).iCheck("uncheck");
+				}
+			});
+		});
+		// 只有当表单中有数据变化时，提交按钮才可用
+		$("form").children().bind('input propertychange', function() {
+			$(":submit").removeClass('disabled').removeAttr("disabled");
+		});
+		// 对radio和checkbox添加只有当表单中有数据变化时，提交按钮才可用设置
+		$('input:radio,input:checkbox').on('ifChecked', function(){
+			$(":submit").removeClass('disabled').removeAttr("disabled");
+		});
+
+		$("form").validate({
+			submitHandler: function(form) {
+				// 当验证通过时执行ajax提交
+				$.ajax({
+	                type: "POST",	// POST方法提交
+	                url: "{:url('admin/business/do_business_relevance')}",	// 执行的方法
+	                data: $("form").serialize(),	// 将表单控件的name属性序列化后提交
+	                dataType: "json",	// 数据类型为json
+	                success: function(data) {
+	                	// 当ajax请求执行成功时执行
+	                    if (data.status == true) {
+	                    	// 返回data对象中的status元素值为1表示数据插入成功
+	                        layer.msg(data.message, {icon: 6, time: 2000});	// 使用H-ui的浮动提示框，2秒后自动消失
+							setTimeout(function() {
+								parent.location.reload();
+							}, 2000);	//2秒后对父页面执行刷新（相当于关闭了弹层同时更新了数据）
+	                    } else {
+	                    	// 返回data对象的status值不为1，表示数据插入失败
+	                    	layer.msg(data.message, {icon: 5, time: 2000});	// 使用H-ui的浮动提示框，2秒后自动消失
+	                    	// 页面停留在这里，不再执行任何动作
+	                    }
+	                }
+            	});
+			}
+		});
+	});
+</script>
+{/block}
+
+{block name='css'}
+<!-- 编写本页特有的样式 -->
+<style type="text/css" media="screen">
+
+</style>
+{/block}
