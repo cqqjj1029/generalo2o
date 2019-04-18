@@ -11,7 +11,7 @@
  Target Server Version : 50723
  File Encoding         : 65001
 
- Date: 16/04/2019 18:12:35
+ Date: 18/04/2019 19:04:10
 */
 
 SET NAMES utf8mb4;
@@ -1354,7 +1354,7 @@ CREATE TABLE `o2o_business`  (
   `business_father_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '父级ID',
   `business_status` tinyint(3) UNSIGNED NOT NULL DEFAULT 1 COMMENT '业务状态，默认1，0为禁用',
   PRIMARY KEY (`business_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '服务分类表，自增ID' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '服务分类表，自增ID' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of o2o_business
@@ -6062,7 +6062,7 @@ CREATE TABLE `o2o_trade`  (
 -- ----------------------------
 -- Records of o2o_trade
 -- ----------------------------
-INSERT INTO `o2o_trade` VALUES ('A', '农、林、牧、渔业', '本门类包括01～05大类', NULL, 1);
+INSERT INTO `o2o_trade` VALUES ('A', '农、林、牧、渔业', '本门类包括01～05大类', '0', 1);
 INSERT INTO `o2o_trade` VALUES ('A1', '农业', '指对各种农作物的种植', 'A', 2);
 INSERT INTO `o2o_trade` VALUES ('A11', '谷物种植', '指以收获籽实为主的农作物的种植，包括稻谷、小麦、玉米等农作物的种植和作为饲料和工业原料的谷物的种植', 'A1', 3);
 INSERT INTO `o2o_trade` VALUES ('A111', '稻谷种植', NULL, 'A11', 4);
@@ -6161,7 +6161,7 @@ INSERT INTO `o2o_trade` VALUES ('A539', '其他畜牧专业及辅助性活动', 
 INSERT INTO `o2o_trade` VALUES ('A54', '渔业专业及辅助性活动', '指对渔业生产提供的各种活动，包括鱼苗及鱼种场、水产良种场和水产增殖场等活动', 'A5', 3);
 INSERT INTO `o2o_trade` VALUES ('A541', '鱼苗及鱼种场活动', NULL, 'A54', 4);
 INSERT INTO `o2o_trade` VALUES ('A549', '其他渔业专业及辅助性活动', NULL, 'A54', 4);
-INSERT INTO `o2o_trade` VALUES ('B', '采矿业', '本类包括06～12大类，采矿业指对固体（如煤和矿物）、液体（如原油）或气体（如天然气）等自然产生的矿物的采掘；包括地下或地上采掘、矿井的运行，以及一般在矿址或矿址附近从事的旨在加工原材料的所有辅助性工作，例如碾磨、选矿和处理，均属本类活动；还包括使原料得以销售所需的准备工作；不包括水的蓄集、净化和分配，以及地质勘查、建筑工程活动', NULL, 1);
+INSERT INTO `o2o_trade` VALUES ('B', '采矿业', '本类包括06～12大类，采矿业指对固体（如煤和矿物）、液体（如原油）或气体（如天然气）等自然产生的矿物的采掘；包括地下或地上采掘、矿井的运行，以及一般在矿址或矿址附近从事的旨在加工原材料的所有辅助性工作，例如碾磨、选矿和处理，均属本类活动；还包括使原料得以销售所需的准备工作；不包括水的蓄集、净化和分配，以及地质勘查、建筑工程活动', '0', 1);
 INSERT INTO `o2o_trade` VALUES ('B6', '煤炭开采和洗选业', '指对各种煤炭的开采、洗选、分级等生产活动；不包括煤制品的生产和煤炭勘探活动', 'B', 2);
 INSERT INTO `o2o_trade` VALUES ('B61', '烟煤和无烟煤开采洗选', '指对地下或露天烟煤、无烟煤的开采，以及对采出的烟煤、无烟煤及其他硬煤进行洗选、分级等提高质量的活动', 'B6', 3);
 INSERT INTO `o2o_trade` VALUES ('B62', '褐煤开采洗选', '指对褐煤——煤化程度较低的一种燃料的地下或露天开采，以及对采出的褐煤进行洗选、分级等提高质量的活动', 'B6', 3);
@@ -6215,7 +6215,7 @@ INSERT INTO `o2o_trade` VALUES ('B112', '石油和天然气开采专业及辅助
 INSERT INTO `o2o_trade` VALUES ('B119', '其他开采专业及辅助性活动', NULL, 'B11', 3);
 INSERT INTO `o2o_trade` VALUES ('B12', '其他采矿业', NULL, 'B', 2);
 INSERT INTO `o2o_trade` VALUES ('B120', '其他采矿业', '指对地热资源、矿泉水资源以及其他未列明的自然资源的开采，但不包括利用这些资源建立的热电厂和矿泉水厂的活动', 'B12', 3);
-INSERT INTO `o2o_trade` VALUES ('C', '制造业', '本门类包括13～43大类，指经物理变化或化学变化后成为新的产品，不论是动力机械制造或手工制作，也不论产品是批发销售或零售，均视为制造；建筑物中的各种制成品、零部件的生产应视为制造，但在建筑预制品工地，把主要部件组装成桥梁、仓库设备、铁路与高架公路、升降机与电梯、管道设备、喷水设备、暖气设备、通风设备与空调设备，照明与安装电线等组装活动，以及建筑物的装置，均列为建筑活动；本门类包括机电产品的再制造，指将废旧汽车零部件、工程机械、机床等进行专业化修复的批量化生产过程，再制造的产品达到与原有新产品相同的质量和性能', NULL, 1);
+INSERT INTO `o2o_trade` VALUES ('C', '制造业', '本门类包括13～43大类，指经物理变化或化学变化后成为新的产品，不论是动力机械制造或手工制作，也不论产品是批发销售或零售，均视为制造；建筑物中的各种制成品、零部件的生产应视为制造，但在建筑预制品工地，把主要部件组装成桥梁、仓库设备、铁路与高架公路、升降机与电梯、管道设备、喷水设备、暖气设备、通风设备与空调设备，照明与安装电线等组装活动，以及建筑物的装置，均列为建筑活动；本门类包括机电产品的再制造，指将废旧汽车零部件、工程机械、机床等进行专业化修复的批量化生产过程，再制造的产品达到与原有新产品相同的质量和性能', '0', 1);
 INSERT INTO `o2o_trade` VALUES ('C13', '农副食品加工业', '指直接以农、林、牧、渔业产品为原料进行的谷物磨制、饲料加工、植物油和制糖加工、屠宰及肉类加工、水产品加工，以及蔬菜、水果和坚果等食品的加工', 'C', 2);
 INSERT INTO `o2o_trade` VALUES ('C131', '谷物磨制', '也称粮食加工，指将稻谷、小麦、玉米、谷子、高粱等谷物去壳、碾磨，加工为成品粮的生产活动', 'C13', 3);
 INSERT INTO `o2o_trade` VALUES ('C1311', '稻谷加工', '指将稻谷去壳、碾磨成大米的生产活动', 'C131', 4);
@@ -6981,7 +6981,7 @@ INSERT INTO `o2o_trade` VALUES ('C4349', '其他运输设备修理', NULL, 'C434
 INSERT INTO `o2o_trade` VALUES ('C435', '电气设备修理', NULL, 'C43', 3);
 INSERT INTO `o2o_trade` VALUES ('C436', '仪器仪表修理', NULL, 'C43', 3);
 INSERT INTO `o2o_trade` VALUES ('C439', '其他机械和设备修理业', NULL, 'C43', 3);
-INSERT INTO `o2o_trade` VALUES ('D', '电力、热力、燃气及水生产和供应业', '本门类包括44～46大类', NULL, 1);
+INSERT INTO `o2o_trade` VALUES ('D', '电力、热力、燃气及水生产和供应业', '本门类包括44～46大类', '0', 1);
 INSERT INTO `o2o_trade` VALUES ('D44', '电力、热力生产和供应业', NULL, 'D', 2);
 INSERT INTO `o2o_trade` VALUES ('D441', '电力生产', NULL, 'D44', 3);
 INSERT INTO `o2o_trade` VALUES ('D4411', '火力发电', '不包括既发电又提供热力的活动', 'D441', 4);
@@ -7005,7 +7005,7 @@ INSERT INTO `o2o_trade` VALUES ('D461', '自来水生产和供应', '指将天�
 INSERT INTO `o2o_trade` VALUES ('D462', '污水处理及其再生利用', '指对污水污泥的处理和处置，及净化后的再利用活动', 'D46', 3);
 INSERT INTO `o2o_trade` VALUES ('D463', '海水淡化处理', '指将海水淡化处理，达到可以使用标准的生产活动', 'D46', 3);
 INSERT INTO `o2o_trade` VALUES ('D469', '其他水的处理、利用与分配', '指对雨水、微咸水等类似水进行收集、处理和利用活动', 'D46', 3);
-INSERT INTO `o2o_trade` VALUES ('E', '建筑业', '本门类包括47～50大类', NULL, 1);
+INSERT INTO `o2o_trade` VALUES ('E', '建筑业', '本门类包括47～50大类', '0', 1);
 INSERT INTO `o2o_trade` VALUES ('E47', '房屋建筑业', '指房屋主体工程的施工活动；不包括主体工程施工前的工程准备活动', 'E', 2);
 INSERT INTO `o2o_trade` VALUES ('E471', '住宅房屋建筑', NULL, 'E47', 3);
 INSERT INTO `o2o_trade` VALUES ('E472', '体育场馆建筑', '指体育馆工程服务、体育及休闲健身用房屋建设活动', 'E47', 3);
@@ -7064,7 +7064,7 @@ INSERT INTO `o2o_trade` VALUES ('E5021', '建筑物拆除活动', NULL, 'E502', 
 INSERT INTO `o2o_trade` VALUES ('E5022', '场地准备活动', NULL, 'E502', 4);
 INSERT INTO `o2o_trade` VALUES ('E503', '提供施工设备服务', '指为建筑工程提供配有操作人员的施工设备的服务', 'E50', 3);
 INSERT INTO `o2o_trade` VALUES ('E509', '其他未列明建筑业', '指上述未列明的其他工程建筑活动', 'E50', 3);
-INSERT INTO `o2o_trade` VALUES ('F', '批发和零售业', '本门类包括51和52大类，指商品在流通环节中的批发活动和零售活动', NULL, 1);
+INSERT INTO `o2o_trade` VALUES ('F', '批发和零售业', '本门类包括51和52大类，指商品在流通环节中的批发活动和零售活动', '0', 1);
 INSERT INTO `o2o_trade` VALUES ('F51', '批发业', '指向其他批发或零售单位（含个体经营者）及其他企事业单位、机关团体等批量销售生活用品、生产资料的活动，以及从事进出口贸易和贸易经纪与代理的活动，包括拥有货物所有权，并以本单位（公司）的名义进行交易活动,也包括不拥有货物的所有权，收取佣金的商品代理、商品代售活动；本类还包括各类商品批发市场中固定摊位的批发活动，以及以销售为目的的收购活动', 'F', 2);
 INSERT INTO `o2o_trade` VALUES ('F511', '农、林、牧、渔产品批发', '指未经过加工的农作物、林产品及牲畜、畜产品、鱼苗的批发和进出口活动，但不包括蔬菜、水果、肉、禽、蛋、奶及水产品的批发和进出口活动，包括以批发为目的的农副产品收购活动', 'F51', 3);
 INSERT INTO `o2o_trade` VALUES ('F5111', '谷物、豆及薯类批发', NULL, 'F511', 4);
@@ -7213,7 +7213,7 @@ INSERT INTO `o2o_trade` VALUES ('F5295', '旧货零售', NULL, 'F529', 4);
 INSERT INTO `o2o_trade` VALUES ('F5296', '生活用燃料零售', '指从事生活用煤、煤油、酒精、薪柴、木炭以及罐装液化石油气等专门零售活动', 'F529', 4);
 INSERT INTO `o2o_trade` VALUES ('F5297', '宠物食品用品零售', NULL, 'F529', 4);
 INSERT INTO `o2o_trade` VALUES ('F5299', '其他未列明零售业', NULL, 'F529', 4);
-INSERT INTO `o2o_trade` VALUES ('G', '交通运输、仓储和邮政业', '本门类包括53～60大类', NULL, 1);
+INSERT INTO `o2o_trade` VALUES ('G', '交通运输、仓储和邮政业', '本门类包括53～60大类', '0', 1);
 INSERT INTO `o2o_trade` VALUES ('G53', '铁路运输业', '指铁路的安全管理、调度指挥、行车组织、客运组织、货运组织，以及机车车辆、线桥隧涵、牵引供电、通信信号、信息系统的运用及维修养护；不包括铁路机车车辆、线桥隧涵、牵引供电、通信信号、信息系统设备的制造厂（公司）、建筑工程公司、商店、学校、科研所、医院等活动', 'G', 2);
 INSERT INTO `o2o_trade` VALUES ('G531', '铁路旅客运输', NULL, 'G53', 3);
 INSERT INTO `o2o_trade` VALUES ('G5311', '高速铁路旅客运输', NULL, 'G531', 4);
@@ -7304,7 +7304,7 @@ INSERT INTO `o2o_trade` VALUES ('G60', '邮政业', NULL, 'G', 2);
 INSERT INTO `o2o_trade` VALUES ('G601', '邮政基本服务', '指邮政企业或者受邮政企业委托的企业提供的信件、印刷品、包裹、汇兑、报刊发行等邮政服务，以及国家规定的其他邮政服务；不包括邮政企业提供的快递服务', 'G60', 3);
 INSERT INTO `o2o_trade` VALUES ('G602', '快递服务', '指快递服务组织在承诺的时限内快速完成的寄递服务', 'G60', 3);
 INSERT INTO `o2o_trade` VALUES ('G609', '其他寄递服务', '指邮政企业和快递企业之外的企业提供的多种类型的寄递服务', 'G60', 3);
-INSERT INTO `o2o_trade` VALUES ('H', '住宿和餐饮业', '本门类包括61和62大类', NULL, 1);
+INSERT INTO `o2o_trade` VALUES ('H', '住宿和餐饮业', '本门类包括61和62大类', '0', 1);
 INSERT INTO `o2o_trade` VALUES ('H61', '住宿业', '指为旅行者提供短期留宿场所的活动，有些单位只提供住宿，也有些单位提供住宿、饮食、商务、娱乐一体的服务，本类不包括主要按月或按年长期出租房屋住所的活动', 'H', 2);
 INSERT INTO `o2o_trade` VALUES ('H611', '旅游饭店', '指按照国家有关规定评定的旅游饭店和具有同等质量、水平的饭店活动', 'H61', 3);
 INSERT INTO `o2o_trade` VALUES ('H612', '一般旅馆', '指不具备评定旅游饭店和同等水平饭店的一般旅馆的活动', 'H61', 3);
@@ -7327,7 +7327,7 @@ INSERT INTO `o2o_trade` VALUES ('H6242', '外卖送餐服务', '指根据消费�
 INSERT INTO `o2o_trade` VALUES ('H629', '其他餐饮业', NULL, 'H62', 3);
 INSERT INTO `o2o_trade` VALUES ('H6291', '小吃服务', '指提供全天就餐的简便餐饮服务，包括路边小饭馆、农家饭馆、流动餐饮和单一小吃等餐饮服务', 'H629', 4);
 INSERT INTO `o2o_trade` VALUES ('H6299', '其他未列明餐饮业', NULL, 'H629', 4);
-INSERT INTO `o2o_trade` VALUES ('I', '信息传输、软件和信息技术服务业', '本门类包括63～65大类', NULL, 1);
+INSERT INTO `o2o_trade` VALUES ('I', '信息传输、软件和信息技术服务业', '本门类包括63～65大类', '0', 1);
 INSERT INTO `o2o_trade` VALUES ('I63', '电信、广播电视和卫星传输服务', NULL, 'I', 2);
 INSERT INTO `o2o_trade` VALUES ('I631', '电信', '指利用有线、无线的电磁系统或者光电系统，传送、发射或者接收语音、文字、数据、图像以及其他任何形式信息的活动', 'I63', 3);
 INSERT INTO `o2o_trade` VALUES ('I6311', '固定电信服务', '指从事固定通信业务活动', 'I631', 4);
@@ -7374,7 +7374,7 @@ INSERT INTO `o2o_trade` VALUES ('I6579', '其他数字内容服务', '含数字�
 INSERT INTO `o2o_trade` VALUES ('I659', '其他信息技术服务业', NULL, 'I65', 3);
 INSERT INTO `o2o_trade` VALUES ('I6591', '呼叫中心', '指受企事业单位委托，利用与公用电话网或因特网连接的呼叫中心系统和数据库技术，经过信息采集、加工、存储等建立信息库，通过固定网、移动网或因特网等公众通信网络向用户提供有关该企事业单位的业务咨询、信息咨询和数据查询等服务', 'I659', 4);
 INSERT INTO `o2o_trade` VALUES ('I6599', '其他未列明信息技术服务业', NULL, 'I659', 4);
-INSERT INTO `o2o_trade` VALUES ('J', '金融业', '本门类包括66～69大类', NULL, 1);
+INSERT INTO `o2o_trade` VALUES ('J', '金融业', '本门类包括66～69大类', '0', 1);
 INSERT INTO `o2o_trade` VALUES ('J66', '货币金融服务', NULL, 'J', 2);
 INSERT INTO `o2o_trade` VALUES ('J661', '中央银行服务', '指代表政府管理金融活动，并制定和执行货币政策，维护金融稳定，管理金融市场的特殊金融机构的活动', 'J66', 3);
 INSERT INTO `o2o_trade` VALUES ('J662', '货币银行服务', '指除中央银行以外的各类银行所从事存款、贷款和信用卡等货币媒介活动，还包括在中国开展货币业务的外资银行及分支机构的活动', 'J66', 3);
@@ -7436,14 +7436,14 @@ INSERT INTO `o2o_trade` VALUES ('J695', '金融资产管理公司', '指经批�
 INSERT INTO `o2o_trade` VALUES ('J699', '其他未列明金融业', NULL, 'J69', 3);
 INSERT INTO `o2o_trade` VALUES ('J6991', '货币经纪公司服务', '指经中国银监会批准设立的专门从事促进金融机构间资金融通和外汇交易等经纪服务的非银行金融机构的活动', 'J699', 4);
 INSERT INTO `o2o_trade` VALUES ('J6999', '其他未包括金融业', '指主要与除提供贷款以外的资金分配有关的其他金融媒介活动，包括保理活动、掉期、期权和其他套期保值安排、保单贴现公司的活动、金融交易处理与结算，以及借款担保服务、发行债券担保服务等融资担保活动，还包括信用卡交易的处理与结算、外币兑换等活动', 'J699', 4);
-INSERT INTO `o2o_trade` VALUES ('K', '房地产业', '本门类包括70大类', NULL, 1);
+INSERT INTO `o2o_trade` VALUES ('K', '房地产业', '本门类包括70大类', '0', 1);
 INSERT INTO `o2o_trade` VALUES ('K70', '房地产业', NULL, 'K', 2);
 INSERT INTO `o2o_trade` VALUES ('K701', '房地产开发经营', '指房地产开发企业进行的房屋、基础设施建设等开发，以及转让房地产开发项目或者销售房屋等活动', 'K70', 3);
 INSERT INTO `o2o_trade` VALUES ('K702', '物业管理', '指物业服务企业按照合同约定，对房屋及配套的设施设备和相关场地进行维修、养护、管理，维护环境卫生和相关秩序的活动', 'K70', 3);
 INSERT INTO `o2o_trade` VALUES ('K703', '房地产中介服务', '指房地产咨询、房地产价格评估、房地产经纪等活动', 'K70', 3);
 INSERT INTO `o2o_trade` VALUES ('K704', '房地产租赁经营', '指各类单位和居民住户的营利性房地产租赁活动，以及房地产管理部门和企事业单位、机关提供的非营利性租赁服务，包括体育场地租赁服务', 'K70', 3);
 INSERT INTO `o2o_trade` VALUES ('K709', '其他房地产业', NULL, 'K70', 3);
-INSERT INTO `o2o_trade` VALUES ('L', '租赁和商务服务业', '本门类包括71和72大类', NULL, 1);
+INSERT INTO `o2o_trade` VALUES ('L', '租赁和商务服务业', '本门类包括71和72大类', '0', 1);
 INSERT INTO `o2o_trade` VALUES ('L71', '租赁业', NULL, 'L', 2);
 INSERT INTO `o2o_trade` VALUES ('L711', '机械设备经营租赁', '指不配备操作人员的机械设备的租赁服务', 'L71', 3);
 INSERT INTO `o2o_trade` VALUES ('L7111', '汽车租赁', NULL, 'L711', 4);
@@ -7514,7 +7514,7 @@ INSERT INTO `o2o_trade` VALUES ('L7296', '非融资担保服务', '指保证人�
 INSERT INTO `o2o_trade` VALUES ('L7297', '商务代理代办服务', '指为机构单位提供的各种代理、代办服务', 'L729', 4);
 INSERT INTO `o2o_trade` VALUES ('L7298', '票务代理服务', '指除旅客交通票务代理外的各种票务代理服务（旅客交通票务代理是指除交通运输外的票务代理，包含体育文化等）', 'L729', 4);
 INSERT INTO `o2o_trade` VALUES ('L7299', '其他未列明商务服务业', '指上述未列明的商务、代理等活动，包括商业保理活动', 'L729', 4);
-INSERT INTO `o2o_trade` VALUES ('M', '科学研究和技术服务业', '本门类包括73～75大类', NULL, 1);
+INSERT INTO `o2o_trade` VALUES ('M', '科学研究和技术服务业', '本门类包括73～75大类', '0', 1);
 INSERT INTO `o2o_trade` VALUES ('M73', '研究和试验发展', '指为了增加知识（包括有关自然、工程、人类、文化和社会的知识），以及运用这些知识创造新的应用，所进行的系统的、创造性的活动；该活动仅限于对新发现、新理论的研究，新技术、新产品、新工艺的研制研究与试验发展，包括基础研究、应用研究和试验发展', 'M', 2);
 INSERT INTO `o2o_trade` VALUES ('M731', '自然科学研究和试验发展', NULL, 'M73', 3);
 INSERT INTO `o2o_trade` VALUES ('M732', '工程和技术研究和试验发展', NULL, 'M73', 3);
@@ -7574,7 +7574,7 @@ INSERT INTO `o2o_trade` VALUES ('M752', '知识产权服务', '指专利、商�
 INSERT INTO `o2o_trade` VALUES ('M753', '科技中介服务', '指为科技活动提供社会化服务与管理，在政府、各类科技活动主体与市场之间提供居间服务的组织，主要开展信息交流、技术咨询、科技评估和科技鉴证等活动', 'M75', 3);
 INSERT INTO `o2o_trade` VALUES ('M754', '创业空间服务', '指顺应新科技革命和产业变革新趋势、有效满足网络时代大众创业创新需求的新型创业服务平台，它是针对早期创业的重要服务载体，主要为创业者提供低成本的工作空间、网络空间、社交空间和资源共享空间，包括众创空间、孵化器、创业基地等', 'M75', 3);
 INSERT INTO `o2o_trade` VALUES ('M759', '其他科技推广服务业', '指除技术推广、科技中介以外的其他科技服务，但不包括短期的日常业务活动', 'M75', 3);
-INSERT INTO `o2o_trade` VALUES ('N', '水利、环境和公共设施管理业', '本门类包括76～79大类', NULL, 1);
+INSERT INTO `o2o_trade` VALUES ('N', '水利、环境和公共设施管理业', '本门类包括76～79大类', '0', 1);
 INSERT INTO `o2o_trade` VALUES ('N76', '水利管理业', NULL, 'N', 2);
 INSERT INTO `o2o_trade` VALUES ('N761', '防洪除涝设施管理', '指对江河湖泊开展的河道、堤防、岸线整治等活动及对河流、湖泊、行蓄洪区和沿海的防洪设施的管理活动，包括防洪工程设施的管理及运行维护等', 'N76', 3);
 INSERT INTO `o2o_trade` VALUES ('N762', '水资源管理', '指对水资源的开发、利用、配置、节约、保护、监测、管理等活动', 'N76', 3);
@@ -7615,7 +7615,7 @@ INSERT INTO `o2o_trade` VALUES ('N792', '土地调查评估服务', '指对土�
 INSERT INTO `o2o_trade` VALUES ('N793', '土地登记服务', '指在土地登记过程中进行受理申请、登记事项审核、登记簿册填写和权属证书发放、土地产权产籍档案管理和应用等活动', 'N79', 3);
 INSERT INTO `o2o_trade` VALUES ('N794', '土地登记代理服务', '指接受申请人委托，通过实地调查、资料收集、权属判别等工作，代为办理土地、林木等不动产登记的申请和领证等事项，提供社会服务等活动', 'N79', 3);
 INSERT INTO `o2o_trade` VALUES ('N799', '其他土地管理服务', '指土地交易服务、土地储备管理及其他未列明的土地管理服务', 'N79', 3);
-INSERT INTO `o2o_trade` VALUES ('O', '居民服务、修理和其他服务业', '本门类包括80～82大类', NULL, 1);
+INSERT INTO `o2o_trade` VALUES ('O', '居民服务、修理和其他服务业', '本门类包括80～82大类', '0', 1);
 INSERT INTO `o2o_trade` VALUES ('O80', '居民服务业', NULL, 'O', 2);
 INSERT INTO `o2o_trade` VALUES ('O801', '家庭服务', '指雇佣家庭雇工的家庭住户和家庭户的自营活动，以及在雇主家庭从事有报酬的家庭雇工的活动，包括钟点工和居住在雇主家里的家政劳动者的活动', 'O80', 3);
 INSERT INTO `o2o_trade` VALUES ('O802', '托儿所服务', '指社会、街道、个人办的面向不足三岁幼儿的看护活动，可分为全托、日托、半托，或计时的服务', 'O80', 3);
@@ -7658,7 +7658,7 @@ INSERT INTO `o2o_trade` VALUES ('O8223', '宠物美容服务', NULL, 'O822', 4);
 INSERT INTO `o2o_trade` VALUES ('O8224', '宠物寄托收养服务', NULL, 'O822', 4);
 INSERT INTO `o2o_trade` VALUES ('O8229', '其他宠物服务', '指宠物运输、宠物培训及其他未列明的宠物活动', 'O822', 4);
 INSERT INTO `o2o_trade` VALUES ('O829', '其他未列明服务业', NULL, 'O82', 3);
-INSERT INTO `o2o_trade` VALUES ('P', '教育', '本门类包括83大类', NULL, 1);
+INSERT INTO `o2o_trade` VALUES ('P', '教育', '本门类包括83大类', '0', 1);
 INSERT INTO `o2o_trade` VALUES ('P83', '教育', NULL, 'P', 2);
 INSERT INTO `o2o_trade` VALUES ('P831', '学前教育', '指经教育行政部门批准举办的对学龄前幼儿进行保育和教育的活动', 'P83', 3);
 INSERT INTO `o2o_trade` VALUES ('P832', '初等教育', '指《义务教育法》规定的小学教育以及成人小学教育（含扫盲）的活动', 'P83', 3);
@@ -7681,7 +7681,7 @@ INSERT INTO `o2o_trade` VALUES ('P8392', '体校及体育培训', '指各类、�
 INSERT INTO `o2o_trade` VALUES ('P8393', '文化艺术培训', '指国家学校教育制度以外，由正规学校或社会各界办的文化艺术培训活动，不包括少年儿童的课外艺术辅导班', 'P839', 4);
 INSERT INTO `o2o_trade` VALUES ('P8394', '教育辅助服务', '指专门从事教育检测、评价、考试、招生等辅助活动', 'P839', 4);
 INSERT INTO `o2o_trade` VALUES ('P8399', '其他未列明教育', '指经批准的宗教院校教育及上述未列明的教育活动', 'P839', 4);
-INSERT INTO `o2o_trade` VALUES ('Q', '卫生和社会工作', '本门类包括84和85大类', NULL, 1);
+INSERT INTO `o2o_trade` VALUES ('Q', '卫生和社会工作', '本门类包括84和85大类', '0', 1);
 INSERT INTO `o2o_trade` VALUES ('Q84', '卫生', NULL, 'Q', 2);
 INSERT INTO `o2o_trade` VALUES ('Q841', '医院', NULL, 'Q84', 3);
 INSERT INTO `o2o_trade` VALUES ('Q8411', '综合医院', NULL, 'Q841', 4);
@@ -7720,7 +7720,7 @@ INSERT INTO `o2o_trade` VALUES ('Q852', '不提供住宿社会工作', '指为�
 INSERT INTO `o2o_trade` VALUES ('Q8521', '社会看护与帮助服务', '指为老人、残疾人、五保户及其他弱势群体提供不住宿的看护、帮助活动', 'Q852', 4);
 INSERT INTO `o2o_trade` VALUES ('Q8522', '康复辅具适配服务', '指为老年人、残疾人、运动伤残人员、孤残儿童及其他弱势群体提供的假肢、矫形器、轮椅车、助行器、助听器等康复辅具适配服务的活动', 'Q852', 4);
 INSERT INTO `o2o_trade` VALUES ('Q8529', '其他不提供住宿社会工作', '指慈善、募捐等其他社会工作的活动', 'Q852', 4);
-INSERT INTO `o2o_trade` VALUES ('R', '文化、体育和娱乐业', '本门类包括86～90大类', NULL, 1);
+INSERT INTO `o2o_trade` VALUES ('R', '文化、体育和娱乐业', '本门类包括86～90大类', '0', 1);
 INSERT INTO `o2o_trade` VALUES ('R86', '新闻和出版业', NULL, 'R', 2);
 INSERT INTO `o2o_trade` VALUES ('R861', '新闻业', NULL, 'R86', 3);
 INSERT INTO `o2o_trade` VALUES ('R862', '出版业', NULL, 'R86', 3);
@@ -7781,7 +7781,7 @@ INSERT INTO `o2o_trade` VALUES ('R9053', '文化娱乐经纪人', NULL, 'R905', 
 INSERT INTO `o2o_trade` VALUES ('R9054', '体育经纪人', NULL, 'R905', 4);
 INSERT INTO `o2o_trade` VALUES ('R9059', '其他文化艺术经纪代理', '指除文化娱乐经纪人、体育经纪人、艺术品、收藏品经纪代理以外的其他文化艺术经纪代理', 'R905', 4);
 INSERT INTO `o2o_trade` VALUES ('R909', '其他娱乐业', '指公园、海滩和旅游景点内小型设施的娱乐活动及其他娱乐活动', 'R90', 3);
-INSERT INTO `o2o_trade` VALUES ('S', '公共管理、社会保障和社会组织', '本类包括91～96大类', NULL, 1);
+INSERT INTO `o2o_trade` VALUES ('S', '公共管理、社会保障和社会组织', '本类包括91～96大类', '0', 1);
 INSERT INTO `o2o_trade` VALUES ('S91', '中国共产党机关', NULL, 'S', 2);
 INSERT INTO `o2o_trade` VALUES ('S910', '中国共产党机关', NULL, 'S91', 3);
 INSERT INTO `o2o_trade` VALUES ('S92', '国家机构', NULL, 'S', 2);
@@ -7829,7 +7829,7 @@ INSERT INTO `o2o_trade` VALUES ('S9542', '宗教活动场所服务', NULL, 'S954
 INSERT INTO `o2o_trade` VALUES ('S96', '基层群众自治组织及其他组织', '指通过选举产生的社区性组织，该组织为本地区提供一般性管理、调解、治安、优抚、计划生育等服务', 'S', 2);
 INSERT INTO `o2o_trade` VALUES ('S961', '社区居民自治组织', '指城市、镇的居民通过选举产生的群众性自治组织的管理活动', 'S96', 3);
 INSERT INTO `o2o_trade` VALUES ('S962', '村民自治组织', '指农村村民通过选举产生的群众性自治组织的管理活动', 'S96', 3);
-INSERT INTO `o2o_trade` VALUES ('T', '国际组织', '本门类包括97大类', NULL, 1);
+INSERT INTO `o2o_trade` VALUES ('T', '国际组织', '本门类包括97大类', '0', 1);
 INSERT INTO `o2o_trade` VALUES ('T97', '国际组织', NULL, 'T', 2);
 INSERT INTO `o2o_trade` VALUES ('T970', '国际组织', '指联合国和其他国际组织驻我国境内机构等活动', 'T97', 3);
 INSERT INTO `o2o_trade` VALUES ('A190', '其他农业', NULL, 'A19', 4);
