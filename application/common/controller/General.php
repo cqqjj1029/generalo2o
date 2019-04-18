@@ -148,18 +148,37 @@ class General extends Controller
         return $father;
     }
 
+    protected function get_district_list($start_father_id=86)
+    {
+        $district = new DistrictModel;
+        $list = $district->where('district_father_id','eq',$start_father_id)->order(['district_id'=>'asc'])->select();
+        return $this->get_district_child($list);
+    }
+
+    protected function get_district_child($list)
+    {
+        if($list) {
+            $district = new DistrictModel;
+            foreach($list as $index=>$item) {
+                $child = $district->where('district_father_id','eq',$item['district_id'])->order(['district_id'=>'asc'])->select();
+                $list[$index]['child'] = $this->get_district_child($child);
+            }
+        }
+        return $list;
+    }
+
     /**
      * 根据father_id获取trade列表
      * @param  integer $father_id [description]
      * @return [type]             [description]
      */
-    protected function get_trade($father_id=0)
+    protected function get_trade($father_id='0')
     {
         $trade = new TradeModel;
         if($father_id) {
             $list = $trade->where('trade_father_id', 'eq', $father_id)->order(['trade_id'=>'asc'])->select();
         } else {
-            $list = $trade->where('trade_father_id','null')->order(['trade_id'=>'asc'])->select();
+            $list = $trade->where('trade_father_id','0')->order(['trade_id'=>'asc'])->select();
         }
         return $list;
     }

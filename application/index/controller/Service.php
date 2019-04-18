@@ -16,12 +16,18 @@ class Service extends Base
         return $data;
     }
 
+    public function district_json($father_id=86)
+    {
+        $data = $this->get_district_list($father_id);
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
+
     /**
      * 根据father_id查询对应的行业数据
      * @param  integer $father_id [description]
      * @return [type]             [description]
      */
-    public function trade($father_id=0)
+    public function trade($father_id='0')
     {
         $data = $this->get_trade($father_id);
         return $data;

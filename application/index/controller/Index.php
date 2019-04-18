@@ -29,4 +29,10 @@ class Index extends Base
     {
         return $this->view->fetch();
     }
+
+    public function jqueryplugin()
+    {
+        $this->view->assign('pagetitle','jquery插件测试');
+        return $this->view->fetch();
+    }
 }

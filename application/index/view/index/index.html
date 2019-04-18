@@ -7,20 +7,23 @@
 {block name="body"}
 <h1>欢迎您访问{$title}</h1>
 
-<div class="container px-lg-5">
-	<div class="row mx-lg-n5 align-items-center justify-content-center">
-		<div class="col py-3 px-lg-5 border bg-light">
-			<a href="{:url('index/index/vue')}">vue测试</a>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-xs-6 col-sm-4 col-md-3 col-lg-1">
+			<a class="btn btn-primary btn-lg" href="{:url('index/index/vue')}">vue测试</a>
 		</div>
-		<div class="col py-3 px-lg-5 border bg-light">
-			<a href="{:url('index/index/bootstrap')}">Bootstrap</a>
+		<div class="col-xs-6 col-sm-4 col-md-3 col-lg-1">
+			<a class="btn btn-primary btn-lg" href="{:url('index/index/bootstrap')}">Bootstrap</a>
 		</div>
-		<div class="col">
-			item3
+		<div class="col-xs-6 col-sm-4 col-md-3 col-lg-1">
+			<a class="btn btn-primary btn-lg" href="{:url('index/index/jqueryplugin')}">jQuery插件</a>
 		</div>
 	</div>
+	<div id="district"></div>
 </div>
 {/block}
 {block name="js"}
+<script type="text/javascript">
 
+</script>
 {/block}

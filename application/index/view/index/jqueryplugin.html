@@ -1,0 +1,38 @@
+{extend name='general:base'/}
+{block name="css"}
+<style type="text/css" media="screen">
+	
+</style>
+{/block}
+{block name="body"}
+<h1>欢迎您访问{$title}</h1>
+<div id="testcontainer" class="form-inline"></div>
+<br/>
+<br/>
+<br/>
+<br/>
+<div id="tradelist"></div>
+{/block}
+{block name="js"}
+{include file='common@general/js-jquery-plugin-linkage' /}
+<script type="text/javascript">
+$(function() {
+	$("#tradelist").linkage({
+		url:"{:url('index/service/trade')}",
+		root_father: "0",
+		//data:[210000,210100,210104],
+		//level:2,
+		value_key:"trade_id",
+		text_key:"trade_name"
+	});
+	$("#testcontainer").linkage({
+		url:"{:url('index/service/district')}",
+		root_father: "86",
+		data:[210000,210100,210104],
+		//level:2,
+		value_key:"district_id",
+		text_key:"district_name"
+	});
+})
+</script>
+{/block}
