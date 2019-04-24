@@ -11,7 +11,7 @@
  Target Server Version : 50723
  File Encoding         : 65001
 
- Date: 18/04/2019 19:04:10
+ Date: 24/04/2019 18:05:12
 */
 
 SET NAMES utf8mb4;
@@ -46,7 +46,7 @@ CREATE TABLE `o2o_admin`  (
 -- ----------------------------
 -- Records of o2o_admin
 -- ----------------------------
-INSERT INTO `o2o_admin` VALUES ('2', 'Admin', 'admin', '$2y$10$BaMZ5gJzmtvAjhZS/ghDuujVRZ/uE37LLooGikCdrcYkb7dYOFL.e', '11@1.com', '123456748', '超级管理员', NULL, 1, 0, 0, 1555294774, 32, 1553164090, 1553935847, NULL);
+INSERT INTO `o2o_admin` VALUES ('2', 'Admin', 'admin', '$2y$10$MNAS1Q9qgd9zFHcynb7KRutXdZmgP3dIW30uEJfcxxJyU6PVmBjaG', '11@1.com', '123456748', '超级管理员', NULL, 1, 0, 0, 1556077944, 33, 1553164090, 1553935847, NULL);
 
 -- ----------------------------
 -- Table structure for o2o_admin_log
@@ -1341,6 +1341,75 @@ INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_list', 0, 
 INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/business/business_list', 0, 'a:0:{}', 1, 1555409349, 1555409349);
 INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_list', 0, 'a:0:{}', 1, 1555409372, 1555409372);
 INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_edit/id/155426291621010001', 0, 'a:1:{s:2:\"id\";s:18:\"155426291621010001\";}', 1, 1555409387, 1555409387);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/home/index', 0, 'a:0:{}', 1, 1556077946, 1556077946);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_list', 0, 'a:0:{}', 1, 1556077949, 1556077949);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_add', 0, 'a:0:{}', 1, 1556077950, 1556077950);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_add', 0, 'a:0:{}', 1, 1556077963, 1556077963);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_add', 0, 'a:0:{}', 1, 1556078158, 1556078158);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_add', 0, 'a:0:{}', 1, 1556078180, 1556078180);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_list', 0, 'a:0:{}', 1, 1556078208, 1556078208);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_add', 0, 'a:0:{}', 1, 1556078210, 1556078210);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_add', 0, 'a:0:{}', 1, 1556078281, 1556078281);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_add', 0, 'a:0:{}', 1, 1556078297, 1556078297);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_add', 0, 'a:0:{}', 1, 1556078717, 1556078717);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_add', 0, 'a:0:{}', 1, 1556078772, 1556078772);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_add', 0, 'a:0:{}', 1, 1556078806, 1556078806);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_add', 0, 'a:0:{}', 1, 1556078826, 1556078826);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_add', 0, 'a:0:{}', 1, 1556086129, 1556086129);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_add', 0, 'a:0:{}', 1, 1556086151, 1556086151);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_add', 0, 'a:0:{}', 1, 1556086161, 1556086161);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_add', 0, 'a:0:{}', 1, 1556086359, 1556086359);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_add', 0, 'a:0:{}', 1, 1556086478, 1556086478);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_add', 0, 'a:0:{}', 1, 1556089245, 1556089245);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/do_merchant_add', 0, '{hided}', 1, 1556089265, 1556089265);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/do_merchant_add', 0, '{hided}', 1, 1556089272, 1556089272);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/do_merchant_add', 0, '{hided}', 1, 1556089277, 1556089277);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_list', 0, 'a:0:{}', 1, 1556089281, 1556089281);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_add', 0, 'a:0:{}', 1, 1556089287, 1556089287);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/do_merchant_add', 0, '{hided}', 1, 1556089308, 1556089308);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_list', 0, 'a:0:{}', 1, 1556089313, 1556089313);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_add', 0, 'a:0:{}', 1, 1556089345, 1556089345);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/do_merchant_add', 0, '{hided}', 1, 1556089365, 1556089365);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_list', 0, 'a:0:{}', 1, 1556089367, 1556089367);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/do_merchant_delete', 0, 'a:1:{s:2:\"id\";s:12:\"155608936501\";}', 1, 1556089374, 1556089374);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_list', 0, 'a:0:{}', 1, 1556089376, 1556089376);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/do_merchant_delete', 0, 'a:1:{s:2:\"id\";s:12:\"155608930801\";}', 1, 1556089379, 1556089379);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_list', 0, 'a:0:{}', 1, 1556089381, 1556089381);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/do_merchant_delete', 0, 'a:1:{s:2:\"id\";s:12:\"155608927201\";}', 1, 1556089383, 1556089383);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_list', 0, 'a:0:{}', 1, 1556089385, 1556089385);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_list', 0, 'a:0:{}', 1, 1556089414, 1556089414);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/store/store_list', 0, 'a:0:{}', 1, 1556089419, 1556089419);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/business/business_list', 0, 'a:0:{}', 1, 1556089420, 1556089420);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/store/store_list', 0, 'a:0:{}', 1, 1556089437, 1556089437);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_list', 0, 'a:0:{}', 1, 1556089438, 1556089438);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/business/business_list', 0, 'a:0:{}', 1, 1556092713, 1556092713);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/config/config', 0, 'a:0:{}', 1, 1556093112, 1556093112);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/role/role_list', 0, 'a:0:{}', 1, 1556093115, 1556093115);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/admin/admin_list', 0, 'a:0:{}', 1, 1556093116, 1556093116);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/menu/menu_list', 0, 'a:0:{}', 1, 1556093118, 1556093118);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/business/business_list', 0, 'a:0:{}', 1, 1556093195, 1556093195);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/store/store_list', 0, 'a:0:{}', 1, 1556093206, 1556093206);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/store/store_add', 0, 'a:0:{}', 1, 1556097548, 1556097548);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/store/store_add', 0, 'a:0:{}', 1, 1556097696, 1556097696);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/store/store_add', 0, 'a:0:{}', 1, 1556098125, 1556098125);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/store/store_add', 0, 'a:0:{}', 1, 1556098159, 1556098159);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/store/store_add', 0, 'a:0:{}', 1, 1556098372, 1556098372);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/store/store_list', 0, 'a:0:{}', 1, 1556098389, 1556098389);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/store/store_add', 0, 'a:0:{}', 1, 1556098390, 1556098390);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/store/store_add', 0, 'a:0:{}', 1, 1556098628, 1556098628);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_list', 0, 'a:0:{}', 1, 1556098633, 1556098633);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/store/store_list', 0, 'a:0:{}', 1, 1556098637, 1556098637);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/store/store_add', 0, 'a:1:{s:11:\"merchant_id\";s:18:\"155426291621010001\";}', 1, 1556098656, 1556098656);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/store/store_add', 0, 'a:1:{s:11:\"merchant_id\";s:18:\"155426291621010002\";}', 1, 1556098662, 1556098662);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/store/store_add', 0, 'a:1:{s:11:\"merchant_id\";s:18:\"155426291621010001\";}', 1, 1556098667, 1556098667);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/store/store_add', 0, 'a:0:{}', 1, 1556098684, 1556098684);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_list', 0, 'a:0:{}', 1, 1556099346, 1556099346);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/merchant_add', 0, 'a:0:{}', 1, 1556099348, 1556099348);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/merchant/do_merchant_add', 0, '{hided}', 1, 1556099369, 1556099369);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/business/business_list', 0, 'a:0:{}', 1, 1556100105, 1556100105);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/store/store_list', 0, 'a:0:{}', 1, 1556100106, 1556100106);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/store/store_add', 0, 'a:0:{}', 1, 1556100107, 1556100107);
+INSERT INTO `o2o_admin_log` VALUES ('admin', 'admin/store/store_add', 0, 'a:0:{}', 1, 1556100223, 1556100223);
 
 -- ----------------------------
 -- Table structure for o2o_business
@@ -1429,7 +1498,7 @@ INSERT INTO `o2o_config` VALUES ('后台标题', 'admin_title', '通用o2o系统
 INSERT INTO `o2o_config` VALUES ('备案编号', 'beian', '辽ICP备18013736号', 0, 0, 1553665278, 1553665278);
 INSERT INTO `o2o_config` VALUES ('网站关键词', 'description', '在线预约线下服务的系统', 0, 0, 1553665278, 1553665278);
 INSERT INTO `o2o_config` VALUES ('网站关键词', 'keywords', 'o2o,预约', 0, 0, 1553665278, 1553665278);
-INSERT INTO `o2o_config` VALUES ('当前ID序号', 'max_global_id', '1', 0, 0, 1553674271, 1554262916);
+INSERT INTO `o2o_config` VALUES ('当前ID序号', 'max_global_id', '1', 0, 0, 1553674271, 1556089365);
 INSERT INTO `o2o_config` VALUES ('网站标题', 'title', '在线预约系统', 0, 0, 1553665278, 1553665278);
 INSERT INTO `o2o_config` VALUES ('统计代码', 'tongji', '&lt;script&gt; var _hmt = _hmt || []; (function() {   var hm = document.createElement(&quot;script&quot;);   hm.src = &quot;https://hm.baidu.com/hm.js?944d4adcd460e3f09700bc2a4dc7385b&quot;;   var s = document.getElementsByTagName(&quot;script&quot;)[0];    s.parentNode.insertBefore(hm, s); })(); &lt;/script&gt;', 0, 0, 1553665278, 1553665278);
 
@@ -5960,14 +6029,15 @@ CREATE TABLE `o2o_store`  (
   `store_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '店铺地址',
   `store_latitude` decimal(10, 0) NULL DEFAULT NULL COMMENT '地理纬度',
   `store_longitude` decimal(10, 0) NULL DEFAULT NULL COMMENT '地理经度',
-  `store_telephone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '店铺电话，用/分隔',
+  `store_telephone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '店铺电话，用英文逗号分隔',
   `store_description` varchar(4000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '店铺介绍',
+  `store_opentime` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '店铺营业时间，文本描述',
   `store_status` tinyint(4) NULL DEFAULT 0 COMMENT '店铺状态，0禁用，1正常',
   `create_time` int(11) NULL DEFAULT NULL,
   `update_time` int(11) NULL DEFAULT NULL,
   `delete_time` int(11) NULL DEFAULT NULL,
   `store_creator_admin_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建者管理员ID',
-  `store_opentime` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '店铺营业时间，文本描述',
+  `store_trade_id` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '门店行业ID',
   PRIMARY KEY (`store_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商户下的店铺表，唯一ID' ROW_FORMAT = Dynamic;
 
