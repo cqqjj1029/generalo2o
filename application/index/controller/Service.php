@@ -2,7 +2,12 @@
 namespace app\index\controller;
 use app\index\controller\Base;
 use app\common\model\District as DistrictModel;
-
+// 指定允许其他域名访问
+header('Access-Control-Allow-Origin:*');
+// 响应类型
+header('Access-Control-Allow-Methods:*');
+// 响应头设置
+header('Access-Control-Allow-Headers:x-requested-with,content-type');
 class Service extends Base
 {
     /**
@@ -10,16 +15,10 @@ class Service extends Base
      * @param  integer $father_id 上一级地区ID，默认86为查询省级
      * @return [type]             返回数据集
      */
-    public function district($father_id=86)
+    public function district($father_id)
     {
         $data = $this->get_district($father_id);
         return $data;
-    }
-
-    public function district_json($father_id=86)
-    {
-        $data = $this->get_district_list($father_id);
-        return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -27,7 +26,7 @@ class Service extends Base
      * @param  integer $father_id [description]
      * @return [type]             [description]
      */
-    public function trade($father_id='0')
+    public function trade($father_id)
     {
         $data = $this->get_trade($father_id);
         return $data;
@@ -38,11 +37,10 @@ class Service extends Base
      * @param  integer $father_id [description]
      * @return [type]             [description]
      */
-    public function business($father_id=0)
+    public function business($father_id)
     {
         $data = $this->get_business($father_id);
         return $data;
-        // dump($data);
     }
 
     /**
@@ -50,7 +48,7 @@ class Service extends Base
      * @param  integer $id [description]
      * @return [type]      [description]
      */
-    public function business_path($id=0)
+    public function business_path($id)
     {
         $data = $this->get_business_path($id);
         return $data;

@@ -129,7 +129,7 @@ class General extends Controller
      * @param  integer $father_id 上一级地区ID，默认86为查询省级
      * @return [type]             返回数据集
      */
-    protected function get_district($father_id=86)
+    protected function get_district($father_id)
     {
         $district = new DistrictModel;
         $list = $district->where(['district_father_id'=>$father_id])->order(['district_id'=>'asc'])->select();
@@ -141,14 +141,14 @@ class General extends Controller
      * @param  integer $id 要查询的district_id
      * @return [type]      返回数据集
      */
-    protected function get_district_father($id=110000)
+    protected function get_district_father($id)
     {
         $district = DistrictModel::get($id);
         $father = DistrictModel::get($district->district_father_id);
         return $father;
     }
 
-    protected function get_district_list($start_father_id=86)
+    protected function get_district_list($start_father_id)
     {
         $district = new DistrictModel;
         $list = $district->where('district_father_id','eq',$start_father_id)->order(['district_id'=>'asc'])->select();
@@ -172,7 +172,7 @@ class General extends Controller
      * @param  integer $father_id [description]
      * @return [type]             [description]
      */
-    protected function get_trade($father_id='0')
+    protected function get_trade($father_id)
     {
         $trade = new TradeModel;
         if($father_id) {
@@ -188,7 +188,7 @@ class General extends Controller
      * @param  integer $father_id business_father_id
      * @return [type]             [description]
      */
-    protected function get_business($father_id=0)
+    protected function get_business($father_id)
     {
         $business = new BusinessModel;
         if($father_id) {

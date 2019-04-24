@@ -35,18 +35,7 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3">所在地区：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<div id="vm-district">
-					<span class="select-box inline size-M">
-						<select class="select" v-model="province" v-on:change="getCity(this.province)">
-							<option v-for="item in list1" :key="item.district_id" :value="item.district_id">{{item.district_name}}</option>
-						</select>
-					</span>
-					<span class="select-box inline size-M">
-						<select class="select" v-model="city" name="merchant_district_id">
-							<option v-for="item in list2" :key="item.district_id" :value="item.district_id">{{item.district_name}}</option>
-						</select>
-					</span>
-				</div>
+				<div id="district"></div>
 			</div>
 		</div>
 		<div class="row cl">
@@ -96,58 +85,7 @@
 {/block}
 
 {block name='js'}
-<script type="text/javascript">
-	var district = new Vue({
-		el: "#vm-district",
-		data: {
-			list1:[],
-			list2:[],
-			province:'',
-			city: '',
-		},
-		created: function() {
-			this.getProvince();
-		},
-		methods: {
-			getProvince: function() {
-				this.$http.get('{:url("index/service/district")}?father_id='+86)
-					.then(function(res) {
-						var _self = this;
-						_self.list1=res.data;
-						_self.province = res.data[0].district_id;
-						var reg = new RegExp('辽宁');
-						res.data.forEach(function(v) {
-							if(reg.test(v.district_name)) {
-								_self.province = v.district_id;
-							}
-						});
-						_self.getCity();
-					})
-					.catch(function(res) {
-						console.log(res);
-					});
-			},
-			getCity: function() {
-				id = this.province||'-1';
-				this.$http.get('{:url("index/service/district")}?father_id='+id)
-					.then(function(res) {
-						var _self = this;
-						_self.list2=res.data;
-						_self.city = res.data[0].district_id;
-						var reg = new RegExp('沈阳');
-						res.data.forEach(function(v) {
-							if(reg.test(v.district_name)) {
-								_self.city = v.district_id;
-							}
-						});
-					})
-					.catch(function(res) {
-						console.log(res);
-					});
-			},
-		}
-	});
-</script>
+{include file='common@general/js-jquery-plugin-linkage' /}
 <script type="text/javascript">
 	$(function() {
 		// 实现菜单全选
@@ -158,7 +96,17 @@
 		$("form").children().bind('input propertychange', function() {
 			$(":submit").removeClass('disabled').removeAttr("disabled");
 		});
-
+		// 引用自建的js-jquery-plugin-linkage插件实现地区联动
+		$("#district").linkage({
+			url:"{:url('index/service/district')}",
+			value_key:"district_id",
+			text_key:"district_name",
+			root_father:"86",
+			default_values:['210000','210100'],
+			level:2,
+			select_css:"select",
+			span_css:"select-box radius inline mr-5",
+		});
 		$("form").validate({
 			rules : {
 				merchant_email: {

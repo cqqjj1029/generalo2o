@@ -12,26 +12,49 @@
 <br/>
 <br/>
 <div id="tradelist"></div>
+<br/>
+<br/>
+<br/>
+<br/>
+<div id="district"></div>
+<br/>
+<br/>
+<br/>
+<br/>
+<div id="business"></div>
 {/block}
 {block name="js"}
 {include file='common@general/js-jquery-plugin-linkage' /}
 <script type="text/javascript">
 $(function() {
-	$("#tradelist").linkage({
-		url:"{:url('index/service/trade')}",
-		root_father: "0",
-		//data:[210000,210100,210104],
-		//level:2,
-		value_key:"trade_id",
-		text_key:"trade_name"
-	});
 	$("#testcontainer").linkage({
 		url:"{:url('index/service/district')}",
 		root_father: "86",
-		data:[210000,210100,210104],
-		//level:2,
+		default_values:['210000','210100','210104'],
+		level:0,
+		value_key:"district_id",
+		text_key:"district_name",
+
+	});
+	$("#tradelist").linkage({
+		url:"{:url('index/service/trade')}",
+		root_father: "0",
+		default_values:['O','O81','O811','O8111'],
+		container_css:"",
+		value_key:"trade_id",
+		text_key:"trade_name"
+	});
+	$("#district").linkage({
+		url:"{:url('index/service/district')}",
 		value_key:"district_id",
 		text_key:"district_name"
+	});
+	$("#business").linkage({
+		url:"{:url('index/service/business')}",
+		value_key:"business_id",
+		text_key:"business_name",
+		default_values:['1','2','8'],
+		// father_keyname:"fid",
 	});
 })
 </script>

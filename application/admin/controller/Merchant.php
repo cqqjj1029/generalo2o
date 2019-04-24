@@ -118,6 +118,7 @@ class Merchant extends Base
 		$data['merchant_id'] = $this->apply_full_global_id_str(input('merchant_district_id'));
 		// 记录“创建者”
 		$data['merchant_creator_admin_id'] = Session::get('admin_infor')->admin_id;
+		$data['merchant_district_id'] = input('district_value');	// district_value是linkage控件自动生成的hidden的name
     	$result['data'] = $data;
 		// 创建Merchant模型实例
 		$merchant = new MerchantModel;
@@ -128,7 +129,7 @@ class Merchant extends Base
 				// merchant添加成功
 				$result['message'] = '<li>商户添加成功</li>';
 				// 插入merchant_admin
-				if($data['admin_id']) {
+				if(input('?admin_id')) {
 					$list = [];
 					foreach($data['admin_id'] as $admin_id) {
 						array_push($list, [
