@@ -188,9 +188,8 @@
 				var value_array = new Array();
 				var text_array = new Array();
 				$("select", container).each(function() {
+					value = $(this).val();
 					if($(this).val()!="-1") {
-						// arr.push($(this).val());	// 获取container下每个select对象的值并添加到数组arr中
-						value = $(this).val();
 						value_array.push($(this).val());
 						text = $(this).find("option:selected").text();
 						text_array.push($(this).find("option:selected").text());

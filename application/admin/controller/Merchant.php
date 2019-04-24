@@ -109,16 +109,16 @@ class Merchant extends Base
     	$data['merchant_status'] = input('?merchant_status') ? 1 : 0;
     	// 用验证器对数据进行校验
     	$validate = Loader::validate('app\common\validate\Merchant');
+		$data['merchant_district_id'] = input('district_value');	// district_value是linkage控件自动生成的hidden的name
     	$v = $validate->scene('init')->check($data);
 		if(!$v) {
 			$result['message'] = $validate->getError();
 			return $result;
 		}
 		// 分配系统唯一ID
-		$data['merchant_id'] = $this->apply_full_global_id_str(input('merchant_district_id'));
+		$data['merchant_id'] = $this->apply_full_global_id_str($data['merchant_district_id']);
 		// 记录“创建者”
 		$data['merchant_creator_admin_id'] = Session::get('admin_infor')->admin_id;
-		$data['merchant_district_id'] = input('district_value');	// district_value是linkage控件自动生成的hidden的name
     	$result['data'] = $data;
 		// 创建Merchant模型实例
 		$merchant = new MerchantModel;

@@ -10,6 +10,7 @@ class Merchant extends Validate
         'merchant_password'=>	'require|confirm|length:4,25|alphaDash',
         'merchant_email'=>  'require|unique:merchant,merchant_email|email',
         'merchant_mobile'=> 'require|unique:merchant,merchant_mobile|number',
+        'merchant_district_id'=>    'require|notIn:-1,0'
     ];
     
     protected $message  =   [
@@ -26,6 +27,7 @@ class Merchant extends Validate
         'merchant_password.confirm'=>  '两次输入的密码不一致',
         'merchant_password.length'=>  '密码的长度在4-25之间',
         'merchant_password.alphaDash'=>  '密码只允许包含字母、数字、下划线或减号',
+        'merchant_district_id'=>    '请选择所在地区',
     ];
     
     protected $scene = [
